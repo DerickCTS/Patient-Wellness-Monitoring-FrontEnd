@@ -1,0 +1,80 @@
+<div class="page-container">
+  <header class="page-header">
+    <h1>Today's Appointments</h1>
+    <p>
+      <span *ngIf="appointments$ | async as appointments">
+        {{ appointments.length }} active appointments
+      </span>
+      for {{ today | date : 'fullDate' }}
+    </p>
+  </header>
+
+  <div class="appointment-list">
+    <ng-container
+      *ngIf="appointments$ | async as appointments; else loading"
+    >
+      <mat-card
+        *ngFor="let app of appointments"
+        class="appointment-card"
+        appearance="outlined"
+      >
+        <mat-card-header>
+          <div mat-card-avatar class="patient-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <mat-card-title>{{ app.patientName }}</mat-card-title>
+          <mat-card-subtitle>
+            <span>
+              <mat-icon>{{ app.gender === 'Male' ? 'male' : 'female' }}</mat-icon>
+              {{ app.gender }} • {{ app.age }} years
+            </span>
+            <span>
+              <mat-icon>schedule</mat-icon>
+              {{ app.appointmentTime }}
+            </span>
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="patient-details">
+          <span>
+            <mat-icon>phone</mat-icon>
+            Contact: {{ app.contactNumber }}
+          </span>
+          <span>
+            <mat-icon>badge</mat-icon>
+            Patient ID: {{ app.patientId }}
+          </span>
+        </mat-card-content>
+
+        <div class="chief-complaint">
+          <mat-icon>lightbulb</mat-icon>
+          <div>
+            <strong>Chief Complaint</strong>
+            <p>{{ app.chiefComplaint }}</p>
+          </div>
+        </div>
+
+        <mat-card-actions align="end">
+          <button
+            mat-flat-button
+            color="primary"
+            (click)="navigateToDiagnosis(app.appointmentId)"
+          >
+            <mat-icon>play_arrow</mat-icon>
+            Start Diagnosis
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <div *ngIf="appointments.length === 0" class="empty-state">
+        <mat-icon>event_available</mat-icon>
+        <h2>All clear!</h2>
+        <p>There are no appointments scheduled for today.</p>
+      </div>
+    </ng-container>
+
+    <ng-template #loading>
+      <p>Loading appointments...</p>
+      </ng-template>
+  </div>
+</div>

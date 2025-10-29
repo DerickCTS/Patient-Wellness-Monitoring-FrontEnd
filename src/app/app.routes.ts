@@ -12,4 +12,11 @@ export const routes: Routes = [
     redirectTo: '/progress', // Makes your page the default
     pathMatch: 'full',
   },
+  {
+    path: 'diagnosis',
+    loadChildren: () =>
+      import('./features/diagnosis/diagnosis-module').then(
+        (m) => m.DiagnosisModule
+      ),
+  }
 ];
