@@ -1,0 +1,14 @@
+// This makes the tabs stretch to fill the width
+:host ::ng-deep .mat-mdc-tab-group {
+  --mdc-tab-indicator-active-indicator-color: #673ab7; // A nice purple
+  --mat-tab-header-active-label-text-color: #673ab7;
+  --mat-tab-header-inactive-label-text-color: #333;
+}
+
+:host ::ng-deep .mat-mdc-tab-header {
+  width: 100%;
+}
+
+:host ::ng-deep .mat-mdc-tab-body-wrapper {
+  padding-top: 24px;
+}

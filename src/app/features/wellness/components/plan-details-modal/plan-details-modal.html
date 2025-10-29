@@ -1,0 +1,64 @@
+<div *ngIf="planDetails$ | async as plan; else loading">
+
+  <button mat-icon-button class="close-button" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <div class="modal-header">
+    <div class="header-image">
+      <img [src]="plan.imageUrl" [alt]="plan.planName" />
+    </div>
+    <div class="header-info">
+      <h3>{{ plan.planName }}</h3>
+      <div class="info-grid">
+        <span>Task</span>
+        <span>: {{ plan.planName }}</span>
+
+        <span>Goal</span>
+        <span>: {{ plan.goal }}</span>
+
+        <span>Assigned By</span>
+        <span>: {{ plan.assignedByDoctorName }}</span>
+
+        <span>Frequency</span>
+        <span>: {{ plan.frequency }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-content">
+    <mat-button-toggle-group [(ngModel)]="activeTab" class="info-tabs">
+      <mat-button-toggle value="description">Description</mat-button-toggle>
+      <mat-button-toggle value="instruction">Instruction</mat-button-toggle>
+      <mat-button-toggle value="benefits">Benefits</mat-button-toggle>
+      <mat-button-toggle value="safety">Safety</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <div class="info-content">
+      <div *ngIf="activeTab === 'description'">
+        <p>{{ plan.description }}</p>
+      </div>
+      <div *ngIf="activeTab === 'instruction'">
+        <ul>
+          <li *ngFor="let item of plan.instructions">{{ item }}</li>
+        </ul>
+      </div>
+      <div *ngIf="activeTab === 'benefits'">
+        <ul>
+          <li *ngFor="let item of plan.benefits">{{ item }}</li>
+        </ul>
+      </div>
+      <div *ngIf="activeTab === 'safety'">
+        <ul>
+          <li *ngFor="let item of plan.safetyPrecautions">{{ item }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="loading-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

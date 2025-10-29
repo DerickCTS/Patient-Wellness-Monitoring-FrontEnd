@@ -1,0 +1,28 @@
+<mat-card class="plan-card">
+  <div class="card-image-container">
+    <img mat-card-image [src]="plan.imageUrl" [alt]="plan.planName" />
+
+    <span class="status-badge" [ngClass]="plan.status.toLowerCase()">
+      {{ plan.status }}
+    </span>
+  </div>
+
+  <mat-card-content class="card-content">
+    <span class="plan-title">{{ plan.planName }}</span>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="markComplete()">
+        <mat-icon>{{ plan.status === 'Completed' ? 'remove_done' : 'check_circle_outline' }}</mat-icon>
+        <span>{{ plan.status === 'Completed' ? 'Mark as Incomplete' : 'Mark as Complete' }}</span>
+      </button>
+      <button mat-menu-item (click)="viewDetails()">
+        <mat-icon>visibility</mat-icon>
+        <span>View Details</span>
+      </button>
+    </mat-menu>
+  </mat-card-content>
+</mat-card>

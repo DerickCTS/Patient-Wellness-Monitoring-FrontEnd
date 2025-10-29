@@ -1,0 +1,65 @@
+<section class="glance-container">
+  <div class="glance-left">
+    <h3>At a Glance</h3>
+    <div class="glance-cards">
+
+      <mat-card class="glance-card score-card">
+        <mat-card-content>
+          <div class="score-title">This Week's Wellness Score</div>
+          <div class="score-progress">
+            <mat-progress-spinner mode="determinate"
+                                  [value]="wellnessScore"
+                                  [diameter]="100"
+                                  [strokeWidth]="10"
+                                  [color]="progressColor"></mat-progress-spinner>
+            <span class="score-percent">{{ wellnessScore }}%</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="glance-card streak-card">
+        <mat-card-content>
+          <mat-icon class="streak-icon">local_fire_department</mat-icon>
+          <div class="streak-count">{{ currentStreak }}-Day Streak!</div>
+          <div class="streak-text">You are on fire! Keep it going.</div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="glance-card tip-card">
+        <mat-card-content>
+          <div class="tip-title">Health Tip of the Day</div>
+          <p class="tip-text">{{ healthTip }}</p>
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+  </div>
+
+  <div class="glance-right">
+
+    <mat-card class="stat-card">
+      <mat-icon class="stat-icon today">check_circle</mat-icon>
+      <div class="stat-info">
+        <div class="stat-label">Tasks Today</div>
+        <div class="stat-value">{{ tasksTodayCompleted }} of {{ tasksTodayTotal }}</div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-icon class="stat-icon week">calendar_view_week</mat-icon>
+      <div class="stat-info">
+        <div class="stat-label">This Week</div>
+        <div class="stat-value">{{ tasksThisWeekCompleted }} of {{ tasksThisWeekTotal }}</div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-icon class="stat-icon streak">star</mat-icon>
+      <div class="stat-info">
+        <div class="stat-label">Best Streak</div>
+        <div class="stat-value">{{ bestStreak }} Days</div>
+      </div>
+    </mat-card>
+
+  </div>
+</section>

@@ -1,0 +1,150 @@
+.glance-container {
+  display: flex;
+  flex-wrap: wrap; // Allow wrapping on small screens
+  gap: 24px;
+}
+
+.glance-left {
+  flex: 3; // Takes up 3/4 of the space
+  min-width: 400px;
+}
+
+.glance-right {
+  flex: 1; // Takes up 1/4 of the space
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 250px;
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 0;
+}
+
+.glance-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.glance-card {
+  height: 220px;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.score-card {
+  mat-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .score-title {
+    font-weight: 600;
+  }
+
+  .score-progress {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .score-percent {
+    position: absolute;
+    font-size: 24px;
+    font-weight: bold;
+  }
+}
+
+.streak-card {
+  background-color: #ffeb3b; // Yellow
+  color: #333;
+
+  mat-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .streak-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: #f44336; // Red
+  }
+
+  .streak-count {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 8px 0;
+  }
+
+  .streak-text {
+    font-size: 14px;
+  }
+}
+
+.tip-card {
+  background-color: #e3f2fd; // Light blue
+  color: #1e88e5;
+
+  .tip-title {
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .tip-text {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-radius: 12px;
+  gap: 16px;
+
+  .stat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+    padding: 8px;
+    border-radius: 50%;
+    color: #fff;
+
+    &.today {
+      background-color: #4caf50;
+    }
+    // Green
+    &.week {
+      background-color: #2196f3;
+    }
+    // Blue
+    &.streak {
+      background-color: #ffc107;
+    }
+    // Amber
+  }
+
+  .stat-label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 4px;
+  }
+
+  .stat-value {
+    font-size: 20px;
+    font-weight: bold;
+  }
+}

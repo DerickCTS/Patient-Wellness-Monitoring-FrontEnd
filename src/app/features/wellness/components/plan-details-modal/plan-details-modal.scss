@@ -1,0 +1,91 @@
+.close-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+}
+
+.modal-header {
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #eee;
+
+  .header-image {
+    width: 200px;
+    height: 120px;
+    border-radius: 8px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .header-info {
+    flex: 1;
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 8px;
+      font-size: 14px;
+
+      span:nth-child(odd) {
+        font-weight: 600;
+        color: #555;
+      }
+    }
+  }
+}
+
+.modal-content {
+  padding: 24px;
+
+  .info-tabs {
+    margin-bottom: 24px;
+    display: flex;
+    width: 100%;
+
+    mat-button-toggle {
+      flex: 1;
+      font-weight: 600;
+    }
+  }
+
+  .info-content {
+    font-size: 15px;
+    line-height: 1.6;
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+  }
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+// Override default padding on the dialog
+:host ::ng-deep .mat-mdc-dialog-content {
+  padding: 0;
+  max-height: 80vh;
+}

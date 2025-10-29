@@ -1,0 +1,40 @@
+.card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; // Allow wrapping on small screens
+  gap: 16px;
+  margin-bottom: 16px;
+
+  h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+  }
+}
+
+.chart-container {
+  position: relative;
+  height: 350px;
+  width: 100%;
+}
+
+.loading-spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 10;
+}
+
+// Styles for the chart
+:host ::ng-deep {
+  .ngx-charts .axis-label {
+    font-weight: 600;
+  }
+}

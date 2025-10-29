@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>{{ getButtonText() }}</h2>
+
+<mat-dialog-content [formGroup]="notesForm">
+  <p>Are you sure you want to update the status for <strong>{{ plan.planName }}</strong>?</p>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Optional Notes</mat-label>
+    <textarea matInput formControlName="patientNotes" rows="3"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Cancel</button>
+  <button mat-flat-button
+          [color]="isCompleted ? 'primary' : 'warn'"
+          (click)="submit()"
+          [disabled]="isLoading">
+
+    <span *ngIf="!isLoading">{{ getButtonText() }}</span>
+    <mat-spinner *ngIf="isLoading" diameter="24"></mat-spinner>
+  </button>
+</mat-dialog-actions>

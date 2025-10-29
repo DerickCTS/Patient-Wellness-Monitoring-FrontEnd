@@ -1,0 +1,45 @@
+<mat-card class="calendar-card">
+  <mat-card-title class="card-title">
+    <h3>Activity Calendar</h3>
+    <div class="year-navigator">
+      <button mat-icon-button (click)="changeYear(-1)">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <span class="year-label">{{ year }}</span>
+      <button mat-icon-button (click)="changeYear(1)">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  </mat-card-title>
+
+  <mat-card-content>
+    <div class="calendar-container">
+      <div class="day-labels">
+        <div *ngFor="let day of days" class="day-label">{{ day }}</div>
+      </div>
+
+      <div class="calendar-grid">
+        <div *ngFor="let month of months; let monthIndex = index" class="month-col">
+          <div class="month-label">{{ month }}</div>
+
+          <div class="day-cell-offset" [style.grid-row-start]="firstDayOffsets[monthIndex] + 1"></div>
+
+          <div *ngFor="let day of getDaysInMonth(monthIndex)"
+               class="day-cell"
+               [ngClass]="getCellColor(getCompletionLevel(monthIndex, day))">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <span>Less</span>
+      <div class="day-cell level-0"></div>
+      <div class="day-cell level-1"></div>
+      <div class="day-cell level-2"></div>
+      <div class="day-cell level-3"></div>
+      <div class="day-cell level-4"></div>
+      <span>More</span>
+    </div>
+  </mat-card-content>
+</mat-card>

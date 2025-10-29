@@ -1,0 +1,38 @@
+<div class="filter-bar">
+  <mat-chip-listbox [(ngModel)]="statusFilter" (ngModelChange)="onFilterChange()">
+    <mat-chip-option value="All" selected>All</mat-chip-option>
+    <mat-chip-option value="Completed">Completed</mat-chip-option>
+    <mat-chip-option value="Pending">Pending</mat-chip-option>
+  </mat-chip-listbox>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Category</mat-label>
+    <mat-select [(ngModel)]="categoryFilter" (selectionChange)="onFilterChange()">
+      <mat-option *ngFor="let cat of categories" [value]="cat">{{ cat }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Due Date</mat-label>
+    <mat-select [(ngModel)]="dateFilter" (selectionChange)="onFilterChange()">
+      <mat-option value="Today">Today</mat-option>
+      <mat-option value="This Week">This Week</mat-option>
+      <mat-option value="This Month">This Month</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div *ngIf="isLoading" class="loading-spinner">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!isLoading" class="plan-grid">
+  <app-plan-card *ngFor="let plan of plans"
+                 [plan]="plan"
+                 (onViewDetails)="openDetailsModal($event)"
+                 (onMarkComplete)="openMarkCompleteModal($event)"></app-plan-card>
+</div>
+
+<div *ngIf="!isLoading && plans.length === 0" class="no-plans">
+  <h3>No plans found for the selected filters.</h3>
+</div>
