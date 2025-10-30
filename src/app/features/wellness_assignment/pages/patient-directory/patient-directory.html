@@ -1,0 +1,24 @@
+<div class="patient-directory-container">
+  <h2 *ngIf="!selectedPatientId()">Patient Directory</h2>
+
+  <ng-container *ngIf="!selectedPatientId()">
+    <app-patient-search-form 
+      (searchPerformed)="handleSearch($event)" 
+      [searchResults]="searchResults()"
+      [isLoading]="isLoadingSearch()"
+      (patientSelected)="selectPatient($event)">
+    </app-patient-search-form>
+  </ng-container>
+
+  <ng-container *ngIf="selectedPatientId()">
+    <button (click)="goBackToSearch()" class="back-button">
+      <mat-icon>arrow_back</mat-icon> Go Back
+    </button>
+    <app-patient-details 
+      [patientId]="selectedPatientId()!" 
+      [patientDetails]="patientDetails()"
+      [isLoading]="isLoadingDetails()"
+      (planAssigned)="handlePlanAssigned()">
+    </app-patient-details>
+  </ng-container>
+</div>
