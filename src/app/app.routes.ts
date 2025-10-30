@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { ProgressTracking } from './features/wellness/pages/progress-tracking/progress-tracking';
+import { PatientDetailsComponent } from './features/wellness_assignment/components/patient-details/patient-details';
 
 export const routes: Routes = [
   {
@@ -11,6 +12,10 @@ export const routes: Routes = [
     path: '',
     redirectTo: '/progress', // Makes your page the default
     pathMatch: 'full',
+  },
+  {
+    path: 'wellness',
+    loadComponent: () => PatientDetailsComponent
   },
   {
     path: 'diagnosis',

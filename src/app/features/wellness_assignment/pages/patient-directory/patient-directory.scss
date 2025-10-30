@@ -1,0 +1,23 @@
+.patient-directory-container { 
+    padding: 24px; 
+}
+.back-button { 
+    background: none; 
+    border: none; 
+    color: var(--primary-color, #4A148C); 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center;
+    margin-bottom: 16px;
+    font-weight: 500;
+    transition: color 0.2s;
+    
+    &:hover {
+        color: darken(#4A148C, 10%);
+    }
+
+    mat-icon { 
+        margin-right: 8px; 
+        font-size: 18px; 
+    }
+}
