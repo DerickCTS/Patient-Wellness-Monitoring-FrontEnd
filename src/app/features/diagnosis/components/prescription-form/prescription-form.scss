@@ -1,0 +1,62 @@
+.form-card {
+  border-style: dashed;
+  background-color: #fafafa;
+  margin-top: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-actions {
+  padding: 0 16px 16px;
+  gap: 8px;
+}
+
+// Flex layout for side-by-side fields
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.flex-field {
+  flex: 1; // Makes fields grow to fill space
+  min-width: 200px; // Prevents them from getting too small
+}
+
+// --- Schedule Section Styles ---
+.schedule-section {
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.schedule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  h4 {
+    margin: 0;
+  }
+}
+
+.schedule-empty-error {
+  margin-bottom: 12px;
+}
+
+.schedule-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+
+  .schedule-field-time {
+    flex: 3; // Make time field bigger
+  }
+  .schedule-field-qty {
+    flex: 1; // Make qty field smaller
+  }
+}

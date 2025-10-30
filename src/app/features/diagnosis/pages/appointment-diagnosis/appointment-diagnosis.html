@@ -1,0 +1,141 @@
+<div class="page-container" *ngIf="details$ | async as details; else loading">
+  <header class="page-header">
+    <div class="header-left">
+      <button mat-icon-button (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div>
+        <h2>Patient Diagnosis</h2>
+        <!-- <p>{{ details.patientInfo.name }} • {{ details.patientInfo.appointmentTime }}</p> -->
+        <p>{{ details.patientInfo.name }}</p>
+      </div>
+    </div>
+    <div class="header-right">
+       <mat-chip-listbox>
+        <mat-chip color="primary" selected>In Progress</mat-chip>
+       </mat-chip-listbox>
+    </div>
+  </header>
+
+  <div class="page-layout">
+    
+    <aside class="patient-info-col">
+      <mat-card class="patient-card" appearance="outlined">
+        <mat-card-header>
+           <div mat-card-avatar class="patient-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <mat-card-title>{{ details.patientInfo.name }}</mat-card-title>
+          <mat-card-subtitle>Patient ID: {{ details.patientInfo.patientId }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content class="patient-details">
+          <span><mat-icon>cake</mat-icon> Age / DOB: {{ details.patientInfo.age }} / {{ details.patientInfo.dateOfBirth | date: 'dd/MM/yyyy' }}</span>
+          <span><mat-icon>{{ details.patientInfo.gender === 'Male' ? 'male' : 'female' }}</mat-icon> Gender: {{ details.patientInfo.gender }}</span>
+          <span><mat-icon>phone</mat-icon> Contact: {{ details.patientInfo.contactNumber }}</span>
+          <span><mat-icon>email</mat-icon> Email: {{ details.patientInfo.email }}</span>
+          <span><mat-icon>home</mat-icon> Address: {{ details.patientInfo.address }}</span>
+          <span><mat-icon>support</mat-icon> Emergency: {{ details.patientInfo.emergencyContact }}</span>
+        </mat-card-content>
+      </mat-card>
+
+      <div class="chief-complaint">
+        <mat-icon>lightbulb</mat-icon>
+        <div>
+          <strong>Chief Complaint</strong>
+          <p>{{ details.patientInfo.chiefComplaint }}</p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="diagnosis-col">
+      <section class="info-section">
+        <div class="section-header">
+          <h3>Diagnosis Information</h3>
+          <button mat-flat-button color="primary" (click)="showDiagnosisForm = true" [disabled]="showDiagnosisForm">
+            <mat-icon>add</mat-icon>
+            Add Diagnosis
+          </button>
+        </div>
+        
+        <app-diagnosis-form
+          *ngIf="showDiagnosisForm"
+          (diagnosisSaved)="onAddDiagnosis($event)"
+          (cancel)="showDiagnosisForm = false"
+        ></app-diagnosis-form>
+        
+        <mat-card class="display-card" *ngFor="let diag of details.existingDiagnoses" appearance="outlined">
+          <mat-card-header>
+            <mat-card-title>{{ diag.diseaseName }}</mat-card-title>
+            <mat-card-subtitle>Existing Diagnosis</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>{{ diag.description }}</mat-card-content>
+        </mat-card>
+        
+        <mat-card class="display-card new-item" *ngFor="let diag of newDiagnoses; let i = index" appearance="outlined">
+           <button mat-icon-button class="delete-btn" color="warn" (click)="onDeleteNewDiagnosis(i)">
+             <mat-icon>delete</mat-icon>
+           </button>
+          <mat-card-header>
+            <!-- <mat-card-title>{{ diag.DiseaseId | iKnowWhatThisIsPipe }}</mat-card-title> <mat-card-subtitle>New Diagnosis (Unsaved)</mat-card-subtitle> -->
+             <mat-card-title>{{ diag.DiseaseId }}</mat-card-title> <mat-card-subtitle>New Diagnosis (Unsaved)</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>{{ diag.Description }}</mat-card-content>
+        </mat-card>
+        
+        <div class="empty-state" *ngIf="!showDiagnosisForm && details.existingDiagnoses.length === 0 && newDiagnoses.length === 0">
+           No diagnosis added yet. Click "Add Diagnosis" to record.
+        </div>
+      </section>
+
+      <section class="info-section">
+         <div class="section-header">
+          <h3>Prescription</h3>
+          <button mat-flat-button color="primary" (click)="showPrescriptionForm = true" [disabled]="showPrescriptionForm">
+            <mat-icon>add</mat-icon>
+            Add Medication
+          </button>
+        </div>
+        
+        <app-prescription-form
+          *ngIf="showPrescriptionForm"
+          (prescriptionSaved)="onAddPrescription($event)"
+          (cancel)="showPrescriptionForm = false"
+        ></app-prescription-form>
+        
+        <mat-card class="display-card" *ngFor="let pres of details.existingPrescriptions" appearance="outlined">
+          <mat-card-header>
+            <mat-card-title>{{ pres.medicationName }}</mat-card-title>
+            <mat-card-subtitle>Existing Prescription ({{ pres.dosage }})</mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
+        
+        <mat-card class="display-card new-item" *ngFor="let pres of newPrescriptions; let i = index" appearance="outlined">
+           <button mat-icon-button class="delete-btn" color="warn" (click)="onDeleteNewPrescription(i)">
+             <mat-icon>delete</mat-icon>
+           </button>
+          <mat-card-header>
+            <mat-card-title>{{ pres.MedicationName }}</mat-card-title>
+            <mat-card-subtitle>New Prescription ({{ pres.Dosage }}) • {{ pres.Schedules.length }} schedule(s)</mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
+        
+         <div class="empty-state" *ngIf="!showPrescriptionForm && details.existingPrescriptions.length === 0 && newPrescriptions.length === 0">
+           No medications prescribed yet. Click "Add Medication" to prescribe.
+        </div>
+      </section>
+      
+      <footer class="page-footer">
+        <button mat-stroked-button (click)="onCancel()">Cancel</button>
+        <button mat-flat-button color="primary" (click)="onSaveDiagnosis()" [disabled]="isSaving">
+          {{ isSaving ? 'Saving...' : 'Save Diagnosis' }}
+        </button>
+      </footer>
+
+    </main>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>Loading diagnosis details...</p>
+</ng-template>
