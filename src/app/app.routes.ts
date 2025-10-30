@@ -16,5 +16,12 @@ export const routes: Routes = [
   {
     path: 'wellness',
     loadComponent: () => PatientDetailsComponent
+  },
+  {
+    path: 'diagnosis',
+    loadChildren: () =>
+      import('./features/diagnosis/diagnosis-module').then(
+        (m) => m.DiagnosisModule
+      ),
   }
 ];

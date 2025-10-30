@@ -1,0 +1,132 @@
+// --- Page Level ---
+.page-container {
+  padding: 24px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    h2 {
+      margin: 0;
+      font-size: 1.75rem;
+    }
+    p {
+      margin: 0;
+      color: #6c757d;
+    }
+  }
+}
+
+// --- Layout ---
+.page-layout {
+  display: flex;
+  flex-wrap: wrap; // Allow wrapping on small screens
+  gap: 24px;
+}
+
+.patient-info-col {
+  flex: 1; // Grow
+  min-width: 300px; // Minimum width
+}
+
+.diagnosis-col {
+  flex: 2; // Grow to be twice as large as the info col
+  min-width: 400px;
+}
+
+// --- Left Column ---
+.patient-card {
+  .patient-avatar {
+    background-color: #e3f2fd;
+    color: #1976d2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .patient-details {
+    padding: 16px;
+    span {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: #333;
+      mat-icon {
+        color: #6c757d;
+      }
+    }
+  }
+}
+
+.chief-complaint {
+  background-color: #fff8e1;
+  color: #6d4c0d;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  p {
+    margin: 4px 0 0 0;
+    font-weight: 500;
+  }
+}
+
+// --- Right Column ---
+.info-section {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid #e0e0e0;
+    h3 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+  }
+}
+
+.display-card {
+  margin: 16px;
+  position: relative; // For delete button
+}
+
+.new-item {
+  background-color: #f4f8ff; // Highlight new items
+  border-color: #1976d2;
+  
+  .delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+  }
+}
+
+.empty-state {
+  padding: 32px 24px;
+  text-align: center;
+  color: #6c757d;
+}
+
+.page-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px;
+  border-top: 1px solid #e0e0e0;
+  background: #fff;
+}

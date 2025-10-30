@@ -1,0 +1,86 @@
+/* A container to give the page some padding */
+.page-container {
+  padding: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: 24px;
+  h1 {
+    font-size: 2.25rem;
+    font-weight: 500;
+    margin: 0;
+  }
+  p {
+    font-size: 1rem;
+    color: #6c757d;
+  }
+}
+
+.appointment-card {
+  margin-bottom: 20px;
+
+  // Use flex to align icon and text
+  .patient-details span,
+  mat-card-subtitle span {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* space between icon and text */
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+
+    mat-icon {
+      font-size: 1.1rem;
+      width: 1.1rem;
+      height: 1.1rem;
+    }
+  }
+
+  // Make avatar blue
+  .patient-avatar {
+    background-color: #e3f2fd;
+    color: #1976d2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  // The yellow box from your Figma
+  .chief-complaint {
+    background-color: #fff8e1; // Light yellow
+    color: #6d4c0d;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px; // Margin inside the card
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    mat-icon {
+      font-size: 1.5rem;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+    p {
+      margin: 4px 0 0 0;
+      font-weight: 500;
+    }
+  }
+
+  mat-card-actions {
+    padding: 0 16px 16px 16px; // Add padding to actions
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px;
+  color: #6c757d;
+
+  mat-icon {
+    font-size: 4rem;
+    width: 4rem;
+    height: 4rem;
+  }
+}
