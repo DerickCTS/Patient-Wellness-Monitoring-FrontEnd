@@ -1,0 +1,113 @@
+<div class="auth-container">
+  <div class="auth-header">
+    <div class="logo-circle">
+      <mat-icon>bloodtype</mat-icon>
+      </div>
+    <h1>Healthcare Management System</h1>
+  </div>
+
+  <mat-card class="auth-card">
+    <mat-tab-group
+      mat-stretch-tabs="true"
+      (selectedTabChange)="onTabChange($event)"
+      animationDuration="500ms"
+    >
+      <mat-tab label="Login">
+        <div class="tab-content">
+          <div *ngIf="!loginRole; else loginForm" class="role-selection">
+            <h3>Select your account type to continue</h3>
+            <div class="role-cards">
+              <mat-card
+                class="role-card"
+                (click)="selectLoginRole('Patient')"
+                appearance="outlined"
+              >
+                <mat-icon class="patient-icon">person</mat-icon>
+                <mat-card-content>
+                  <h4>Patient</h4>
+                  <p>Access your health records</p>
+                </mat-card-content>
+              </mat-card>
+              <mat-card
+                class="role-card"
+                (click)="selectLoginRole('Doctor')"
+                appearance="outlined"
+              >
+                <mat-icon class="doctor-icon">medical_services</mat-icon>
+                <mat-card-content>
+                  <h4>Doctor</h4>
+                  <p>Manage patient care</p>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+
+          <ng-template #loginForm>
+            <div class="form-container">
+              <div class="form-header">
+                <mat-icon [class]="loginRole === 'Patient' ? 'patient-icon' : 'doctor-icon'">
+                  {{ loginRole === 'Patient' ? 'person' : 'medical_services' }}
+                </mat-icon>
+                <h3>Login as {{ loginRole }}</h3>
+                <button mat-button (click)="changeRole()">Change</button>
+              </div>
+              <app-login-form [role]="loginRole!"></app-login-form>
+            </div>
+          </ng-template>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Sign Up">
+        <div class="tab-content">
+          <div
+            *ngIf="!signupRole; else signupForm"
+            class="role-selection"
+          >
+            <h3>Select your account type to get started</h3>
+            <div class="role-cards">
+              <mat-card
+                class="role-card"
+                (click)="selectSignupRole('Patient')"
+                appearance="outlined"
+              >
+                <mat-icon class="patient-icon">person_add</mat-icon>
+                <mat-card-content>
+                  <h4>Patient</h4>
+                  <p>Create your patient account</p>
+                </mat-card-content>
+              </mat-card>
+              <mat-card
+                class="role-card"
+                (click)="selectSignupRole('Doctor')"
+                appearance="outlined"
+              >
+                <mat-icon class="doctor-icon">person_add</mat-icon>
+                <mat-card-content>
+                  <h4>Doctor</h4>
+                  <p>Join as a healthcare provider</p>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+
+          <ng-template #signupForm>
+            <div class="form-container">
+              <div class="form-header">
+                 <mat-icon [class]="signupRole === 'Patient' ? 'patient-icon' : 'doctor-icon'">
+                  person_add
+                </mat-icon>
+                <h3>Sign Up as {{ signupRole }}</h3>
+                <button mat-button (click)="changeRole()">Change</button>
+              </div>
+              
+              <app-patient-register-form *ngIf="signupRole === 'Patient'"></app-patient-register-form>
+              <app-doctor-register-form *ngIf="signupRole === 'Doctor'"></app-doctor-register-form>
+            </div>
+          </ng-template>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+
+  <p class="footer-text">Secure and confidential healthcare portal</p>
+</div>

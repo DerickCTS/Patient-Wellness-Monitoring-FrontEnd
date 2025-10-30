@@ -1,0 +1,90 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+  <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="FirstName" />
+      <mat-error>First Name is required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="LastName" />
+      <mat-error>Last Name is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Specialization</mat-label>
+      <input
+        matInput
+        formControlName="Specialization"
+        placeholder="e.g., Cardiology"
+      />
+      <mat-error>Specialization is required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Education</mat-label>
+      <input matInput formControlName="Education" placeholder="e.g., MD, MBBS" />
+      <mat-error>Education is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Contact Number</mat-label>
+      <input matInput formControlName="ContactNumber" type="tel" />
+      <mat-error>Contact Number is required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="Email" type="email" />
+      <mat-error>A valid email is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        formControlName="Password"
+        [type]="hidePassword ? 'password' : 'text'"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="hidePassword = !hidePassword"
+      >
+        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+      <mat-error>Password must be at least 6 characters</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Confirm Password</mat-label>
+      <input
+        matInput
+        formControlName="ConfirmPassword"
+        [type]="hidePassword ? 'password' : 'text'"
+      />
+      <mat-error
+        *ngIf="registerForm.hasError('mismatch') && registerForm.get('ConfirmPassword')?.touched"
+      >
+        Passwords do not match
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <button
+    mat-flat-button
+    color="primary"
+    type="submit"
+    class="register-button"
+    [disabled]="isLoading"
+  >
+    {{ isLoading ? 'Creating Account...' : 'Create Account' }}
+  </button>
+</form>

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PatientDirectory } from './patient-directory';
+import { DoctorRegisterForm } from './doctor-register-form';
 
-describe('PatientDirectory', () => {
-  let component: PatientDirectory;
-  let fixture: ComponentFixture<PatientDirectory>;
+describe('DoctorRegisterForm', () => {
+  let component: DoctorRegisterForm;
+  let fixture: ComponentFixture<DoctorRegisterForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PatientDirectory]
+      imports: [DoctorRegisterForm]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PatientDirectory);
+    fixture = TestBed.createComponent(DoctorRegisterForm);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

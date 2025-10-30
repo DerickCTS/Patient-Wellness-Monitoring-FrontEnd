@@ -1,0 +1,126 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+  <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="FirstName" />
+      <mat-error>First Name is required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="LastName" />
+      <mat-error>Last Name is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Date of Birth</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="DateOfBirth"
+        placeholder="dd-mm-yyyy"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error>Date of Birth is required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Gender</mat-label>
+      <mat-select formControlName="Gender">
+        <mat-option *ngFor="let gender of genders" [value]="gender">
+          {{ gender }}
+        </mat-option>
+      </mat-select>
+      <mat-error>Gender is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Blood Group</mat-label>
+      <mat-select formControlName="BloodGroup">
+        <mat-option *ngFor="let group of bloodGroups" [value]="group">
+          {{ group }}
+        </mat-option>
+      </mat-select>
+      <mat-error>Blood Group is required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Contact Number</mat-label>
+      <input matInput formControlName="ContactNumber" type="tel" />
+      <mat-error>Contact Number is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="Email" type="email" />
+    <mat-error>A valid email is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Address</mat-label>
+    <textarea matInput formControlName="Address"></textarea>
+    <mat-error>Address is required</mat-error>
+  </mat-form-field>
+
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Emergency Contact Name</mat-label>
+      <input matInput formControlName="EmergencyContactName" />
+      <mat-error>Name is required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Emergency Contact Number</mat-label>
+      <input matInput formControlName="EmergencyContactNumber" type="tel" />
+      <mat-error>Number is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        formControlName="Password"
+        [type]="hidePassword ? 'password' : 'text'"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="hidePassword = !hidePassword"
+      >
+        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+      <mat-error>Password must be at least 6 characters</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Confirm Password</mat-label>
+      <input
+        matInput
+        formControlName="ConfirmPassword"
+        [type]="hidePassword ? 'password' : 'text'"
+      />
+      <mat-error
+        *ngIf="registerForm.hasError('mismatch') && registerForm.get('ConfirmPassword')?.touched"
+      >
+        Passwords do not match
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <button
+    mat-flat-button
+    color="primary"
+    type="submit"
+    class="register-button"
+    [disabled]="isLoading"
+  >
+    {{ isLoading ? 'Creating Account...' : 'Create Account' }}
+  </button>
+</form>

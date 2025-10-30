@@ -1,0 +1,20 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 0;
+}
+
+.login-button {
+  padding: 12px;
+  font-size: 1rem;
+}
+
+mat-progress-bar {
+  // Make it sit on the top edge of the form
+  position: absolute;
+  top: -24px; // Positioned relative to the parent card
+  left: 0;
+  right: 0;
+  border-radius: 4px;
+}

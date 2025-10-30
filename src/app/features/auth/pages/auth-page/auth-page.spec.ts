@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AssignPlanModal } from './assign-plan-modal';
+import { AuthPage } from './auth-page';
 
-describe('AssignPlanModal', () => {
-  let component: AssignPlanModal;
-  let fixture: ComponentFixture<AssignPlanModal>;
+describe('AuthPage', () => {
+  let component: AuthPage;
+  let fixture: ComponentFixture<AuthPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AssignPlanModal]
+      imports: [AuthPage]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AssignPlanModal);
+    fixture = TestBed.createComponent(AuthPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
