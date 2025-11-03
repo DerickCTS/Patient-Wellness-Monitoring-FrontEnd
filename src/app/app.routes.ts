@@ -23,10 +23,10 @@ export const routes: Routes = [
     redirectTo: '/progress', // Makes your page the default
     pathMatch: 'full',
   },
-  {
-    path: 'wellness',
-    loadComponent: () => PatientDetailsComponent
-  },
+  // {
+  //   path: 'wellness',
+  //   loadComponent: () => PatientDetailsComponent
+  // },
   {
     path: 'diagnosis',
     loadChildren: () =>
