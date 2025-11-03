@@ -1,0 +1,111 @@
+.loading-state {
+  text-align: center;
+  padding: 48px;
+  color: #666;
+}
+
+.view-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+// --- Template Grid ---
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.template-card {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// --- Form View ---
+.form-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.template-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+}
+
+.form-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.readonly-section {
+  display: flex;
+  gap: 24px;
+  background-color: #f9f9f9;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+.readonly-field {
+  label {
+    font-size: 0.8rem;
+    color: #777;
+    margin-bottom: 2px;
+  }
+  p {
+    font-size: 1rem;
+    color: #000;
+    font-weight: 500;
+    margin: 0;
+  }
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.flex-field {
+  flex: 1;
+  min-width: 200px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+  
+  button {
+    padding: 10px 24px;
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,84 @@
+// No padding on the dialog itself
+:host ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+  padding: 0;
+  border-radius: 12px;
+}
+
+.close-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  color: #aaa;
+  background-color: rgba(255, 255, 255, 0.7);
+
+  &:hover {
+    color: #000;
+  }
+}
+
+.loading-state {
+  padding: 48px;
+  text-align: center;
+}
+
+.dialog-content {
+  max-width: 600px;
+  padding: 0;
+}
+
+.plan-header {
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  background-color: #f9f9f9;
+}
+
+.plan-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+.plan-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.info-row {
+  display: flex;
+  font-size: 1rem;
+  .label {
+    font-weight: 500;
+    color: #333;
+    width: 100px; // Aligns the colons
+  }
+  .value {
+    color: #555;
+  }
+}
+
+.divider {
+  border: 0;
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 0;
+}
+
+// --- Tabs Content ---
+.tab-content {
+  padding: 24px;
+  color: #333;
+  line-height: 1.6;
+}
+
+.list {
+  padding-left: 20px;
+  li {
+    margin-bottom: 10px;
+  }
+}

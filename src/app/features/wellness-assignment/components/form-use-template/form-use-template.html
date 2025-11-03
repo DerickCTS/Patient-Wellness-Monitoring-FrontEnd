@@ -1,0 +1,136 @@
+<div class="template-container">
+  <div *ngIf="!selectedTemplate; else formView">
+    <h3 class="view-title">Select a Template</h3>
+
+    <div *ngIf="isLoadingTemplates" class="loading-state">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      <p>Loading templates...</p>
+    </div>
+
+    <div *ngIf="templates$ | async as templates" class="template-grid">
+      <mat-card
+        *ngFor="let template of templates"
+        class="template-card"
+        appearance="outlined"
+        (click)="onTemplateSelected(template)"
+      >
+        <img
+          mat-card-image
+          [src]="wellnessService.getFullImageUrl(template.imageUrl)"
+          alt="{{ template.planName }}"
+        />
+        <mat-card-header>
+          <mat-card-title>{{ template.planName }}</mat-card-title>
+          <mat-card-subtitle>{{ template.goal }}</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </div>
+  </div>
+
+  <ng-template #formView>
+    <div class="form-header">
+      <button mat-icon-button (click)="goBackToTemplates()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h3 class="view-title">Assign: {{ selectedTemplateDetails?.planName }}</h3>
+    </div>
+
+    <div *ngIf="isLoadingDetails" class="loading-state">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      <p>Loading template details...</p>
+    </div>
+
+    <form *ngIf="!isLoadingDetails" [formGroup]="form" (ngSubmit)="onSubmit()" class="template-form">
+      <mat-progress-bar *ngIf="isSaving" mode="indeterminate" class="form-progress"></mat-progress-bar>
+
+      <div class="readonly-section">
+        <div class="readonly-field">
+          <label>Plan Name</label>
+          <p>{{ selectedTemplateDetails?.planName }}</p>
+        </div>
+        <div class="readonly-field">
+          <label>Goal</label>
+          <p>{{ selectedTemplateDetails?.goal }}</p>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="flex-field">
+          <mat-label>Category</mat-label>
+          <mat-select formControlName="Category">
+             <mat-option *ngFor="let cat of categories" [value]="cat">{{cat}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="flex-field">
+          <mat-label>Frequency Count</mat-label>
+          <input matInput formControlName="FrequencyCount" type="number" min="1">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="flex-field">
+          <mat-label>Frequency Unit</mat-label>
+          <mat-select formControlName="FrequencyUnit">
+            <mat-option *ngFor="let unit of units" [value]="unit">{{unit}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="flex-field">
+          <mat-label>Start Date</mat-label>
+          <input matInput [matDatepicker]="startPicker" formControlName="StartDate">
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="flex-field">
+          <mat-label>End Date</mat-label>
+          <input matInput [matDatepicker]="endPicker" formControlName="EndDate">
+          <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+          <mat-datepicker #endPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      
+      <mat-divider></mat-divider>
+
+      <div class="details-header">
+        <h4>Plan Details</h4>
+        <mat-slide-toggle (change)="toggleEdit($event)">
+          Enable Editing
+        </mat-slide-toggle>
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="Description" rows="3"></textarea>
+      </mat-form-field>
+
+      <app-form-array-manager
+        label="Instructions"
+        [formArray]="instructions"
+        (addItem)="addItem(instructions)"
+        (removeItem)="removeItem(instructions, $event)"
+      ></app-form-array-manager>
+      
+      <app-form-array-manager
+        label="Benefits"
+        [formArray]="benefits"
+        (addItem)="addItem(benefits)"
+        (removeItem)="removeItem(benefits, $event)"
+      ></app-form-array-manager>
+      
+      <app-form-array-manager
+        label="Safety"
+        [formArray]="safety"
+        (addItem)="addItem(safety)"
+        (removeItem)="removeItem(safety, $event)"
+      ></app-form-array-manager>
+      
+      <div class="form-actions">
+        <button mat-flat-button color="primary" type="submit" [disabled]="isSaving">
+          {{ isSaving ? 'Assigning...' : 'Assign Wellness Plan' }}
+        </button>
+      </div>
+    </form>
+  </ng-template>
+</div>

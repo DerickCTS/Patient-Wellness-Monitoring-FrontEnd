@@ -1,0 +1,64 @@
+.scratch-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative; // For progress bar
+}
+
+.form-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.flex-field {
+  flex: 1;
+  min-width: 200px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.file-upload-field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 200px;
+  position: relative; // For upload progress
+
+  .file-name {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.85rem;
+    color: #3f51b5;
+  }
+  
+  mat-progress-bar {
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    right: 0;
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+  
+  button {
+    padding: 10px 24px;
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,74 @@
+<ng-container *ngIf="planDetails$ | async as plan; else loading">
+  <button mat-icon-button class="close-button" (click)="closeDialog()">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <div mat-dialog-content class="dialog-content">
+    <div class="plan-header">
+      <img
+        [src]="wellnessService.getFullImageUrl(plan.imageUrl)"
+        alt="{{ plan.planName }}"
+        class="plan-image"
+      />
+      <div class="plan-info">
+        <div class="info-row">
+          <span class="label">Task:</span>
+          <span class="value">{{ plan.planName }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Goal:</span>
+          <span class="value">{{ plan.goal }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Assigned By:</span>
+          <span class="value">{{ plan.assignedByDoctorName }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Frequency:</span>
+          <span class="value">{{ plan.frequency }}</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <mat-tab-group mat-stretch-tabs="true" animationDuration="0ms">
+      <mat-tab label="Description">
+        <div class="tab-content">
+          <p>{{ plan.description }}</p>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Instruction">
+        <div class="tab-content">
+          <ul class="list">
+            <li *ngFor="let item of plan.instructions">{{ item }}</li>
+          </ul>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Benefits">
+        <div class="tab-content">
+          <ul class="list">
+            <li *ngFor="let item of plan.benefits">{{ item }}</li>
+          </ul>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Safety">
+        <div class="tab-content">
+          <ul class="list">
+            <li *ngFor="let item of plan.safetyPrecautions">{{ item }}</li>
+          </ul>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</ng-container>
+
+<ng-template #loading>
+  <div mat-dialog-content class="loading-state">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <p>Loading plan details...</p>
+  </div>
+</ng-template>

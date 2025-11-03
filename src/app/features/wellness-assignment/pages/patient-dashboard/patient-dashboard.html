@@ -1,0 +1,188 @@
+<div *ngIf="patientDetails$ | async as patient; else loading">
+  <div class="dashboard-container">
+    <header class="dashboard-header">
+      <button mat-icon-button (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h2>Patient Dashboard</h2>
+      <button
+        mat-flat-button
+        color="primary"
+        class="assign-button"
+        (click)="assignNewPlan(patient)" >
+        <mat-icon>add</mat-icon>
+        Assign Wellness Plan
+      </button>
+    </header>
+
+    <mat-card class="info-card" appearance="outlined">
+      <mat-card-title>Patient Information</mat-card-title>
+      <mat-card-content>
+        <div class="info-grid">
+          <div>
+            <app-info-item icon="person" label="Full Name">
+              {{ patient.firstName }} {{ patient.lastName }}
+            </app-info-item>
+            <app-info-item icon="email" label="Email">
+              {{ patient.email }}
+            </app-info-item>
+            <app-info-item icon="calendar_today" label="Date of Birth">
+              {{ patient.dateOfBirth | date: 'dd/MM/yyyy' }}
+            </app-info-item>
+            <app-info-item icon="badge" label="Patient ID">
+              {{ patient.patientId }}
+            </app-info-item>
+          </div>
+          <div>
+            <app-info-item icon="{{ patient.gender === 'Male' ? 'male' : 'female' }}" label="Gender">
+              {{ patient.gender }}
+            </app-info-item>
+            <app-info-item icon="bloodtype" label="Blood Group">
+              {{ patient.bloodGroup }}
+            </app-info-item>
+            <app-info-item icon="phone" label="Contact Number">
+              {{ patient.contactNumber }}
+            </app-info-item>
+            <app-info-item icon="support" label="Emergency Contact">
+              {{ patient.emergencyContactName }}
+              <span class="subtext">{{ patient.emergencyContactNumber }}</span>
+            </app-info-item>
+          </div>
+          <div class="grid-span-2">
+            <app-info-item icon="home" label="Address">
+              {{ patient.address }}
+            </app-info-item>
+          </div>
+          <div class="grid-span-2">
+            <app-info-item icon="medical_services" label="Personalized Doctor">
+              {{ patient.personalizedDoctor }}
+            </app-info-item>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="info-card" appearance="outlined">
+      <mat-card-title>Diagnosis History</mat-card-title>
+      <mat-card-content>
+        <mat-accordion *ngIf="patient.diagnoses.length > 0; else noDiagnoses">
+          <mat-expansion-panel
+            *ngFor="let diagnosis of patient.diagnoses"
+            (opened)="loadDiagnosisDetails(diagnosis.diagnosisId)"
+            (closed)="clearDiagnosisDetails()"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title class="diag-header-title">
+                {{ diagnosis.diseaseName }}
+                <mat-chip>{{ diagnosis.diagnosisDate | date: 'dd/MM/yyyy' }}</mat-chip>
+              </mat-panel-title>
+              <mat-panel-description>
+                Diagnosed by: Dr. {{ diagnosis.doctorName }}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <ng-template matExpansionPanelContent>
+              <div
+                class="diag-details-content"
+                *ngIf="activeDiagnosisDetails$ | async as details; else diagLoading"
+              >
+                <div class="detail-item">
+                  <strong>Diagnosed By</strong>
+                  <p>Dr. {{ details.diagnosedBy }}</p>
+                </div>
+                <div class="detail-item">
+                  <strong>Diagnosis Description (Notes)</strong>
+                  <p>{{ details.diagnosisDescription }}</p>
+                </div>
+                <div class="detail-item">
+                  <strong>Disease Description (General)</strong>
+                  <p>{{ details.diseaseDescription }}</p>
+                </div>
+
+                <h4>Medications</h4>
+                <table mat-table [dataSource]="details.medicationDetails" class="med-table">
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>Tablet Name</th>
+                    <td mat-cell *matCellDef="let med">{{ med.medicationName }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="dosage">
+                    <th mat-header-cell *matHeaderCellDef>Dosage</th>
+                    <td mat-cell *matCellDef="let med">{{ med.dosage }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                    <td mat-cell *matCellDef="let med">
+                      <mat-chip [class.active-chip]="med.isActive">
+                        {{ med.isActive ? 'Active' : 'Inactive' }}
+                      </mat-chip>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="medicationColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: medicationColumns"></tr>
+                </table>
+              </div>
+              <ng-template #diagLoading>
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+              </ng-template>
+            </ng-template>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <ng-template #noDiagnoses>
+          <p class="empty-state">No diagnosis history found for this patient.</p>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="info-card" appearance="outlined">
+      <mat-card-title>Assigned Wellness Plans</mat-card-title>
+      <mat-card-content>
+        <div *ngIf="patient.wellnessPlans.length > 0; else noPlans" class="plan-list">
+          <mat-card
+            *ngFor="let plan of patient.wellnessPlans"
+            class="plan-card"
+            appearance="outlined"
+          >
+            <img
+              mat-card-image
+              [src]="wellnessService.getFullImageUrl(plan.planImage)"
+              alt="{{ plan.planName }}"
+            />
+            <div classclass="plan-tags">
+              <mat-chip [class.custom-chip]="plan.wellnessType === 'Custom'">
+                {{ plan.wellnessType }}
+              </mat-chip>
+              <mat-chip [class.active-chip]="plan.status === 'Active'">
+                {{ plan.status }}
+              </mat-chip>
+            </div>
+            <mat-card-header>
+              <mat-card-title>{{ plan.planName }}</mat-card-title>
+              <mat-card-subtitle>{{ plan.category }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p><strong>Goal:</strong> {{ plan.goal }}</p>
+            </mat-card-content>
+            <mat-card-actions align="end">
+              <button mat-button color="primary" (click)="viewPlanDetails(plan)">
+                View Details
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+        <ng-template #noPlans>
+          <p class="empty-state">No wellness plans have been assigned to this patient.</p>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="page-loading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <p>Loading patient details...</p>
+  </div>
+</ng-template>

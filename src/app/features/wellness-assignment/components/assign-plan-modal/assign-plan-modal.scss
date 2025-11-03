@@ -1,0 +1,67 @@
+.modal-header {
+  padding: 24px 24px 16px 24px;
+  border-bottom: 1px solid #e0e0e0;
+  
+  h2 {
+    margin: 0;
+  }
+  .subtitle {
+    margin: 4px 0 0 0;
+    color: #555;
+    font-size: 1rem;
+  }
+}
+
+.close-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.modal-content {
+  padding: 0 !important;
+  max-height: 70vh; // Make modal scrollable
+}
+
+.modal-layout {
+  display: flex;
+}
+
+.modal-nav {
+  width: 250px;
+  padding: 16px;
+  border-right: 1px solid #e0e0e0;
+  background-color: #fcfcfc;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .nav-button {
+    display: flex;
+    justify-content: flex-start;
+    padding: 12px;
+    font-size: 1rem;
+    color: #333;
+
+    mat-icon {
+      margin-right: 12px;
+      color: #666;
+    }
+
+    &.active {
+      background-color: #3f51b5;
+      color: white;
+      font-weight: 500;
+      
+      mat-icon {
+        color: white;
+      }
+    }
+  }
+}
+
+.modal-form-area {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto; // Make the form area scroll
+}

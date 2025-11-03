@@ -1,0 +1,98 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="scratch-form">
+  <mat-progress-bar *ngIf="isSaving" mode="indeterminate" class="form-progress"></mat-progress-bar>
+  
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Plan Name</mat-label>
+      <input matInput formControlName="PlanName">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Plan Goal</mat-label>
+      <input matInput formControlName="Goal">
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <div class="file-upload-field">
+      <button mat-stroked-button type="button" (click)="fileInput.click()">
+        <mat-icon>upload</mat-icon>
+        Choose File
+      </button>
+      <input hidden #fileInput type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg">
+      <span *ngIf="form.get('ImageUrl')?.value" class="file-name">
+        <mat-icon color="primary">check_circle</mat-icon>
+        {{ form.get('ImageUrl')?.value | slice:0:30 }}...
+      </span>
+      <mat-progress-bar *ngIf="isUploading" mode="indeterminate"></mat-progress-bar>
+    </div>
+    
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Category</mat-label>
+      <mat-select formControlName="Category">
+        <mat-option *ngFor="let cat of categories" [value]="cat">{{cat}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Frequency Count</mat-label>
+      <input matInput formControlName="FrequencyCount" type="number" min="1">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Frequency Unit</mat-label>
+      <mat-select formControlName="FrequencyUnit">
+         <mat-option *ngFor="let unit of units" [value]="unit">{{unit}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>Start Date</mat-label>
+      <input matInput [matDatepicker]="startPicker" formControlName="StartDate">
+      <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+      <mat-datepicker #startPicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="flex-field">
+      <mat-label>End Date</mat-label>
+      <input matInput [matDatepicker]="endPicker" formControlName="EndDate">
+      <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+      <mat-datepicker #endPicker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  
+  <mat-divider></mat-divider>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="Description" rows="3"></textarea>
+  </mat-form-field>
+
+  <app-form-array-manager
+    label="Instructions"
+    [formArray]="instructions"
+    (addItem)="addItem(instructions)"
+    (removeItem)="removeItem(instructions, $event)"
+  ></app-form-array-manager>
+  
+  <app-form-array-manager
+    label="Benefits"
+    [formArray]="benefits"
+    (addItem)="addItem(benefits)"
+    (removeItem)="removeItem(benefits, $event)"
+  ></app-form-array-manager>
+  
+  <app-form-array-manager
+    label="Safety"
+    [formArray]="safety"
+    (addItem)="addItem(safety)"
+    (removeItem)="removeItem(safety, $event)"
+  ></app-form-array-manager>
+  
+  <div class="form-actions">
+    <button mat-flat-button color="primary" type="submit" [disabled]="isSaving || isUploading">
+      {{ isSaving ? 'Assigning...' : 'Assign Wellness Plan' }}
+    </button>
+  </div>
+</form>
