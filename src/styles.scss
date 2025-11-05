@@ -1,12 +1,9 @@
-
 // Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
+// Since other parts of the project might use Material, we keep the theme setup.
 @use '@angular/material' as mat;
 
 html {
+  // Theme setup for any existing or future Material components
   @include mat.theme((
     color: (
       primary: mat.$magenta-palette,
@@ -17,23 +14,40 @@ html {
   ));
 }
 
-body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
 
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
+/* 1. Font Awesome Import for Icons */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
 
-  // Reset the user agent margin.
-  margin: 0;
+/* 2. Global Reset/Normalization */
+html, body { 
+  height: 100%;
+  // Remove Material system variables which can interfere with custom backgrounds
+  background-color: #f5f7fa; /* Set a default light background */
+  color: #333; /* Set a default text color */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+  margin: 0; // Reset the user agent margin.
+  
+  // Keep Angular Material's font if needed, but prioritize our custom one
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  
+  // Default the application to a light color theme.
+  color-scheme: light; 
 }
-/* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* 3. Apply box-sizing globally for easier layout */
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+/* 4. Custom Element Styles */
+h1, h2, h3, h4, h5, h6 {
+  color: #333;
+  font-weight: 600;
+}
+
+p {
+  color: #666;
+  line-height: 1.6;
+}
+

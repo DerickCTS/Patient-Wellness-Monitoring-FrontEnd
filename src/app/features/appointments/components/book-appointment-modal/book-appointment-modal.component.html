@@ -1,0 +1,186 @@
+<div class="modal-backdrop">
+  <div class="modal-content">
+    <div class="modal-header">
+      @if (currentStep === 1) {
+        <h3>Book New Appointment - Step 1/3: Reason & Doctor</h3>
+      } @else if (currentStep === 2) {
+        <h3>Select Time Slot - Step 2/3</h3>
+      } @else if (currentStep === 3) {
+        <h3>Confirm Appointment Details - Step 3/3</h3>
+      }
+      <button (click)="closeModal.emit()" class="close-button">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      
+      <!-- STEP 1: Specialization and Reason -->
+      @if (currentStep === 1) {
+        <form (submit)="$event.preventDefault()">
+          <!-- Specialization Select -->
+          <div class="form-group">
+            <label for="specialization">Select Specialization</label>
+            <div class="input-group">
+              <select 
+                id="specialization" 
+                [ngModel]="formData().specialization" 
+                (ngModelChange)="handleInputChange('specialization', $event)"
+                required
+                class="form-select"
+              >
+                <option value="" disabled>Choose a specialization</option>
+                @for (spec of specializations; track spec) {
+                  <option [value]="spec">{{ spec }}</option>
+                }
+              </select>
+              <button (click)="openSpecializationGuide()" class="guide-button" type="button">?</button>
+            </div>
+          </div>
+
+          <!-- Reason Input -->
+          <div class="form-group">
+            <label for="reason">Reason for Appointment (Brief Description)</label>
+            <textarea 
+              id="reason" 
+              [ngModel]="formData().reason" 
+              (ngModelChange)="handleInputChange('reason', $event)" 
+              rows="3" 
+              required 
+              class="form-input"
+            ></textarea>
+          </div>
+        </form>
+      }
+
+      <!-- STEP 2: Doctor and Time Selection -->
+      @if (currentStep === 2) {
+        <!-- Date Input -->
+        <div class="form-group date-group">
+          <label for="date">Appointment Date</label>
+          <input 
+            type="date" 
+            id="date" 
+            [ngModel]="formData().date"
+            (ngModelChange)="handleInputChange('date', $event)"
+            [min]="minDate" 
+            required 
+            class="form-input"
+          >
+        </div>
+        
+        <!-- Doctor List -->
+        <div class="doctor-list-container">
+          <h4>Available Doctors ({{ formData().specialization }})</h4>
+          
+          @if (isLoadingDoctors()) {
+            <p class="loading-message">Loading doctors...</p>
+          } @else {
+            <!-- FIX 4: Correct @if syntax with semicolon (;) -->
+            @if (doctors$ | async; as doctors) {
+              
+              @if (doctors.length === 0) {
+                <div class="no-doctors">
+                  <p>No doctors available for this specialization on {{ formData().date | date:'mediumDate' }}.</p>
+                </div>
+              } @else {
+                @for (doctor of doctors; track doctor.id) {
+                  <div class.="doctor-panel" [class.selected]="doctor.id === formData().doctorId">
+                    <div class="doctor-info">
+                      <span class="doctor-name">{{ doctor.name }}</span>
+                      <span class="doctor-qual">{{ doctor.qualifications }}</span>
+                      <span class="doctor-exp">{{ doctor.experienceYears }} yrs exp.</span>
+                      @if (doctor.id === formData().doctorId) {
+                        <span class="selected-badge">Selected</span>
+                      }
+                    </div>
+                    
+                    @if (doctor.id !== formData().doctorId) {
+                      <button (click)="selectDoctor(doctor)" class="select-doctor-button" type="button">Select</button>
+                    } @else {
+                      <!-- Time Slots -->
+                      <div class="time-slots-container">
+                        <h4>Available Times on {{ formData().date | date:'shortDate' }}</h4>
+                        
+                        @if (isLoadingSlots()) {
+                          <p class="loading-message">Loading slots...</p>
+                        } @else {
+                          <!-- FIX 5: Correct @if syntax with semicolon (;) -->
+                          @if (slots$ | async; as slots) {
+                            <div class="slots-grid">
+                              @for (slot of slots; track slot.time) {
+                                <button 
+                                  (click)="selectSlot(slot)" 
+                                  [class.selected-slot]="formData().date === slot.date && formData().time === slot.time"
+                                  class="time-slot"
+                                  type="button">
+                                  <span class="slot-time">{{ slot.time }}</span>
+                                  <span class="slot-date">{{ slot.date | date:'shortDate' }}</span>
+                                </button>
+                              }
+                            </div>
+                            @if (slots.length === 0) {
+                              <p class="no-results">No time slots found for the selected doctor/date.</p>
+                            }
+                          }
+                        }
+                      </div>
+                    }
+                  </div>
+                }
+              }
+            }
+          }
+        </div>
+      }
+
+      <!-- STEP 3: Confirmation -->
+      @if (currentStep === 3) {
+        <div class="confirmation-summary">
+          <h4>Review and Confirm Booking</h4>
+          @if (selectedDoctor(); as doctor) {
+            <div class="details-grid">
+              <p><span class="label">Doctor:</span> {{ doctor.name }} ({{ doctor.specialization }})</p>
+              <p><span class="label">Qualifications:</span> {{ doctor.qualifications }}</p>
+              <p><span class="label">Date:</span> {{ formData().date | date:'mediumDate' }}</p>
+              <p><span class="label">Time:</span> {{ formData().time }}</p>
+              <p class="full-width"><span class="label">Reason:</span> {{ formData().reason }}</p>
+            </div>
+          }
+        </div>
+        
+        <div class="submission-messages">
+          @if (submissionError()) {
+            <p class="error-message"><i class="fa fa-exclamation-triangle"></i> {{ submissionError() }}</p>
+          }
+          @if (isSubmitting()) {
+            <p class="loading-message"><i class="fa fa-spinner fa-spin"></i> Processing...</p>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="modal-footer">
+      @if (currentStep > 1) {
+        <button (click)="prevStep()" class="btn btn-secondary" [disabled]="isSubmitting()">Back</button>
+      }
+      @if (currentStep < 3) {
+        <button 
+          (click)="nextStep()" 
+          class="btn btn-primary" 
+          [disabled]="(currentStep === 1 && (!formData().specialization || !formData().reason))"
+          type="button"
+        >
+          Next
+        </button>
+      } @else {
+        <button 
+          (click)="confirmBooking()" 
+          class="btn btn-success" 
+          [disabled]="isSubmitting() || !formData().doctorId || !formData().date || !formData().time"
+          type="button"
+        >
+          {{ isSubmitting() ? 'Booking...' : 'Confirm Booking' }}
+        </button>
+      }
+    </div>
+  </div>
+</div>

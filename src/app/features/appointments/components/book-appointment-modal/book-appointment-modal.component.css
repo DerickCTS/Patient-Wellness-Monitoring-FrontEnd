@@ -1,0 +1,340 @@
+/* --- Base Modal Styles --- */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #999;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 25px;
+  max-height: 70vh;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 20px 25px;
+  border-top: 1px solid #eee;
+  background-color: #f7f7f7;
+}
+
+/* --- Form Elements (Shared) --- */
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  color: #556ee6;
+  margin-bottom: 8px;
+}
+
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #556ee6;
+  outline: none;
+}
+
+/* --- Step 1 Specific Styles --- */
+
+.specialization-guide {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.guide-button {
+  background: none;
+  border: none;
+  color: #556ee6;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.guide-button i {
+  margin-right: 5px;
+}
+
+/* --- Step 2 Specific Styles --- */
+
+.selection-summary {
+  background-color: #f0f3ff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.change-button {
+  background: none;
+  border: none;
+  color: #556ee6;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.doctor-panel {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.doctor-header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+  position: relative;
+}
+
+.doctor-header:hover {
+  background-color: #fafafa;
+}
+
+.doctor-header .icon-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f0f3ff;
+  color: #556ee6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  margin-right: 15px;
+}
+
+.doctor-header .details p {
+  margin: 0;
+  font-weight: 600;
+}
+.doctor-header .details .qualification {
+  font-weight: normal;
+  font-size: 0.9rem;
+}
+.doctor-header .details .experience {
+  font-size: 0.8rem;
+  color: #f2994a;
+  background-color: #fff8e1;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 10px;
+  font-weight: 500;
+}
+
+.selected-indicator {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: #198754;
+  font-size: 1.5rem;
+}
+
+.slots-section {
+  padding: 15px;
+  background-color: #fcfcfc;
+  border-top: 1px solid #eee;
+}
+
+.slots-title {
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #556ee6;
+}
+
+.slots-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.slot-button {
+  background-color: #f0f3ff;
+  color: #556ee6;
+  border: 1px solid #556ee6;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.slot-button:hover {
+  background-color: #e6e9ff;
+}
+
+.selected-slot {
+  background-color: #556ee6;
+  color: white;
+}
+
+.slot-time {
+  font-weight: 600;
+}
+
+.slot-date {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+
+/* --- Step 3 Confirmation --- */
+.confirmation-box {
+  background-color: #f0f3ff;
+  border-radius: 12px;
+  padding: 25px;
+  text-align: center;
+}
+
+.check-icon {
+  font-size: 3rem;
+  color: #198754;
+  margin-bottom: 15px;
+}
+
+.confirmation-box h4 {
+  margin-top: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px 10px;
+  text-align: left;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0;
+}
+.details-grid p {
+  margin: 0;
+  font-size: 1rem;
+}
+.details-grid .label {
+  font-weight: 600;
+  color: #556ee6;
+  display: block;
+  margin-bottom: 4px;
+}
+.details-grid .full-row {
+  grid-column: span 2;
+}
+
+.submission-note {
+  background-color: #fff8e1;
+  color: #a08000;
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  text-align: left;
+}
+.submission-note i {
+  margin-right: 8px;
+}
+
+/* --- Button Overrides --- */
+.primary-button {
+  background-color: #556ee6;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+.primary-button:hover:not([disabled]) {
+  background-color: #435cd1;
+}
+.primary-button[disabled] {
+  background-color: #a0a0a0;
+  cursor: not-allowed;
+}
+
+.secondary-button {
+  background: none;
+  color: #666;
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.secondary-button:hover {
+  background-color: #eee;
+}
+
+/* Loading Spinner */
+.fa-spinner {
+  margin-right: 5px;
+}

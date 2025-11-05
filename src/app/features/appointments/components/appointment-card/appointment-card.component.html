@@ -1,0 +1,80 @@
+<div class="appointment-card" [ngClass]="getCardClass()">
+  <div class="header">
+    <div class="doctor-info">
+      <span class="icon-circle">
+        <i class="fas fa-user-md"></i>
+      </span>
+      <div class="details">
+        <h3>Dr. {{ appointment.doctor.name }}</h3>
+        <p>{{ appointment.doctor.qualifications }}</p>
+      </div>
+    </div>
+    <span class="status-tag">
+      {{ appointment.status }}
+    </span>
+  </div>
+
+  <div class="body-content">
+    <div class="row-item">
+      <i class="fas fa-graduation-cap"></i>
+      <div class="label-group">
+        <p class="label">Specialization</p>
+        <p class="value">{{ appointment.doctor.specialization }}</p>
+      </div>
+    </div>
+
+    <div class="row-item">
+      <i class="fas fa-calendar-alt"></i>
+      <div class="label-group">
+        <p class="label">Date</p>
+        <p class="value">{{ appointment.date }}</p>
+      </div>
+    </div>
+
+    <div class="row-item">
+      <i class="fas fa-clock"></i>
+      <div class="label-group">
+        <p class="label">Time</p>
+        <p class="value">{{ appointment.time }}</p>
+      </div>
+    </div>
+
+    <div class="row-item full-width reason-section">
+      <i class="fas fa-file-alt"></i>
+      <div class="label-group">
+        <p class="label">Reason</p>
+        <p class="value">{{ appointment.reason }}</p>
+      </div>
+    </div>
+
+    <ng-container *ngIf="appointment.status === AppointmentStatus.Rejected">
+      <div class="rejected-alert">
+        <p class="alert-label">Appointment Rejected</p>
+        <p class="alert-reason">Reason: {{ appointment.rejectionReason }}</p>
+      </div>
+      <button class="primary-button full-width action-button">
+        Book Another Slot
+      </button>
+    </ng-container>
+
+    <ng-container *ngIf="appointment.status === AppointmentStatus.Approved">
+      <div class="status-time-box">
+        <i class="fas fa-history"></i>
+        <div class="label-group">
+          <p class="label">Appointment Time</p>
+          <p class="value">Appointment time has arrived</p>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="appointment.status === AppointmentStatus.Pending">
+      <div class="pending-time-box">
+        <i class="fas fa-hourglass-half"></i>
+        <div class="label-group">
+          <p class="label">Waiting for doctor's approval</p>
+          <p class="value">You will be notified once confirmed.</p>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

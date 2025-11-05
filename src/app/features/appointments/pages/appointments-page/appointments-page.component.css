@@ -1,0 +1,127 @@
+/* --- Header Banner (Kept largely the same) --- */
+.appointments-container {
+  padding: 24px;
+}
+
+.header-banner {
+  background-color: #2e4a86;
+  color: white;
+  padding: 20px 40px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-content h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.text-content p {
+  margin: 0;
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.book-button {
+  background-color: #556ee6; /* Lighter blue/purple for the button */
+  color: white;
+  font-weight: 500;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.book-button i {
+    margin-right: 5px;
+}
+.book-button:hover {
+    background-color: #435cd1;
+}
+
+/* --- Custom Tab Navigation Styles --- */
+.tab-navigation {
+  display: flex;
+  gap: 1px;
+  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  flex-grow: 1;
+  background-color: transparent;
+  color: #666;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 15px 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-button i {
+    margin-right: 8px;
+    font-size: 1.1rem;
+}
+
+.tab-button:hover {
+  background-color: #f7f7f7;
+}
+
+.tab-button.active {
+  color: #556ee6;
+  border-bottom-color: #556ee6;
+  background-color: #fcfcfc;
+}
+
+/* Badge Styling */
+.badge {
+  background-color: #198754; /* Green for Approved/General Count */
+  color: white;
+  font-size: 0.8em;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-left: 8px;
+  font-weight: normal;
+}
+
+.pending-badge {
+  background-color: #ffc107; /* Yellow for Pending */
+  color: #333;
+}
+
+.rejected-badge {
+  background-color: #dc3545; /* Red for Rejected */
+}
+
+/* Card Grid Layout */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+}

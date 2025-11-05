@@ -2,9 +2,7 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\app",
-    "\\src\\app\\features\\wellness\\components"
+    "\\src\\app"
   ],
-  "SelectedNode": "\\src\\app\\app.ts",
   "PreviewInSolutionExplorer": false
 }

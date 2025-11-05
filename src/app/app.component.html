@@ -1,0 +1,24 @@
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="logo">
+      <i class="fas fa-stethoscope"></i> P W M
+    </div>
+    <nav>
+      <ul>
+        <li *ngFor="let item of navItems">
+          <a
+            [routerLink]="item.path"
+            routerLinkActive="active"
+          >
+            <i [class]="item.icon"></i>
+            <span>{{ item.label }}</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="content-area">
+    <router-outlet></router-outlet>
+  </main>
+</div>

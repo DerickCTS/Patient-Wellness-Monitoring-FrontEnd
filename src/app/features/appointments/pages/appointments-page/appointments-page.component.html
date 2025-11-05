@@ -1,0 +1,77 @@
+<div class="appointments-container">
+  <div class="header-banner">
+    <div class="content-wrapper">
+      <i class="fas fa-stethoscope icon"></i>
+      <div class="text-content">
+        <h2>My Appointments</h2>
+        <p>Manage and track your medical appointments</p>
+      </div>
+    </div>
+    <button class="book-button primary-button" (click)="openBookAppointmentModal()">
+      <i class="fas fa-plus"></i> Book New Appointment
+    </button>
+  </div>
+
+  <div class="tab-navigation">
+    <button class="tab-button" [class.active]="selectedTabIndex() === 0" (click)="selectTab(0)">
+      <i class="fas fa-check-circle"></i>
+      Approved Appointments <span class="badge">{{ approvedAppointments().length }}</span>
+    </button>
+
+    <button class="tab-button" [class.active]="selectedTabIndex() === 1" (click)="selectTab(1)">
+      <i class="fas fa-clock"></i>
+      Pending Appointments <span class="badge pending-badge">{{ pendingAppointments().length }}</span>
+    </button>
+
+    <button class="tab-button" [class.active]="selectedTabIndex() === 2" (click)="selectTab(2)">
+      <i class="fas fa-times-circle"></i>
+      Rejected Appointments <span class="badge rejected-badge">{{ rejectedAppointments().length }}</span>
+    </button>
+
+    <button class="tab-button" [class.active]="selectedTabIndex() === 3" (click)="selectTab(3)">
+      <i class="fas fa-history"></i>
+      Past Appointments
+    </button>
+  </div>
+
+  <div class="tab-content-area">
+    <ng-container *ngIf="selectedTabIndex() === 0">
+      <div class="card-grid">
+        <app-appointment-card
+          *ngFor="let appointment of approvedAppointments()"
+          [appointment]="appointment"
+          [showActionButton]="false"
+        />
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="selectedTabIndex() === 1">
+      <div class="card-grid">
+        <app-appointment-card
+          *ngFor="let appointment of pendingAppointments()"
+          [appointment]="appointment"
+          [showActionButton]="false"
+        />
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="selectedTabIndex() === 2">
+      <div class="card-grid">
+        <app-appointment-card
+          *ngFor="let appointment of rejectedAppointments()"
+          [appointment]="appointment"
+          [showActionButton]="false"
+        />
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="selectedTabIndex() === 3">
+      <app-past-appointments-table [appointments]="pastAppointments()" />
+    </ng-container>
+  </div>
+
+  <app-book-appointment-modal
+    *ngIf="isModalOpen()"
+    (closeModal)="closeBookAppointmentModal()"
+  />
+</div>
