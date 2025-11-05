@@ -1,77 +1,57 @@
-<div class="appointments-container">
-  <div class="header-banner">
-    <div class="content-wrapper">
-      <i class="fas fa-stethoscope icon"></i>
-      <div class="text-content">
-        <h2>My Appointments</h2>
-        <p>Manage and track your medical appointments</p>
-      </div>
-    </div>
-    <button class="book-button primary-button" (click)="openBookAppointmentModal()">
+<div class="appointments-page-container">
+  <header class="header">
+    <h1>Your Appointments</h1>
+    <button class="btn btn-primary" (click)="openBookingModal()">
       <i class="fas fa-plus"></i> Book New Appointment
     </button>
-  </div>
+  </header>
 
-  <div class="tab-navigation">
-    <button class="tab-button" [class.active]="selectedTabIndex() === 0" (click)="selectTab(0)">
-      <i class="fas fa-check-circle"></i>
-      Approved Appointments <span class="badge">{{ approvedAppointments().length }}</span>
-    </button>
+  <section class="appointment-list">
+    <h2>Upcoming & Pending</h2>
 
-    <button class="tab-button" [class.active]="selectedTabIndex() === 1" (click)="selectTab(1)">
-      <i class="fas fa-clock"></i>
-      Pending Appointments <span class="badge pending-badge">{{ pendingAppointments().length }}</span>
-    </button>
-
-    <button class="tab-button" [class.active]="selectedTabIndex() === 2" (click)="selectTab(2)">
-      <i class="fas fa-times-circle"></i>
-      Rejected Appointments <span class="badge rejected-badge">{{ rejectedAppointments().length }}</span>
-    </button>
-
-    <button class="tab-button" [class.active]="selectedTabIndex() === 3" (click)="selectTab(3)">
-      <i class="fas fa-history"></i>
-      Past Appointments
-    </button>
-  </div>
-
-  <div class="tab-content-area">
-    <ng-container *ngIf="selectedTabIndex() === 0">
-      <div class="card-grid">
-        <app-appointment-card
-          *ngFor="let appointment of approvedAppointments()"
-          [appointment]="appointment"
-          [showActionButton]="false"
-        />
+    <!-- Approved Appointments -->
+    @if (approved().length > 0) {
+      <div class="list-section">
+        <h3>Approved Appointments ({{ approved().length }})</h3>
+        @for (appt of approved(); track appt.id) {
+          <app-appointment-card [appointment]="appt" />
+        }
       </div>
-    </ng-container>
+    }
 
-    <ng-container *ngIf="selectedTabIndex() === 1">
-      <div class="card-grid">
-        <app-appointment-card
-          *ngFor="let appointment of pendingAppointments()"
-          [appointment]="appointment"
-          [showActionButton]="false"
-        />
+    <!-- Pending Appointments -->
+    @if (pending().length > 0) {
+      <div class="list-section">
+        <h3>Pending Approval ({{ pending().length }})</h3>
+        @for (appt of pending(); track appt.id) {
+          <app-appointment-card [appointment]="appt" />
+        }
       </div>
-    </ng-container>
+    }
 
-    <ng-container *ngIf="selectedTabIndex() === 2">
-      <div class="card-grid">
-        <app-appointment-card
-          *ngFor="let appointment of rejectedAppointments()"
-          [appointment]="appointment"
-          [showActionButton]="false"
-        />
+    <!-- Rejected Appointments -->
+    @if (rejected().length > 0) {
+      <div class="list-section">
+        <h3>Rejected Appointments ({{ rejected().length }})</h3>
+        @for (appt of rejected(); track appt.id) {
+          <app-appointment-card [appointment]="appt" />
+        }
       </div>
-    </ng-container>
+    }
 
-    <ng-container *ngIf="selectedTabIndex() === 3">
-      <app-past-appointments-table [appointments]="pastAppointments()" />
-    </ng-container>
-  </div>
+    @if (approved().length === 0 && pending().length === 0 && rejected().length === 0) {
+      <div class="empty-state">
+        <p>You have no current appointments. Time to book one!</p>
+        <button class="btn btn-secondary" (click)="openBookingModal()">Book Now</button>
+      </div>
+    }
+  </section>
 
-  <app-book-appointment-modal
-    *ngIf="isModalOpen()"
-    (closeModal)="closeBookAppointmentModal()"
-  />
+  <!-- Past Appointments Table -->
+  <app-past-appointments-table [appointments]="past()" />
+
+  <!-- Modals -->
+  @if (isBookingModalOpen()) {
+    <app-book-appointment-modal (closeModal)="closeBookingModal()" (book)="handleAppointmentBooked($any($event))" />
+  }
 </div>

@@ -1,0 +1,63 @@
+<div class="modal-backdrop">
+  <div class="modal-content" style="max-width: 800px;">
+    <div class="modal-header">
+      <h3>Medical Specialization Guide</h3>
+      <button (click)="closeModal.emit()" class="close-button">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <p class="text-center" style="margin-bottom: 20px; color: var(--color-text-muted);">
+        Find the right specialization based on your health concerns.
+      </p>
+
+      <div class="guide-grid">
+        @for (spec of specializations; track spec.name) {
+          <div class="guide-card">
+            <h5>
+              <span class="icon-container">
+                <!-- Using inline SVG for Lucide icons -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-{{ getIconName(spec.name) }}">
+                  @switch (getIconName(spec.name)) {
+                    @case ('heart') {
+                      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                    }
+                    @case ('sun') {
+                      <circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M6.34 17.66l-1.41 1.41"/><path d="M19.07 4.93l-1.41 1.41"/>
+                    }
+                    @case ('stethoscope') {
+                      <path d="M2 12a10 10 0 1 0 20 0 10 10 0 1 0-20 0"/><path d="M9 10v4a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-4"/><path d="M12 2v2"/><path d="M12 20v2"/>
+                    }
+                    @case ('brain') {
+                      <path d="M12 18a6 6 0 0 0 0-12"/><path d="M16 14a3 3 0 0 0 0-6"/><path d="M20 10a1.5 1.5 0 0 0 0-3"/><path d="M12 20v2"/><path d="M12 4v2"/><path d="M18 6l-1 4"/><path d="M6 18l-1-4"/><path d="M16 18l-1 4"/><path d="M8 6l-1-4"/><path d="M12 2a4 4 0 0 0 0 8"/><path d="M12 22a4 4 0 0 0 0-8"/>
+                    }
+                    @case ('bones') {
+                       <path d="M20 12.5v1.2a1 1 0 0 1-1.4 1H17"/><path d="M16 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M12 16a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M8 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M4 12.5v1.2a1 1 0 0 0 1.4 1H7"/><path d="M2 11c1.2-1 2.4-2 4-2h12c1.6 0 2.8 1 4 2"/><path d="M2 13c1.2 1 2.4 2 4 2h12c1.6 0 2.8-1 4-2"/>
+                    }
+                    @case ('child') {
+                      <circle cx="12" cy="5" r="3"/><path d="M18 20a6 6 0 0 0-12 0"/><path d="M15 11l-3 3-3-3"/>
+                    }
+                    @default {
+                      <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>
+                    }
+                  }
+                </svg>
+              </span>
+              {{ spec.name }}
+            </h5>
+            <p class="description">{{ spec.description }}</p>
+            <h6 class="conditions-title">Common conditions treated:</h6>
+            <ul>
+              @for (condition of spec.conditions; track $index) {
+                <li>{{ condition }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+        <button (click)="closeModal.emit()" class="btn btn-secondary">Close Guide</button>
+    </div>
+  </div>
+</div>

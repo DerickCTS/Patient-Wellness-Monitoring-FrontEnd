@@ -1,0 +1,309 @@
+/* 1. Font Awesome Import for Icons */
+/* NOTE: The @import has been removed. Please place the following <link> tag
+   in your main index.html file's <head> section to load Font Awesome correctly:
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+*/
+
+:root {
+ --color-primary: #5A40F5; /* Deep Purple */
+ --color-secondary: #00BFB3; /* Teal/Cyan */
+ --color-accent: #FFD700; /* Gold/Yellow */
+ --color-success: #10B981; /* Green */
+ --color-danger: #EF4444; /* Red */
+ --color-warning: #FBBF24; /* Amber */
+ --color-bg-light: #F9FAFB;
+ --color-card-bg: #FFFFFF;
+ --color-text-dark: #1F2937;
+ --color-text-muted: #6B7280;
+ --color-border: #E5E7EB;
+
+ /* Specific card background colors for states */
+ --bg-approved: #E0FFE5;
+ --bg-pending: #FFFBE0;
+ --bg-rejected: #FFE0E0;
+}
+
+body {
+ font-family: 'Inter', sans-serif;
+ background-color: var(--color-bg-light);
+ color: var(--color-text-dark);
+ margin: 0;
+ padding: 0;
+}
+
+/* 2. Global Reset/Normalization - Apply box-sizing globally for easier layout */
+*, *::before, *::after {
+ box-sizing: border-box;
+}
+
+/* --- Utility Classes --- */
+.container {
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 20px;
+}
+
+/* --- Buttons --- */
+.btn {
+ padding: 10px 20px;
+ border-radius: 8px;
+ font-weight: 600;
+ cursor: pointer;
+ transition: all 0.2s ease-in-out;
+ border: none;
+}
+
+.btn-primary {
+ background-color: var(--color-primary);
+ color: white;
+}
+
+.btn-primary:hover {
+ background-color: #4B32E0;
+}
+
+.btn-secondary {
+ background-color: #F3F4F6;
+ color: var(--color-text-dark);
+ border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+ background-color: #E5E7EB;
+}
+
+.btn-success {
+ background-color: var(--color-success);
+ color: white;
+}
+.btn-success:hover {
+ background-color: #059669;
+}
+
+.btn-danger {
+ background-color: var(--color-danger);
+ color: white;
+}
+
+.btn-small {
+ padding: 6px 12px;
+ font-size: 14px;
+}
+
+/* --- Modal Base --- */
+.modal-backdrop {
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ background-color: rgba(0, 0, 0, 0.6);
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ z-index: 1000;
+}
+
+.modal-content {
+ background-color: var(--color-card-bg);
+ border-radius: 12px;
+ width: 90%;
+ max-width: 600px;
+ box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+ display: flex;
+ flex-direction: column;
+ max-height: 90vh;
+ overflow: hidden;
+}
+
+.modal-header {
+ padding: 20px;
+ border-bottom: 1px solid var(--color-border);
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+}
+
+.modal-header h3 {
+ margin: 0;
+ font-size: 1.25rem;
+ font-weight: 700;
+ color: var(--color-primary);
+}
+
+.modal-body {
+ padding: 20px;
+ overflow-y: auto;
+ flex-grow: 1;
+}
+
+.modal-footer {
+ padding: 15px 20px;
+ border-top: 1px solid var(--color-border);
+ display: flex;
+ justify-content: flex-end;
+ gap: 10px;
+}
+
+.close-button {
+ background: none;
+ border: none;
+ font-size: 1.5rem;
+ cursor: pointer;
+ color: var(--color-text-muted);
+}
+.close-button:hover {
+ color: var(--color-text-dark);
+}
+
+/* --- Form Elements --- */
+.form-group {
+ margin-bottom: 20px;
+}
+
+.form-group label {
+ display: block;
+ margin-bottom: 8px;
+ font-weight: 600;
+ color: var(--color-text-dark);
+ font-size: 0.95rem;
+}
+
+.form-input, .form-select, textarea.form-input {
+ width: 100%;
+ padding: 12px;
+ border: 1px solid var(--color-border);
+ border-radius: 8px;
+ box-sizing: border-box;
+ transition: border-color 0.2s;
+}
+
+.form-input:focus, .form-select:focus, textarea.form-input:focus {
+ border-color: var(--color-secondary);
+ outline: none;
+ box-shadow: 0 0 0 3px rgba(0, 191, 179, 0.2);
+}
+
+textarea.form-input {
+ resize: vertical;
+}
+
+.input-group {
+ display: flex;
+ align-items: center;
+ gap: 10px;
+}
+
+.guide-button {
+ background-color: var(--color-secondary);
+ color: white;
+ padding: 10px 15px;
+ border-radius: 8px;
+ font-weight: 500;
+ cursor: pointer;
+ white-space: nowrap;
+ transition: background-color 0.2s;
+ display: flex;
+ align-items: center;
+ gap: 5px;
+}
+.guide-button:hover {
+ background-color: #00998E;
+}
+
+.error-message {
+ color: var(--color-danger);
+ background-color: #FEE2E2;
+ padding: 10px;
+ border-radius: 8px;
+ margin-top: 10px;
+ display: flex;
+ align-items: center;
+ gap: 8px;
+}
+.loading-message {
+ color: var(--color-primary);
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ padding: 10px;
+}
+
+/* --- Appointment Card Styles (Used in appointment-card.component.css) --- */
+.appointment-card {
+ border-radius: 12px;
+ padding: 20px;
+ margin-bottom: 20px;
+ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+ display: flex;
+ flex-direction: column;
+}
+
+.card-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: flex-start;
+ margin-bottom: 10px;
+}
+
+.doctor-info h4 {
+ margin: 0;
+ font-size: 1.125rem;
+ font-weight: 700;
+}
+
+.status-badge {
+ padding: 4px 10px;
+ border-radius: 9999px;
+ font-weight: 600;
+ font-size: 0.8rem;
+}
+
+.card-body {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ gap: 15px;
+ margin-bottom: 15px;
+}
+
+.detail-item {
+ display: flex;
+ flex-direction: column;
+ padding: 8px 0;
+ border-left: 3px solid transparent;
+ padding-left: 10px;
+}
+
+.detail-label {
+ font-size: 0.8rem;
+ color: var(--color-text-muted);
+ font-weight: 500;
+ display: flex;
+ align-items: center;
+ gap: 5px;
+}
+
+.detail-value {
+ font-size: 0.9rem;
+ font-weight: 600;
+}
+
+.timer-box {
+ background-color: #F0F4FF;
+ color: var(--color-primary);
+ padding: 15px;
+ border-radius: 8px;
+ text-align: center;
+ grid-column: 1 / -1; /* Full width */
+}
+
+.timer-box .timer-label {
+ font-weight: 600;
+ margin-bottom: 5px;
+ display: block;
+}
+
+.timer-box .countdown {
+ font-size: 1.5rem;
+ font-weight: 800;
+}

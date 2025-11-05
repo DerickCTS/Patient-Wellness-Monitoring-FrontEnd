@@ -1,46 +1,55 @@
-// Enums for clarity and type safety
+import { Signal } from "@angular/core";
+
+// export enum AppointmentStatus = 'approved' | 'pending' | 'rejected' | 'completed';
+
 export enum AppointmentStatus {
-  Approved = 'Approved',
-  Pending = 'Pending',
-  Rejected = 'Rejected',
-  Completed = 'Completed',
-  Cancelled = 'Cancelled'
+  Approved,
+  Pending,
+  Rejected,
+  Completed
 }
 
-// Data model for a Doctor (used within an Appointment)
 export interface Doctor {
-  id: number;
+  id: number; 
   name: string;
-  qualifications: string; // e.g., MD, FACP, FAAOS
   specialization: string;
+  qualifications: string;
   experienceYears: number;
 }
 
-// Data model for an Appointment slot (for booking)
 export interface TimeSlot {
-  date: string; // ISO date string or formatted string e.g., 'Oct 15, 2025'
-  time: string; // e.g., '10:00 AM'
+  date: string; // ISO Date String (e.g., '2025-11-20')
+  time: string; // Time String (e.g., '10:00 AM')
+  isAvailable: boolean;
 }
 
-// Main Data Model for an Appointment
 export interface Appointment {
   id: number;
   patientId: number;
-  doctor: Doctor;
+  doctorId: number | null;
+  doctorName: string;
+  specialty: string;
+  date: string; // ISO date string
+  time: string; // Time string (e.g., "10:00 AM")
+  reason: string;
   status: AppointmentStatus;
-  date: string; // e.g., 'Oct 15, 2025'
-  time: string; // e.g., '2:30 PM'
-  reason: string; // The reason for visit / chief complaint
-  requestedOn: string; // Date the request was submitted
-  rejectionReason?: string; // Only present if status is Rejected
+  doctor: Doctor;
+  requestedOn: String;
+  rejectionReason: string | null; 
 }
 
-// Data model for the Appointment Booking Form payload
 export interface AppointmentForm {
   patientId: number;
-  doctorId: number | null;
+  doctorId: number | null; 
   specialization: string;
   date: string;
   time: string;
   reason: string;
+}
+
+export interface AppointmentServiceState {
+  approvedAppointments: Signal<Appointment[]>;
+  pendingAppointments: Signal<Appointment[]>;
+  rejectedAppointments: Signal<Appointment[]>;
+  pastAppointments: Signal<Appointment[]>;
 }

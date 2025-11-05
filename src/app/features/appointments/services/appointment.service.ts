@@ -23,16 +23,16 @@ export class AppointmentService {
   readonly allAppointments = this.mockAppointments.asReadonly();
 
   readonly approvedAppointments = computed(() =>
-    this.mockAppointments().filter(a => a.status === AppointmentStatus.Approved)
+    this.mockAppointments().filter(a => a.status ===  AppointmentStatus.Approved)
   );
   readonly pendingAppointments = computed(() =>
-    this.mockAppointments().filter(a => a.status === AppointmentStatus.Pending)
+    this.mockAppointments().filter(a => a.status ===  AppointmentStatus.Pending)
   );
   readonly rejectedAppointments = computed(() =>
-    this.mockAppointments().filter(a => a.status === AppointmentStatus.Rejected)
+    this.mockAppointments().filter(a => a.status ===  AppointmentStatus.Rejected)
   );
   readonly pastAppointments = computed(() =>
-    this.mockAppointments().filter(a => a.status === AppointmentStatus.Completed)
+    this.mockAppointments().filter(a => a.status ===  AppointmentStatus.Completed)
   );
 
   // --- PUBLIC METHODS ---
@@ -50,10 +50,10 @@ export class AppointmentService {
   getSlotsForDoctor(doctorId: number, date: string): Observable<TimeSlot[]> {
     // Mock slots. In a real app, 'date' would be used in the API call.
     const mockSlots: TimeSlot[] = [
-      { date: date, time: '09:00 AM' },
-      { date: date, time: '09:30 AM' },
-      { date: date, time: '11:00 AM' },
-      { date: date, time: '02:00 PM' },
+      { date: date, time: '09:00 AM', isAvailable: true },
+      { date: date, time: '09:30 AM', isAvailable: true },
+      { date: date, time: '11:00 AM', isAvailable: true },
+      { date: date, time: '02:00 PM', isAvailable: false },
     ];
     return of(mockSlots).pipe(delay(300));
   }
@@ -66,13 +66,17 @@ export class AppointmentService {
 
     const newAppointment: Appointment = {
       id: Math.floor(Math.random() * 10000), 
-      patientId: payload.patientId, // <-- FIX: Use patientId from payload
+      patientId: payload.patientId, 
       doctor: doctor,
-      status: AppointmentStatus.Pending,
+      doctorName: doctor.name,
+      specialty: doctor.specialization,
+      doctorId: payload.doctorId,
+      status:  AppointmentStatus.Pending,
       date: payload.date,
       time: payload.time,
       reason: payload.reason,
       requestedOn: new Date().toISOString(),
+      rejectionReason: null,
     };
 
     // Optimistically update state
@@ -86,11 +90,11 @@ export class AppointmentService {
     const doctors = this.mockDoctors;
     // Mocking for patientId = 1
     return [
-      { id: 1005, patientId: 1, doctor: doctors[0], status: AppointmentStatus.Approved, date: '2025-11-10', time: '2:30 PM', reason: 'Annual health checkup', requestedOn: '2025-11-01' },
-      { id: 1004, patientId: 1, doctor: doctors[2], status: AppointmentStatus.Approved, date: '2025-11-12', time: '9:00 AM', reason: 'Knee pain assessment', requestedOn: '2025-11-02' },
-      { id: 1003, patientId: 1, doctor: doctors[3], status: AppointmentStatus.Pending, date: '2025-11-15', time: '10:00 AM', reason: 'Heart checkup', requestedOn: '2025-11-03' },
-      { id: 1001, patientId: 1, doctor: doctors[1], status: AppointmentStatus.Rejected, date: '2025-11-08', time: '11:00 AM', reason: 'Skin rash', requestedOn: '2025-11-01', rejectionReason: 'Doctor is unavailable on this date.' },
-      { id: 5, patientId: 1, doctor: doctors[0], status: AppointmentStatus.Completed, date: '2025-10-20', time: '2:00 PM', reason: 'Flu symptoms', requestedOn: '2025-10-18' },
+      { id: 1005, patientId: 1, doctor: doctors[0],doctorName:'Michael Chen',specialty:'Dermatology',doctorId:2, status: AppointmentStatus.Approved, date: '2025-11-10', time: '2:30 PM', reason: 'Annual health checkup', requestedOn: '2025-11-01', rejectionReason:'' },
+      { id: 1004, patientId: 1, doctor: doctors[2],doctorName:'James Wilson', specialty:'Cardiology', doctorId:3, status: AppointmentStatus.Approved, date: '2025-11-12', time: '9:00 AM', reason: 'Knee pain assessment', requestedOn: '2025-11-02', rejectionReason:'' },
+      { id: 1003, patientId: 1, doctor: doctors[3], doctorName:'Patricia White', specialty:'Neurology', doctorId:4, status: AppointmentStatus.Pending, date: '2025-11-15', time: '10:00 AM', reason: 'Heart checkup', requestedOn: '2025-11-03', rejectionReason:'' },
+      { id: 1001, patientId: 1, doctor: doctors[1], doctorName:'Sarah Johnson', specialty: 'General Medicine', doctorId:5, status: AppointmentStatus.Rejected, date: '2025-11-08', time: '11:00 AM', reason: 'Skin rash', requestedOn: '2025-11-01', rejectionReason: 'Doctor is unavailable on this date.' },
+      { id: 5, patientId: 1, doctor: doctors[0], doctorName:'Emily Rodriguez', specialty:'Neurology', doctorId:4, status: AppointmentStatus.Completed, date: '2025-10-20', time: '2:00 PM', reason: 'Flu symptoms', requestedOn: '2025-10-18', rejectionReason: '' },
     ];
   }
 }

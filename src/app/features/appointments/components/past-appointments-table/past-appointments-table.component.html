@@ -1,52 +1,45 @@
 <div class="past-appointments-container">
-  <div class="header-section">
-    <i class="fas fa-calendar-check icon"></i>
-    <div class="text-content">
-      <h3>Past Appointments</h3>
-      <p>View your complete appointment history</p>
-    </div>
+  <div class="table-header">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history"><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 15.7 6.4M21 12A9 9 0 0 0 5.2 7.7"/><path d="M12 7v5l3 3"/></svg>
+    <h2>Past Appointments</h2>
+    <p class="subtitle">View your complete appointment history and records.</p>
   </div>
 
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Doctor</th>
-          <th>Specialization</th>
-          <th>Reason</th>
-          <th class="status-col">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let appointment of appointments">
-          <td>
-            <i class="fas fa-calendar-alt date-icon"></i>
-            {{ appointment.date }}
-          </td>
-          <td>
-            <i class="fas fa-clock time-icon"></i>
-            {{ appointment.time }}
-          </td>
-          <td>
-            <i class="fas fa-user-md doctor-icon"></i>
-            Dr. {{ appointment.doctor.name }}
-          </td>
-          <td>
-            <span class="specialization-tag">
-              {{ appointment.doctor.specialization }}
-            </span>
-          </td>
-          <td>{{ appointment.reason }}</td>
-          <td class="status-col">
-            <span class="status-completed">
-              <i class="fas fa-check-circle"></i>
-              {{ appointment.status }}
-            </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  @if (appointments().length === 0) {
+    <div class="no-history-state">
+      <p>No completed appointment history found.</p>
+    </div>
+  } @else {
+    <div class="table-wrapper">
+      <table class="appointments-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Doctor</th>
+            <th>Specialization</th>
+            <th>Reason</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (appointment of appointments(); track appointment.id) {
+            <tr>
+              <td>{{ appointment.date | date:'MMM d, y' }}</td>
+              <td>{{ appointment.time }}</td>
+              <td>{{ appointment.doctor.name }}</td>
+              <td><span class="spec-tag">{{ appointment.doctor.specialization }}</span></td>
+              <td class="reason-col">{{ appointment.reason }}</td>
+              <td>
+                <span class="status-completed status-tag">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 22 3-3"/><path d="m9 12 2 2 4-4"/></svg>
+                  Completed
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
 </div>

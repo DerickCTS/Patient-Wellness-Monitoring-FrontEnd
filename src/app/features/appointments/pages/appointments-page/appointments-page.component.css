@@ -1,127 +1,76 @@
-/* --- Header Banner (Kept largely the same) --- */
-.appointments-container {
-  padding: 24px;
+/* * IMPORTANT: This file uses standard class names defined in your global styles.scss 
+ * and relies on them being loaded correctly by the Angular configuration.
+ * DO NOT add @import 'src/styles.scss'; here, as that is the cause of the error.
+ */
+
+.appointments-page-container {
+    padding: 20px 0;
 }
 
-.header-banner {
-  background-color: #2e4a86;
-  color: white;
-  padding: 20px 40px;
-  border-radius: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--color-border);
 }
 
-.content-wrapper {
-  display: flex;
-  align-items: center;
+.header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
 }
 
-.icon {
-  font-size: 40px;
-  width: 40px;
-  height: 40px;
-  margin-right: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.appointment-list {
+    margin-bottom: 40px;
 }
 
-.text-content h2 {
-  margin: 0;
-  font-size: 1.8rem;
-  font-weight: 600;
+.appointment-list h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 20px;
 }
 
-.text-content p {
-  margin: 0;
-  font-size: 1rem;
-  opacity: 0.8;
+.list-section {
+    background-color: var(--color-card-bg);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 25px;
 }
 
-.book-button {
-  background-color: #556ee6; /* Lighter blue/purple for the button */
-  color: white;
-  font-weight: 500;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-.book-button i {
-    margin-right: 5px;
-}
-.book-button:hover {
-    background-color: #435cd1;
+.list-section h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    margin-bottom: 15px;
+    border-bottom: 1px dashed var(--color-border);
+    padding-bottom: 10px;
 }
 
-/* --- Custom Tab Navigation Styles --- */
-.tab-navigation {
-  display: flex;
-  gap: 1px;
-  border-bottom: 2px solid #e0e0e0;
-  margin-bottom: 20px;
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    border: 2px dashed var(--color-border);
+    border-radius: 12px;
+    background-color: var(--color-card-bg);
 }
 
-.tab-button {
-  flex-grow: 1;
-  background-color: transparent;
-  color: #666;
-  border: none;
-  border-bottom: 3px solid transparent;
-  padding: 15px 10px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.empty-state p {
+    color: var(--color-text-muted);
+    margin-bottom: 20px;
 }
 
-.tab-button i {
-    margin-right: 8px;
-    font-size: 1.1rem;
-}
-
-.tab-button:hover {
-  background-color: #f7f7f7;
-}
-
-.tab-button.active {
-  color: #556ee6;
-  border-bottom-color: #556ee6;
-  background-color: #fcfcfc;
-}
-
-/* Badge Styling */
-.badge {
-  background-color: #198754; /* Green for Approved/General Count */
-  color: white;
-  font-size: 0.8em;
-  padding: 2px 8px;
-  border-radius: 12px;
-  margin-left: 8px;
-  font-weight: normal;
-}
-
-.pending-badge {
-  background-color: #ffc107; /* Yellow for Pending */
-  color: #333;
-}
-
-.rejected-badge {
-  background-color: #dc3545; /* Red for Rejected */
-}
-
-/* Card Grid Layout */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  gap: 20px;
-  padding: 20px 0;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .header h1 {
+        font-size: 1.75rem;
+    }
 }

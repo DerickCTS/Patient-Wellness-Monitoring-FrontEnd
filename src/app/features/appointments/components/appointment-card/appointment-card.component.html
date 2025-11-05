@@ -1,80 +1,91 @@
-<div class="appointment-card" [ngClass]="getCardClass()">
-  <div class="header">
+<div 
+  class="appointment-card"
+  [class.card-approved]="appointment().status === AppointmentStatus.Approved"
+  [class.card-pending]="appointment().status === AppointmentStatus.Pending"
+  [class.card-rejected]="appointment().status === AppointmentStatus.Rejected"
+  [class.card-completed]="appointment().status === AppointmentStatus.Completed"
+>
+  <div class="card-header">
     <div class="doctor-info">
-      <span class="icon-circle">
-        <i class="fas fa-user-md"></i>
-      </span>
-      <div class="details">
-        <h3>Dr. {{ appointment.doctor.name }}</h3>
-        <p>{{ appointment.doctor.qualifications }}</p>
-      </div>
+      <h4>Dr. {{ appointment().doctor.name }}</h4>
+      <p>{{ appointment().doctor.qualifications }}</p>
     </div>
-    <span class="status-tag">
-      {{ appointment.status }}
+    <span 
+      class="status-badge"
+      [class.badge-approved]="appointment().status === AppointmentStatus.Approved"
+      [class.badge-pending]="appointment().status === AppointmentStatus.Pending"
+      [class.badge-rejected]="appointment().status === AppointmentStatus.Rejected"
+    >
+      {{ appointment().status }}
     </span>
   </div>
 
-  <div class="body-content">
-    <div class="row-item">
-      <i class="fas fa-graduation-cap"></i>
-      <div class="label-group">
-        <p class="label">Specialization</p>
-        <p class="value">{{ appointment.doctor.specialization }}</p>
-      </div>
+  <div class="card-body">
+    
+    <div class="detail-item">
+      <span class="detail-label">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-check"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M16 11l2 2 4-4"/></svg>
+        Specialization
+      </span>
+      <span class="detail-value">{{ appointment().doctor.specialization }}</span>
+    </div>
+    
+    <div class="detail-item">
+      <span class="detail-label">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+        Date
+      </span>
+      <span class="detail-value">{{ appointment().date | date:'mediumDate' }}</span>
+    </div>
+    
+    <div class="detail-item">
+      <span class="detail-label">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Time
+      </span>
+      <span class="detail-value">{{ appointment().time }}</span>
     </div>
 
-    <div class="row-item">
-      <i class="fas fa-calendar-alt"></i>
-      <div class="label-group">
-        <p class="label">Date</p>
-        <p class="value">{{ appointment.date }}</p>
-      </div>
+    <!-- Reason Section -->
+    <div class="reason-section">
+      <span class="detail-label">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><line x1="16" x2="8" y1="18" y2="18"/><line x1="16" x2="8" y1="14" y2="14"/></svg>
+        Reason for Visit
+      </span>
+      <p>{{ appointment().reason }}</p>
     </div>
 
-    <div class="row-item">
-      <i class="fas fa-clock"></i>
-      <div class="label-group">
-        <p class="label">Time</p>
-        <p class="value">{{ appointment.time }}</p>
+    <!-- Timer / Status Block -->
+    @if (appointment().status === AppointmentStatus.Approved) {
+      <div class="timer-box" [class.timer-arrived]="timeRemaining() <= 0">
+        <span class="timer-label">
+          @if (timeRemaining() > 0) {
+            Time Remaining Until Appointment
+          } @else {
+            Appointment Time
+          }
+        </span>
+        <span class="countdown">
+          @if (timeRemaining() > 0) {
+            {{ timerDisplay() }}
+          } @else {
+            Appointment time has arrived
+          }
+        </span>
       </div>
-    </div>
+    } @else if (appointment().status === AppointmentStatus.Pending) {
+      <div class="timer-box" style="background-color: #FFFBE0; color: var(--color-warning);">
+        <span class="timer-label">Waiting for Doctor's Approval</span>
+        <span class="countdown" style="font-size: 1.2rem;">You will be notified once confirmed.</span>
+      </div>
+    } @else if (appointment().status === AppointmentStatus.Rejected) {
+      <div class="rejection-details">
+        <strong>Appointment Rejected</strong>
+        <p>Reason: {{ appointment().rejectionReason }}</p>
+        <!-- FIX: Implement the "Book Another Slot" button -->
+        <button (click)="onBookAnotherSlot()" class="btn book-slot-btn" type="button">Book Another Slot</button>
+      </div>
+    }
 
-    <div class="row-item full-width reason-section">
-      <i class="fas fa-file-alt"></i>
-      <div class="label-group">
-        <p class="label">Reason</p>
-        <p class="value">{{ appointment.reason }}</p>
-      </div>
-    </div>
-
-    <ng-container *ngIf="appointment.status === AppointmentStatus.Rejected">
-      <div class="rejected-alert">
-        <p class="alert-label">Appointment Rejected</p>
-        <p class="alert-reason">Reason: {{ appointment.rejectionReason }}</p>
-      </div>
-      <button class="primary-button full-width action-button">
-        Book Another Slot
-      </button>
-    </ng-container>
-
-    <ng-container *ngIf="appointment.status === AppointmentStatus.Approved">
-      <div class="status-time-box">
-        <i class="fas fa-history"></i>
-        <div class="label-group">
-          <p class="label">Appointment Time</p>
-          <p class="value">Appointment time has arrived</p>
-        </div>
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="appointment.status === AppointmentStatus.Pending">
-      <div class="pending-time-box">
-        <i class="fas fa-hourglass-half"></i>
-        <div class="label-group">
-          <p class="label">Waiting for doctor's approval</p>
-          <p class="value">You will be notified once confirmed.</p>
-        </div>
-      </div>
-    </ng-container>
   </div>
 </div>

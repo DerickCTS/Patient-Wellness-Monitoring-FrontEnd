@@ -1,0 +1,70 @@
+.guide-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.guide-card {
+    background-color: #F8F9FA;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+    transition: transform 0.2s;
+}
+
+.guide-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.guide-card h5 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    color: var(--color-primary);
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.guide-card .icon-container {
+    color: var(--color-secondary);
+    font-size: 1.5rem;
+}
+
+.guide-card .description {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 15px;
+}
+
+.guide-card .conditions-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    color: var(--color-text-dark);
+}
+
+.guide-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.guide-card ul li {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    padding-left: 15px;
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.guide-card ul li::before {
+    content: '\2022'; /* Bullet point */
+    color: var(--color-secondary);
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
