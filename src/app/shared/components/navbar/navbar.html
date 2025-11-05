@@ -1,0 +1,40 @@
+<ng-container *ngIf="isLoggedIn">
+
+  <nav class="sidebar" [class.open]="isSidebarOpen">
+    <div class="sidebar-header">
+      <h3>Menu</h3>
+    </div>
+    
+    <ng-container *ngIf="isDoctor">
+      <a routerLink="/wellness" routerLinkActive="active" (click)="toggleSidebar()">
+        Assign Wellness
+      </a>
+      <a routerLink="/diagnosis" routerLinkActive="active" (click)="toggleSidebar()">
+        Diagnosis
+      </a>
+      </ng-container>
+    
+    <ng-container *ngIf="!isDoctor">
+      <a routerLink="/progress" routerLinkActive="active" (click)="toggleSidebar()">
+        My Progress
+      </a>
+      </ng-container>
+  </nav>
+
+  <div class="sidebar-overlay" [class.open]="isSidebarOpen" (click)="toggleSidebar()"></div>
+
+  <header class="top-navbar">
+    
+    <div class="navbar-left">
+      <button class="icon-button" (click)="toggleSidebar()">
+        <fa-icon [icon]="faBars"></fa-icon>
+      </button>
+    </div>
+
+    <div class="navbar-right">
+      <img [src]="profileImageUrl" alt="Profile" class="profile-image" />
+      <span class="username">{{ userName }}</span>
+      <button class="logout-button" (click)="logout()">Logout</button>
+    </div>
+  </header>
+</ng-container>

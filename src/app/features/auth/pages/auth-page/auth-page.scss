@@ -1,155 +1,184 @@
-/* --- Global Styles for this page --- */
-:host {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  padding: 24px;
+// General Reset 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
-/* --- Main Container --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #0c2e60, #0f418d, #140e56);
+  padding: 15px 40px;
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logo h3 {
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+  padding-bottom: 5px;
+}
+
+.hospital-icon {
+  color: white;
+  font-size: 1.3rem;
+}
+
+// Define our "Classic Health" color palette
+$primary-color: #253E8A;    // Richer Navy Blue (Primary Brand/Focus)
+$accent-color: #42a5f5;     // Sky Blue (Neutral Accent)
+$patient-color: #1abc9c;    // Teal/Turquoise for Patient role
+$doctor-color: #9b59b6;     // Royal Purple for Doctor role
+$error-color: #f44336;
+$bg-color: #eef1f6;         // Fallback color
+$card-bg: #ffffff;
+$text-color: #263238;
+$border-color: #d1d5db;
+$header-tab-bg: #f5f5f5;
+
+
+
 .auth-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
-  width: 100%;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 40px 24px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  font-family: Arial, sans-serif;
+  background-color: lightblue; 
 }
 
-/* --- Header (Logo & Title) --- */
 .auth-header {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 16px;
+  margin-bottom: 32px;
+  flex-shrink: 0;
 
   .logo-circle {
     display: flex;
-    justify-content: center;
     align-items: center;
-    width: 64px;
-    height: 64px;
-    background-color: #3f51b5; // Material Primary
-    color: white;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    box-shadow: 0 4px 12px rgba(63, 81, 181, 0.4);
+    background-color: $primary-color;
+    box-shadow: 0 6px 15px rgba($primary-color, 0.3); 
+    margin-right: 20px;
 
-    mat-icon {
+    .icon {
       font-size: 36px;
-      width: 36px;
-      height: 36px;
+      color: $card-bg;
     }
   }
 
   h1 {
-    font-size: 1.75rem;
-    font-weight: 500;
-    color: #333;
-    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0c2e60; 
   }
 }
 
-/* --- Main Auth Card --- */
 .auth-card {
   width: 100%;
-  max-width: 650px;
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-  overflow: hidden; // Keeps tabs rounded
+  max-width: 700px;
+  border-radius: 16px;
+  box-shadow: 0 18px 56px rgba(0, 0, 0, 0.25); 
+  border: 1px solid $border-color;
+  background-color: $card-bg; 
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-/* --- Tab Content Styling --- */
-.tab-content {
-  padding: 24px 32px; // More padding
-  min-height: 400px;
+// --- Simplified Header/Tab Styling ---
+.simplified-header {
+  display: flex;
+  padding: 10px 40px 0;
+  gap: 10px;
+  background-color: $header-tab-bg; 
+  border-bottom: 1px solid $border-color;
 }
 
-/* --- Role Selection Styling --- */
+.header-tab {
+  flex-grow: 1;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: $text-color;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent; 
+  cursor: pointer;
+  transition: all 0.2s;
+  opacity: 0.7;
+
+  &:hover { opacity: 1; color: $primary-color; }
+
+  &.active { opacity: 1; color: $primary-color; border-bottom-color: $primary-color; }
+}
+
+.tab-content-wrapper {
+  padding: 30px 0; 
+}
+// --- End Simplified Header Styling ---
+
 .role-selection {
   text-align: center;
-  h3 {
-    font-weight: 400;
-    color: #555;
-    margin-bottom: 24px;
-  }
-  .role-cards {
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap; // Allow wrapping on small screens
-  }
+  padding: 16px 40px; 
+
+  h3 { color: $text-color; font-weight: 500; margin-top: 0; margin-bottom: 30px; }
+
+  .role-cards { display: flex; flex-direction: column; gap: 20px; width: 100%; }
+
   .role-card {
-    flex: 1;
-    min-width: 200px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 8px;
+    flex: 1; padding: 24px; border: 1px solid $border-color; border-radius: 10px; cursor: pointer; transition: all 0.2s ease-in-out;
+    background: $card-bg; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    .icon { font-size: 48px; margin-bottom: 12px; }
 
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-      border-color: #3f51b5;
-    }
+    .patient-icon { color: $patient-color; }
+    .doctor-icon { color: $doctor-color; }
 
-    mat-icon {
-      font-size: 48px;
-      width: 48px;
-      height: 48px;
-      margin-top: 20px;
-    }
-
-    h4 {
-      font-size: 1.2rem;
-      font-weight: 500;
-      margin: 16px 0 8px;
-    }
-    p {
-      color: #6c757d;
-      margin-bottom: 20px;
+    &:hover { border-color: $primary-color; box-shadow: 0 8px 20px rgba($primary-color, 0.15); transform: translateY(-4px); }
+    
+    .card-content {
+      h4 { margin: 0 0 4px 0; font-size: 1.2rem; color: $text-color; }
+      p { margin: 0; font-size: 0.9rem; color: #78909c; }
     }
   }
 }
 
-/* --- Form Container Styling --- */
+@media (min-width: 600px) {
+  .role-cards { flex-direction: row !important; }
+}
+
 .form-container {
-  position: relative; // For the progress bar
-}
-.form-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
+  .form-header {
+    display: flex; align-items: center; margin-bottom: 24px;
+    padding: 0 20px 16px 20px;
+    border-bottom: 1px solid $border-color;
+    
+    .icon { font-size: 32px; margin-right: 12px; }
+    
+    .patient-icon { color: $patient-color; }
+    .doctor-icon { color: $doctor-color; }
 
-  h3 {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 500;
-  }
-
-  mat-icon {
-    font-size: 32px;
-    width: 32px;
-    height: 32px;
-  }
-
-  // "Change" button
-  button {
-    margin-left: auto;
-    color: #3f51b5;
+    h2 { margin: 0; font-size: 1.5rem; color: $text-color; font-weight: 600; }
   }
 }
 
-/* --- Icon Colors --- */
-.patient-icon {
-  color: #1976d2; // Blue
-}
-.doctor-icon {
-  color: #8e44ad; // Purple
+.back-button {
+  background: none; border: none; color: $primary-color; cursor: pointer; font-size: 1rem; font-weight: 500; margin-top: 20px; padding: 0 20px;
+  transition: color 0.2s;
+  &:hover { color: darken($primary-color, 10%); }
 }
 
-/* --- Footer Text --- */
 .footer-text {
-  color: #6c757d;
-  font-size: 0.9rem;
+  flex-shrink: 0; margin-top: 32px; color: lighten($text-color, 30%); font-size: 0.9rem; text-align: center;
 }

@@ -2,37 +2,18 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth';
 import { PatientRegisterDto } from '../../models/auth.models';
-
-// --- ADD THESE IMPORTS ---
+// Removed all Mat imports for pure HTML compatibility
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-patient-register-form',
   templateUrl: './patient-register-form.html',
   styleUrls: ['./patient-register-form.scss'],
-
-  // --- ADD THIS 'imports' ARRAY ---
   standalone: true,
   imports: [
-    MatNativeDateModule,
     CommonModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatProgressBarModule,
-    MatSelectModule,
-    MatDatepickerModule,
   ],
 })
 export class PatientRegisterFormComponent {
@@ -49,9 +30,10 @@ export class PatientRegisterFormComponent {
       {
         FirstName: ['', Validators.required],
         LastName: ['', Validators.required],
-        DateOfBirth: [null, Validators.required],
+        // Set initial value to a string or empty string for type='date' in HTML
+        DateOfBirth: ['', Validators.required], 
         Gender: [null, Validators.required],
-        BloodGroup: [null, Validators.required],
+        BloodGroup: [null, Validators.required], 
         ContactNumber: ['', Validators.required],
         Email: ['', [Validators.required, Validators.email]],
         Address: ['', Validators.required],
@@ -60,43 +42,74 @@ export class PatientRegisterFormComponent {
         Password: ['', [Validators.required, Validators.minLength(6)]],
         ConfirmPassword: ['', Validators.required],
       },
-      { validators: this.passwordMatchValidator }
+      // Use a static method reference for the validator
+      { validators: PatientRegisterFormComponent.passwordMatchValidator }
     );
   }
 
-  // Custom validator to check if passwords match
-  passwordMatchValidator(form: FormGroup) {
-    const password = form.get('Password')?.value;
-    const confirmPassword = form.get('ConfirmPassword')?.value;
-    return password === confirmPassword ? null : { mismatch: true };
+  // ✅ CRITICAL FIX: Robust, static Custom Password Validator
+  static passwordMatchValidator(form: FormGroup): { [key: string]: any } | null {
+    const passwordControl = form.get('Password');
+    const confirmPasswordControl = form.get('ConfirmPassword');
+
+    // Return null if controls are missing or not fully ready (let required validators handle it)
+    if (!passwordControl || !confirmPasswordControl || !passwordControl.value || !confirmPasswordControl.value) {
+      // Ensure the 'mismatch' error is explicitly cleared if a value disappears
+      if (confirmPasswordControl?.hasError('mismatch')) {
+        confirmPasswordControl.setErrors(null);
+      }
+      return null;
+    }
+
+    if (passwordControl.value !== confirmPasswordControl.value) {
+      // Add 'mismatch' error to the ConfirmPassword control
+      confirmPasswordControl.setErrors({ ...confirmPasswordControl.errors, mismatch: true });
+      return { mismatch: true }; 
+    } else {
+      // Clear the 'mismatch' error from the control when they match
+      if (confirmPasswordControl.hasError('mismatch')) {
+        const errors = { ...confirmPasswordControl.errors };
+        delete errors['mismatch'];
+        confirmPasswordControl.setErrors(Object.keys(errors).length ? errors : null);
+      }
+      return null;
+    }
   }
 
   onSubmit(): void {
+    // 1. Force visual check and exit if still invalid
     if (this.registerForm.invalid || this.isLoading) {
+      // Ensure all fields show their errors
       this.registerForm.markAllAsTouched();
+      console.log('Form is invalid. Cannot submit.', this.registerForm);
       return;
     }
 
     this.isLoading = true;
-
-    // Format the date before sending
+    
+    // 2. Prepare Payload
     const formValue = this.registerForm.value;
     const payload: PatientRegisterDto = {
+      // Use spread operator to quickly copy all fields
       ...formValue,
-      DateOfBirth: new Date(formValue.DateOfBirth)
-        .toISOString()
-        .split('T')[0], // Format as 'YYYY-MM-DD'
+      // Format DateOfBirth to YYYY-MM-DD string format expected by APIs
+      DateOfBirth: new Date(formValue.DateOfBirth).toISOString().split('T')[0],
+      Role: 'Patient', 
     };
 
+    // 3. Service Call (This is where the account is created)
+    console.log('Attempting to register Patient with payload:', payload);
+
     this.authService.registerPatient(payload).subscribe({
-      next: (res) => {
+      next: (response) => {
         this.isLoading = false;
-        // The service shows the snackbar
-        // The parent component will handle navigation
+        console.log('✅ Registration successful for patient:', response);
+        alert('Patient Account Created Successfully! Check the console for the API response.');
       },
-      error: (err) => {
+      error: (error) => {
         this.isLoading = false;
-        // The service shows the error
+        console.error('❌ Registration failed:', error);
+        alert('Registration failed. Check the console for API error details.');
       },
     });
   }

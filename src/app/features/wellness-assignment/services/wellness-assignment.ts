@@ -124,7 +124,8 @@ export class WellnessService {
   // --- HELPER FUNCTIONS ---
 
   getDoctorId(): string | null {
-    return this.authService.getDoctorId();
+    // return this.authService.getDoctorId();
+    return '1';
   }
 
   showSuccess(message: string): void {

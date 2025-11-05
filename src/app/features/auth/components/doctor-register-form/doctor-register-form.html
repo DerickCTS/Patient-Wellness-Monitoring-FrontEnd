@@ -1,89 +1,188 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
-  <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+  <div *ngIf="isLoading" class="progress-bar"></div>
 
   <div class="form-row">
-    <mat-form-field appearance="outline" class="flex-field">
-      <mat-label>First Name</mat-label>
-      <input matInput formControlName="FirstName" />
-      <mat-error>First Name is required</mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="flex-field">
-      <mat-label>Last Name</mat-label>
-      <input matInput formControlName="LastName" />
-      <mat-error>Last Name is required</mat-error>
-    </mat-form-field>
-  </div>
-
-  <div class="form-row">
-    <mat-form-field appearance="outline" class="flex-field">
-      <mat-label>Specialization</mat-label>
-      <input
-        matInput
-        formControlName="Specialization"
-        placeholder="e.g., Cardiology"
-      />
-      <mat-error>Specialization is required</mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="flex-field">
-      <mat-label>Education</mat-label>
-      <input matInput formControlName="Education" placeholder="e.g., MD, MBBS" />
-      <mat-error>Education is required</mat-error>
-    </mat-form-field>
-  </div>
-
-  <div class="form-row">
-    <mat-form-field appearance="outline" class="flex-field">
-      <mat-label>Contact Number</mat-label>
-      <input matInput formControlName="ContactNumber" type="tel" />
-      <mat-error>Contact Number is required</mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="flex-field">
-      <mat-label>Email</mat-label>
-      <input matInput formControlName="Email" type="email" />
-      <mat-error>A valid email is required</mat-error>
-    </mat-form-field>
-  </div>
-
-  <div class="form-row">
-    <mat-form-field appearance="outline" class="flex-field">
-      <mat-label>Password</mat-label>
-      <input
-        matInput
-        formControlName="Password"
-        [type]="hidePassword ? 'password' : 'text'"
-      />
-      <button
-        mat-icon-button
-        matSuffix
-        type="button"
-        (click)="hidePassword = !hidePassword"
+    <div
+      class="form-field flex-field"
+      [class.ng-invalid]="registerForm.get('FirstName')?.invalid && registerForm.get('FirstName')?.touched"
+    >
+      <label for="FirstName">First Name</label>
+      <div class="input-wrapper">
+        <i class="icon input-prefix">badge</i>
+        <input id="FirstName" formControlName="FirstName" placeholder="Enter first name" />
+      </div>
+      <div
+        class="error-message"
+        *ngIf="registerForm.get('FirstName')?.hasError('required') && registerForm.get('FirstName')?.touched"
       >
-        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-      </button>
-      <mat-error>Password must be at least 6 characters</mat-error>
-    </mat-form-field>
+        First Name is required
+      </div>
+    </div>
+    
+    <div
+      class="form-field flex-field"
+      [class.ng-invalid]="registerForm.get('LastName')?.invalid && registerForm.get('LastName')?.touched"
+    >
+      <label for="LastName">Last Name</label>
+      <div class="input-wrapper">
+        <i class="icon input-prefix">badge</i>
+        <input id="LastName" formControlName="LastName" placeholder="Enter last name" />
+      </div>
+      <div
+        class="error-message"
+        *ngIf="registerForm.get('LastName')?.hasError('required') && registerForm.get('LastName')?.touched"
+      >
+        Last Name is required
+      </div>
+    </div>
+  </div>
 
-    <mat-form-field appearance="outline" class="flex-field">
-      <mat-label>Confirm Password</mat-label>
-      <input
-        matInput
-        formControlName="ConfirmPassword"
-        [type]="hidePassword ? 'password' : 'text'"
-      />
-      <mat-error
+  <div class="form-row">
+    <div
+      class="form-field flex-field"
+      [class.ng-invalid]="registerForm.get('Specialization')?.invalid && registerForm.get('Specialization')?.touched"
+    >
+      <label for="Specialization">Specialization</label>
+      <div class="input-wrapper">
+        <i class="icon input-prefix">work</i>
+        <input
+          id="Specialization"
+          formControlName="Specialization"
+          placeholder="e.g., Cardiology"
+        />
+      </div>
+      <div
+        class="error-message"
+        *ngIf="registerForm.get('Specialization')?.hasError('required') && registerForm.get('Specialization')?.touched"
+      >
+        Specialization is required
+      </div>
+    </div>
+    
+    <div
+      class="form-field flex-field"
+      [class.ng-invalid]="registerForm.get('Education')?.invalid && registerForm.get('Education')?.touched"
+    >
+      <label for="Education">Education</label>
+      <div class="input-wrapper">
+        <i class="icon input-prefix">school</i>
+        <input id="Education" formControlName="Education" placeholder="e.g., MD, MBBS" />
+      </div>
+      <div
+        class="error-message"
+        *ngIf="registerForm.get('Education')?.hasError('required') && registerForm.get('Education')?.touched"
+      >
+        Education is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div
+      class="form-field flex-field"
+      [class.ng-invalid]="registerForm.get('ContactNumber')?.invalid && registerForm.get('ContactNumber')?.touched"
+    >
+      <label for="ContactNumber">Contact Number</label>
+      <div class="input-wrapper">
+        <i class="icon input-prefix">phone</i>
+        <input id="ContactNumber" formControlName="ContactNumber" type="tel" placeholder="Enter contact number" />
+      </div>
+      <div
+        class="error-message"
+        *ngIf="registerForm.get('ContactNumber')?.hasError('required') && registerForm.get('ContactNumber')?.touched"
+      >
+        Contact Number is required
+      </div>
+    </div>
+    
+    <div
+      class="form-field flex-field"
+      [class.ng-invalid]="registerForm.get('Email')?.invalid && registerForm.get('Email')?.touched"
+    >
+      <label for="Email">Email</label>
+      <div class="input-wrapper">
+        <i class="icon input-prefix">alternate_email</i>
+        <input id="Email" formControlName="Email" type="email" placeholder="Enter email address" />
+      </div>
+      <div
+        class="error-message"
+        *ngIf="(registerForm.get('Email')?.hasError('required') || registerForm.get('Email')?.hasError('email')) && registerForm.get('Email')?.touched"
+      >
+        A valid email is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div
+      class="form-field flex-field"
+      [class.ng-invalid]="registerForm.get('Password')?.invalid && registerForm.get('Password')?.touched"
+    >
+      <label for="Password">Password</label>
+      <div class="input-wrapper">
+        <i class="icon input-prefix">lock</i>
+        <input
+          id="Password"
+          formControlName="Password"
+          [type]="hidePassword ? 'password' : 'text'"
+          placeholder="Enter password"
+        />
+        <button
+          class="icon-button"
+          type="button"
+          (click)="hidePassword = !hidePassword"
+        >
+          <i class="icon">{{ hidePassword ? 'visibility_off' : 'visibility' }}</i>
+        </button>
+      </div>
+      <div
+        class="error-message"
+        *ngIf="registerForm.get('Password')?.hasError('minlength') && registerForm.get('Password')?.touched"
+      >
+        Password must be at least 6 characters
+      </div>
+    </div>
+    
+    <div
+      class="form-field flex-field"
+      [class.ng-invalid]="(registerForm.get('ConfirmPassword')?.invalid && registerForm.get('ConfirmPassword')?.touched) || (registerForm.hasError('mismatch') && registerForm.get('ConfirmPassword')?.touched)"
+    >
+      <label for="ConfirmPassword">Confirm Password</label>
+      <div class="input-wrapper">
+        <i class="icon input-prefix">lock</i>
+        <input
+          id="ConfirmPassword"
+          formControlName="ConfirmPassword"
+          [type]="hidePassword ? 'password' : 'text'"
+          placeholder="Confirm password"
+        />
+        <button
+          class="icon-button"
+          type="button"
+          (click)="hidePassword = !hidePassword"
+        >
+          <i class="icon">{{ hidePassword ? 'visibility_off' : 'visibility' }}</i>
+        </button>
+      </div>
+      <div
+        class="error-message"
+        *ngIf="registerForm.get('ConfirmPassword')?.hasError('required') && registerForm.get('ConfirmPassword')?.touched"
+      >
+        Confirm Password is required
+      </div>
+      <div
+        class="error-message"
         *ngIf="registerForm.hasError('mismatch') && registerForm.get('ConfirmPassword')?.touched"
       >
         Passwords do not match
-      </mat-error>
-    </mat-form-field>
+      </div>
+    </div>
   </div>
 
   <button
-    mat-flat-button
-    color="primary"
     type="submit"
     class="register-button"
-    [disabled]="isLoading"
+    [disabled]="isLoading || registerForm.invalid"
   >
     {{ isLoading ? 'Creating Account...' : 'Create Account' }}
   </button>

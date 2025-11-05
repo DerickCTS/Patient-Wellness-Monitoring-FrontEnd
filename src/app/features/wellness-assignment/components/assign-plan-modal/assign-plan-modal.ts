@@ -42,7 +42,8 @@ export class AssignPlanModalComponent {
     this.patientName = data.patientName;
     
     // This is the CRITICAL step from Blocker 1
-    const id = this.authService.getDoctorId();
+    // const id = this.authService.getDoctorId();
+    const id = "1";
     if (!id) {
       console.error('Doctor ID not found! Cannot assign plan.');
       this.dialogRef.close();

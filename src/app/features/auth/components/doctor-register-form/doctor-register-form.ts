@@ -2,31 +2,18 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth';
 import { DoctorRegisterDto } from '../../models/auth.models';
-
-// --- ADD THESE IMPORTS ---
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-doctor-register-form',
   templateUrl: './doctor-register-form.html',
   styleUrls: ['./doctor-register-form.scss'],
-
-  // --- ADD THIS 'imports' ARRAY ---
   standalone: true,
+  // Removed all Mat...Module imports
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatProgressBarModule,
   ],
 })
 export class DoctorRegisterFormComponent {

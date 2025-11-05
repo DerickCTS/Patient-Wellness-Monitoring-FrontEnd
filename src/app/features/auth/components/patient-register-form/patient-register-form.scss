@@ -1,35 +1,174 @@
+/* --- SHARED FORM STYLES (FINAL - With Margin Fix) --- */
+
+// Define theme colors
+$primary-color: #253E8A; // Richer Navy Blue (Primary Focus)
+$error-color: #f44336; // Red validation
+$default-border-color: #bdbdbd; // Standard light gray border
+$focus-color-neutral: #616161; // Dark Gray for neutral elements
+
+// ICON FONT FIX
+i.icon {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  display: inline-block;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// --- Form Layout ---
+
+.login-form,
 .register-form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 16px 0;
+  gap: 18px; 
 }
 
 .form-row {
   display: flex;
-  flex-wrap: wrap; // Allows wrapping on small screens
-  gap: 16px;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+
+  .flex-field {
+    flex: 1;
+    min-width: 0;
+  }
 }
 
-.flex-field {
-  flex: 1; // Makes fields grow to fill space
-  min-width: 200px;
+@media (min-width: 600px) {
+  .form-row {
+    flex-direction: row;
+    gap: 20px;
+  }
 }
 
-.full-width {
+// --- Input Field Styling (Non-Material) ---
+
+.form-field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* 🔥 USER'S MARGIN FIX */
+  margin-inline: 20px; 
+
+  label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: $focus-color-neutral;
+    margin-bottom: 4px;
+    display: block;
+    transition: color 0.2s;
+  }
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
   width: 100%;
 }
 
-.register-button {
-  padding: 12px;
-  font-size: 1rem;
-  margin-top: 8px;
+.input-prefix {
+  position: absolute;
+  left: 12px;
+  font-size: 20px;
+  color: #616161;
+  opacity: 0.6;
+  transition: color 0.2s, opacity 0.2s;
 }
 
-mat-progress-bar {
-  position: absolute;
-  top: -24px;
-  left: 0;
-  right: 0;
-  border-radius: 4px;
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px 12px 12px 42px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: $focus-color-neutral;
+  background-color: white;
+  border: 1px solid $default-border-color;
+  border-radius: 8px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  appearance: none;
+}
+
+/* IMPRESSIVE FOCUS COLOR */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: $primary-color; 
+  box-shadow: 0 0 0 2px $primary-color; 
+}
+
+/* IMPRESSIVE ICON COLOR */
+.input-wrapper:focus-within .input-prefix {
+  color: $primary-color;
+  opacity: 1;
+}
+
+// Validation Styling
+.form-field.ng-invalid.ng-touched {
+  label { color: $error-color; }
+  input, select, textarea { border-color: $error-color; }
+}
+
+.error-message {
+  color: $error-color;
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: block;
+  margin-top: 4px;
+}
+
+// Password Toggle Button
+.icon-button { position: absolute; right: 10px; border: none; background: none; cursor: pointer; padding: 0; }
+.icon-button .icon { font-size: 20px; color: $focus-color-neutral; }
+
+// Progress Bar
+.progress-bar { height: 4px; width: 100%; background-color: #e0e0e0; margin-bottom: 18px; border-radius: 2px; }
+.progress-bar::before { content: ''; display: block; height: 100%; background-color: $primary-color; width: 30%; animation: slide 2s infinite linear; border-radius: 2px; }
+@keyframes slide { 0% { transform: translateX(-100%); } 50% { transform: translateX(350%); } 100% { transform: translateX(-100%); } }
+
+// --- Button Styling ---
+
+.login-button,
+.register-button {
+  width: 100%;
+  height: 52px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  border-radius: 8px;
+  margin-top: 20px;
+  background-color: $primary-color;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba($primary-color, 0.4); 
+
+  &:hover:not([disabled]) {
+    background-color: darken($primary-color, 8%);
+    box-shadow: 0 10px 30px rgba($primary-color, 0.5); 
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    background-color: #bdbdbd;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
 }

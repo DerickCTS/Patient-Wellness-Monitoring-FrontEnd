@@ -10,6 +10,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { LoginFormComponent } from '../../components/login-form/login-form';
 import { PatientRegisterFormComponent } from '../../components/patient-register-form/patient-register-form';
 import { DoctorRegisterFormComponent } from '../../components/doctor-register-form/doctor-register-form';
+import { 
+  faHospital,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-auth-page',
@@ -27,6 +31,7 @@ import { DoctorRegisterFormComponent } from '../../components/doctor-register-fo
     LoginFormComponent,
     PatientRegisterFormComponent,
     DoctorRegisterFormComponent,
+    FontAwesomeModule
   ],
 })
 export class AuthPageComponent {
@@ -41,6 +46,7 @@ export class AuthPageComponent {
   // This manages which role is selected *on the sign up tab*
   signupRole: 'Patient' | 'Doctor' | null = null;
 
+  faHospital = faHospital;
   // --- Event Handlers ---
 
   onTabChange(event: MatTabChangeEvent): void {

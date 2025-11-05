@@ -1,0 +1,156 @@
+/* Color variables for easy theming */
+:host {
+  --navbar-height: 60px;
+  --sidebar-width: 240px;
+  --primary-color: #3f51b5; // A material-like blue
+  --primary-text: #ffffff;
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #333333;
+  --sidebar-hover-bg: #f0f0f0;
+  --overlay-bg: rgba(0, 0, 0, 0.5);
+}
+
+/* 3. The Top Navbar */
+.top-navbar {
+  height: var(--navbar-height);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background-color: var(--primary-color);
+  color: var(--primary-text);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  box-sizing: border-box; // Ensures padding is included in height
+}
+
+.navbar-left,
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  color: var(--primary-text);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.profile-image {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #eee;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.username {
+  font-weight: 500;
+}
+
+.logout-button {
+  background: none;
+  border: 1px solid var(--primary-text);
+  color: var(--primary-text);
+  padding: 6px 12px;
+  border-radius: 18px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--primary-text);
+    color: var(--primary-color);
+  }
+}
+
+
+/* 1. The Sidebar */
+.sidebar {
+  height: 100vh;
+  width: var(--sidebar-width);
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--sidebar-bg);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1002;
+  
+  /* Animation */
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  
+  &.open {
+    transform: translateX(0);
+  }
+}
+
+.sidebar-header {
+  padding: 16px;
+  height: var(--navbar-height);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+  box-sizing: border-box; // Ensures padding is included in height
+  
+  h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--sidebar-text);
+  }
+}
+
+.sidebar a {
+  display: block;
+  padding: 16px 20px;
+  text-decoration: none;
+  color: var(--sidebar-text);
+  font-size: 1rem;
+  font-weight: 500;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--sidebar-hover-bg);
+  }
+  
+  &.active {
+    background-color: var(--primary-color);
+    color: var(--primary-text);
+  }
+}
+
+/* 2. The Overlay */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--overlay-bg);
+  z-index: 1001;
+  
+  /* Hidden by default */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+  }
+}

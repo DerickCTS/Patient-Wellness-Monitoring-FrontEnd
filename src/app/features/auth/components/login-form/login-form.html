@@ -1,52 +1,62 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-  <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Email</mat-label>
-    <input
-      matInput
-      formControlName="Email"
-      placeholder="Enter your email"
-      type="email"
-    />
-    <mat-icon matSuffix>email</mat-icon>
-    <mat-error *ngIf="loginForm.get('Email')?.hasError('required')">
-      Email is required
-    </mat-error>
-    <mat-error *ngIf="loginForm.get('Email')?.hasError('email')">
-      Please enter a valid email
-    </mat-error>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Password</mat-label>
-    <input
-      matInput
-      formControlName="Password"
-      [type]="hidePassword ? 'password' : 'text'"
-    />
-    <button
-      mat-icon-button
-      matSuffix
-      type="button"
-      (click)="hidePassword = !hidePassword"
-      [attr.aria-label]="'Hide password'"
-      [attr.aria-pressed]="hidePassword"
+  <div *ngIf="isLoading" class="progress-bar"></div>
+  
+  <div
+    class="form-field"
+    [class.ng-invalid]="loginForm.get('Email')?.invalid && loginForm.get('Email')?.touched"
+  >
+    <label for="Email">Email</label>
+    <div class="input-wrapper">
+      <i class="icon input-prefix">alternate_email</i>
+      <input 
+        id="Email"
+        formControlName="Email"
+        placeholder="Enter your email"
+        type="email"
+      />
+    </div>
+    <div 
+      class="error-message"
+      *ngIf="(loginForm.get('Email')?.hasError('required') || loginForm.get('Email')?.hasError('email')) && loginForm.get('Email')?.touched"
     >
-      <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-    </button>
-    <mat-error *ngIf="loginForm.get('Password')?.hasError('required')">
-      Password is required
-    </mat-error>
-  </mat-form-field>
+      A valid email is required
+    </div>
+  </div>
 
+  <div
+    class="form-field"
+    [class.ng-invalid]="loginForm.get('Password')?.invalid && loginForm.get('Password')?.touched"
+  >
+    <label for="Password">Password</label>
+    <div class="input-wrapper">
+      <i class="icon input-prefix">lock</i>
+      <input
+        id="Password"
+        formControlName="Password"
+        [type]="hidePassword ? 'password' : 'text'"
+        placeholder="Enter password"
+      />
+      <button
+        class="icon-button"
+        type="button"
+        (click)="hidePassword = !hidePassword"
+      >
+        <i class="icon">{{ hidePassword ? 'visibility_off' : 'visibility' }}</i>
+      </button>
+    </div>
+    <div 
+      class="error-message"
+      *ngIf="loginForm.get('Password')?.hasError('required') && loginForm.get('Password')?.touched"
+    >
+      Password is required
+    </div>
+  </div>
+  
   <button
-    mat-flat-button
-    color="primary"
     type="submit"
     class="login-button"
-    [disabled]="isLoading"
+    [disabled]="isLoading || loginForm.invalid"
   >
-    {{ isLoading ? 'Logging in...' : 'Login' }}
+    {{ isLoading ? 'Logging In...' : 'Login' }}
   </button>
 </form>
