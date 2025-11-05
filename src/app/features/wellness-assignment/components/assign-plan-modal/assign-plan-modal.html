@@ -1,0 +1,50 @@
+<div class="modal-header">
+  <h2 mat-dialog-title>Add New Wellness Plan</h2>
+  <p class="subtitle">Assigning plan for: <strong>{{ patientName }}</strong></p>
+  <button mat-icon-button class="close-button" [mat-dialog-close]="false">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div mat-dialog-content class="modal-content">
+  <div class="modal-layout">
+    <nav class="modal-nav">
+      <button
+        mat-button
+        class="nav-button"
+        [class.active]="activeView === 'template'"
+        (click)="activeView = 'template'"
+      >
+        <mat-icon>auto_awesome_mosaic</mat-icon>
+        <span>Use Template</span>
+      </button>
+      <button
+        mat-button
+        class="nav-button"
+        [class.active]="activeView === 'scratch'"
+        (click)="activeView = 'scratch'"
+      >
+        <mat-icon>create</mat-icon>
+        <span>Create from Scratch</span>
+      </button>
+    </nav>
+
+    <div class="modal-form-area">
+      <div [ngSwitch]="activeView">
+        <app-form-use-template
+          *ngSwitchCase="'template'"
+          [patientId]="patientId"
+          [doctorId]="doctorId"
+          (planAssigned)="onPlanAssigned()"
+        ></app-form-use-template>
+
+        <app-form-create-scratch
+          *ngSwitchCase="'scratch'"
+          [patientId]="patientId"
+          [doctorId]="doctorId"
+          (planAssigned)="onPlanAssigned()"
+        ></app-form-create-scratch>
+      </div>
+    </div>
+  </div>
+</div>

@@ -39,7 +39,13 @@ export interface LoginRequestDto {
 export interface AuthSuccessDto {
   message: string;
 }
-
+// --- NEW: API Response for Successful Login ---
+// This is the updated response we assume you're adding
+export interface LoginSuccessDto {
+  message: string;
+  patientId?: number; // The '?' makes it optional
+  doctorId?: number;  // The '?' makes it optional
+}
 export interface AuthErrorDto {
   message: string;
 }

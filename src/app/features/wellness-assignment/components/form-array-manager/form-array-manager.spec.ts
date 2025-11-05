@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlanListComponent } from './plan-list';
+import { FormArrayManager } from './form-array-manager';
 
-describe('PlanList', () => {
-  let component: PlanListComponent;
-  let fixture: ComponentFixture<PlanListComponent>;
+describe('FormArrayManager', () => {
+  let component: FormArrayManager;
+  let fixture: ComponentFixture<FormArrayManager>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PlanListComponent]
+      imports: [FormArrayManager]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PlanListComponent);
+    fixture = TestBed.createComponent(FormArrayManager);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

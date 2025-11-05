@@ -3,35 +3,36 @@ import { ProgressTracking } from './features/wellness/pages/progress-tracking/pr
 
 export const routes: Routes = [
   {
-    path: 'auth', // URL will be /auth
+    path: '',
+    redirectTo: '/auth', // Makes your page the default
+    pathMatch: 'full',
+  },
+  {
+    path: 'auth', 
     loadComponent: () =>
       import('./features/auth/pages/auth-page/auth-page').then(
         (m) => m.AuthPageComponent
       ),
-    // loadChildren: () =>
-    //   import('./features/auth/auth-module').then(
-    //     (m) => m.AuthModule
-    //   ),
   },
   {
     path: 'progress',
-    // This is the new part: We load the component directly
-    loadComponent: () => ProgressTracking,
+    loadComponent: () => 
+      import('./features/wellness/pages/progress-tracking/progress-tracking').then(
+        (m) => m.ProgressTracking
+      ),
   },
-  {
-    path: '',
-    redirectTo: '/progress', // Makes your page the default
-    pathMatch: 'full',
-  },
-  // {
-  //   path: 'wellness',
-  //   loadComponent: () => PatientDetailsComponent
-  // },
   {
     path: 'diagnosis',
     loadChildren: () =>
       import('./features/diagnosis/diagnosis-module').then(
         (m) => m.DiagnosisModule
       ),
-  }
+  },
+  {
+    path: 'wellness',
+    loadChildren: () =>
+      import('./features/wellness-assignment/wellness-assignment-module').then(
+        (m) => m.WellnessModule
+      ),
+  },
 ];

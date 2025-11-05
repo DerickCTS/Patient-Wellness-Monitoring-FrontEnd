@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlanListComponent } from './plan-list';
+import { FormCreateScratch } from './form-create-scratch';
 
-describe('PlanList', () => {
-  let component: PlanListComponent;
-  let fixture: ComponentFixture<PlanListComponent>;
+describe('FormCreateScratch', () => {
+  let component: FormCreateScratch;
+  let fixture: ComponentFixture<FormCreateScratch>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PlanListComponent]
+      imports: [FormCreateScratch]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PlanListComponent);
+    fixture = TestBed.createComponent(FormCreateScratch);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
