@@ -3,35 +3,37 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators'; // Make sure 'tap' is imported
 import {
   PatientFullDetailsDto,
   DiagnosisDetailsDto,
   AssignedWellnessPlanDto,
-} from '../../models/wellness.models';
-import { WellnessService } from '../../services/wellness.service';
+} from '../../models/wellness-assignment.model';
+import { WellnessService } from '../../services/wellness-assignment';
 
+// --- Dialog imports from Part 3 ---
 import { MatDialog } from '@angular/material/dialog';
-import { WellnessPlanDetailComponent } from 'src/app/shared/components/wellness-plan-detail/wellness-plan-detail.component';
-// --- ADD THIS IMPORT ---
-import { AssignPlanModalComponent } from '../../components/assign-plan-modal/assign-plan-modal.component';
+import { WellnessPlanDetailComponent } from '../../../../shared/components/wellness-plan-detail/wellness-plan-detail';
 
-// --- (Standalone imports...)
+// --- Dialog import from Part 4 ---
+import { AssignPlanModalComponent } from '../../components/assign-plan-modal/assign-plan-modal';
+
+// --- STANDALONE IMPORTS ---
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatTableModule } from '@angular/material/table';
-import { MatChipsModule } from '@angular/material/chips';
+import { MatExpansionModule } from '@angular/material/expansion'; // For Accordion
+import { MatTableModule } from '@angular/material/table';     // For Medications
+import { MatChipsModule } from '@angular/material/chips';     // For Status tags
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { InfoItemComponent } from '../../components/info-item/info-item.component';
+import { InfoItemComponent } from '../../components/info-item/info-item'; // Helper component
 
 @Component({
   selector: 'app-patient-dashboard',
-  templateUrl: './patient-dashboard.component.html',
-  styleUrls: ['./patient-dashboard.component.scss'],
+  templateUrl: './patient-dashboard.html',
+  styleUrls: ['./patient-dashboard.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -43,15 +45,19 @@ import { InfoItemComponent } from '../../components/info-item/info-item.componen
     MatTableModule,
     MatChipsModule,
     MatProgressBarModule,
-    InfoItemComponent,
-    WellnessPlanDetailComponent,
-    AssignPlanModalComponent, // <-- ADD THIS IMPORT
+    InfoItemComponent,            // The helper component
+    WellnessPlanDetailComponent, // The Part 3 popup
+    AssignPlanModalComponent,  // The Part 4 popup
   ],
 })
 export class PatientDashboardComponent implements OnInit {
-  patientId!: number; // Store the patientId
+  patientId!: number;
   patientDetails$!: Observable<PatientFullDetailsDto>;
+
+  // This will store the details for the *currently open* accordion
   activeDiagnosisDetails$: Observable<DiagnosisDetailsDto | null> = of(null);
+
+  // For the medications table
   medicationColumns: string[] = ['name', 'dosage', 'status'];
 
   constructor(
@@ -78,16 +84,44 @@ export class PatientDashboardComponent implements OnInit {
     );
   }
 
-  // ... (load/clearDiagnosisDetails methods are unchanged)
-  // ... (viewPlanDetails method is unchanged)
+  // --- Diagnosis History Methods (THESE ARE THE MISSING ONES) ---
+
+  /**
+   * Called when the user clicks to expand a diagnosis panel.
+   * It fetches the details for that specific diagnosis.
+   */
+  loadDiagnosisDetails(diagnosisId: number): void {
+    this.activeDiagnosisDetails$ =
+      this.wellnessService.getDiagnosisDetails(diagnosisId);
+  }
+
+  /**
+   * Called when the user closes an expansion panel.
+   * This clears the old data to save memory.
+   */
+  clearDiagnosisDetails(): void {
+    this.activeDiagnosisDetails$ = of(null);
+  }
+
+  // --- Wellness Plan Methods ---
+
+  /**
+   * (Part 3) Called when "View Details" is clicked.
+   */
+  viewPlanDetails(plan: AssignedWellnessPlanDto): void {
+    this.dialog.open(WellnessPlanDetailComponent, {
+      width: '650px',
+      data: { planId: plan.planId },
+      autoFocus: false,
+    });
+  }
 
   /**
    * (Part 4) Called when "Assign Wellness Plan" is clicked.
-   * This is the UPDATED method.
    */
   assignNewPlan(patient: PatientFullDetailsDto): void {
     const dialogRef = this.dialog.open(AssignPlanModalComponent, {
-      width: '900px', // A wider dialog
+      width: '900px',
       maxWidth: '90vw',
       data: {
         patientId: patient.patientId,
@@ -97,17 +131,20 @@ export class PatientDashboardComponent implements OnInit {
     });
 
     // After the dialog closes, refresh the data
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) { // 'true' means a plan was successfully assigned
-        // This re-runs the API call to get the updated list of plans
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) {
         this.patientDetails$ = this.wellnessService
           .getPatientFullDetails(this.patientId)
-          .pipe(tap(() => this.wellnessService.showSuccess('Plan list refreshed!')));
+          .pipe(
+            tap(() => this.wellnessService.showSuccess('Plan list refreshed!'))
+          );
       }
     });
   }
 
+  // --- Navigation ---
+
   goBack(): void {
-    this.router.navigate(['/wellness']);
+    this.router.navigate(['/wellness']); // Go back to search
   }
 }

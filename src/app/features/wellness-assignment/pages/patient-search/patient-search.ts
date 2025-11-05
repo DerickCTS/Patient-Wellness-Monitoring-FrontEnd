@@ -1,12 +1,12 @@
 // src/app/features/wellness/pages/patient-search/patient-search.component.ts
 
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators }_from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { PatientSearchResultDto } from '../../models/wellness.models';
-import { WellnessService } from '../../services/wellness.service';
+import { PatientSearchResultDto } from '../../models/wellness-assignment.model';
+import { WellnessService } from '../../services/wellness-assignment';
 
 // --- STANDALONE IMPORTS ---
 import { CommonModule } from '@angular/common';
@@ -21,8 +21,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-patient-search',
-  templateUrl: './patient-search.component.html',
-  styleUrls: ['./patient-search.component.scss'],
+  templateUrl: './patient-search.html',
+  styleUrls: ['./patient-search.scss'],
 
   // --- ADD ALL IMPORTS FOR STANDALONE ---
   standalone: true,

@@ -31,7 +31,7 @@ export const routes: Routes = [
   {
     path: 'wellness',
     loadChildren: () =>
-      import('./features/wellness/wellness.module').then(
+      import('./features/wellness-assignment/wellness-assignment-module').then(
         (m) => m.WellnessModule
       ),
   },

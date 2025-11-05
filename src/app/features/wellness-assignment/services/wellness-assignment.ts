@@ -3,8 +3,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PatientSearchResultDto } from '../models/wellness.models';
-import { AuthService } from 'src/app/features/auth/services/auth.service'; // <-- Import Auth Service
+import { AssignScratchPlanDto, AssignTemplatePlanDto, DiagnosisDetailsDto, ImageUploadResponseDto, PatientFullDetailsDto, PatientSearchResultDto, WellnessTemplateDto } from '../models/wellness-assignment.model';
+import { AuthService } from '../../auth/services/auth'; // <-- Import Auth Service
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { PlanDetailsDto } from '../../wellness/models/plan.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +15,7 @@ export class WellnessService {
   // IMPORTANT: Make sure this base URL is correct
   private baseUrl = 'https://localhost:7129/api/Doctor';
   private planUrl = 'https://localhost:7129/api/WellnessPlan'; // <-- New URL
-  private progressBaseUrl = 'http://localhost:5287/api/progress';
+  private progressBaseUrl = 'https://localhost:7129/api/progress';
   // This is the full base URL for your .NET server (for images)
   private serverBaseUrl = 'https://localhost:7129';
 

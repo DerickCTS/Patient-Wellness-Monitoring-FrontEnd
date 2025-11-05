@@ -3,21 +3,21 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { PlanDetailsDto } from 'src/app/features/wellness/models/wellness.models';
-import { WellnessService } from 'src/app/features/wellness/services/wellness.service';
+import { PlanDetailsDto } from '../../../features/wellness/models/plan.dto';
+import { WellnessService } from '../../../features/wellness-assignment/services/wellness-assignment';
 
 // --- STANDALONE IMPORTS ---
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatDialogModule }L from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-wellness-plan-detail',
-  templateUrl: './wellness-plan-detail.component.html',
-  styleUrls: ['./wellness-plan-detail.component.scss'],
+  templateUrl: './wellness-plan-detail.html',
+  styleUrls: ['./wellness-plan-detail.scss'],
 
   // --- ADD STANDALONE IMPORTS ---
   standalone: true,

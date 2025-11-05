@@ -1,8 +1,8 @@
 // src/app/features/wellness/wellness-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PatientSearchComponent } from './pages/patient-search/patient-search.component';
-import { PatientDashboardComponent } from './pages/patient-dashboard/patient-dashboard.component';
+import { PatientSearchComponent } from './pages/patient-search/patient-search';
+import { PatientDashboardComponent } from './pages/patient-dashboard/patient-dashboard';
 
 const routes: Routes = [
   {

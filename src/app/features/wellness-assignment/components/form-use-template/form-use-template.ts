@@ -8,8 +8,8 @@ import {
   PlanDetailsDto,
   PlanDetailItemDto,
   WellnessTemplateDto,
-} from '../../models/wellness.models';
-import { WellnessService } from '../../services/wellness.service';
+} from '../../models/wellness-assignment.model';
+import { WellnessService } from '../../services/wellness-assignment';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 // --- STANDALONE IMPORTS ---
@@ -24,12 +24,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { FormArrayManagerComponent } from '../form-array-manager/form-array-manager.component'; // Import our helper
+import { FormArrayManagerComponent } from '../form-array-manager/form-array-manager'; // Import our helper
+import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-form-use-template',
-  templateUrl: './form-use-template.component.html',
-  styleUrls: ['./form-use-template.component.scss'],
+  templateUrl: './form-use-template.html',
+  styleUrls: ['./form-use-template.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -44,6 +45,7 @@ import { FormArrayManagerComponent } from '../form-array-manager/form-array-mana
     MatCardModule,
     MatSlideToggleModule,
     FormArrayManagerComponent, // Use our helper
+    MatDivider
   ],
 })
 export class FormUseTemplateComponent implements OnInit {

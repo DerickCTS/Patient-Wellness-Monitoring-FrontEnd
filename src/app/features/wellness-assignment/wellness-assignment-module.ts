@@ -3,7 +3,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { WellnessRoutingModule } from './wellness-routing.module.ts';
+import { WellnessRoutingModule } from './wellness-assignment-routing-module';
 
 // --- SHARED MODULES ---
 import { ReactiveFormsModule } from '@angular/forms';
@@ -29,8 +29,8 @@ import { MatTooltipModule } from '@angular/material/tooltip'; // For 'View Detai
 
 // --- STANDALONE COMPONENTS ---
 // We import them here so they can be routed to
-import { PatientSearchComponent } from './pages/patient-search/patient-search.component';
-import { PatientDashboardComponent } from './pages/patient-dashboard/patient-dashboard.component';
+import { PatientSearchComponent } from './pages/patient-search/patient-search';
+import { PatientDashboardComponent } from './pages/patient-dashboard/patient-dashboard';
 
 @NgModule({
   imports: [

@@ -2,8 +2,8 @@
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { WellnessService } from '../../services/wellness.service';
-import { AssignScratchPlanDto, PlanDetailItemDto } from '../../models/wellness.models';
+import { WellnessService } from '../../services/wellness-assignment';
+import { AssignScratchPlanDto, PlanDetailItemDto } from '../../models/wellness-assignment.model';
 import { finalize } from 'rxjs';
 
 // --- STANDALONE IMPORTS ---
@@ -16,12 +16,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { FormArrayManagerComponent } from '../form-array-manager/form-array-manager.component';
+import { FormArrayManagerComponent } from '../form-array-manager/form-array-manager';
+import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-form-create-scratch',
-  templateUrl: './form-create-scratch.component.html',
-  styleUrls: ['./form-create-scratch.component.scss'],
+  templateUrl: './form-create-scratch.html',
+  styleUrls: ['./form-create-scratch.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -34,6 +35,7 @@ import { FormArrayManagerComponent } from '../form-array-manager/form-array-mana
     MatSelectModule,
     MatDatepickerModule,
     FormArrayManagerComponent, // <-- ADD IT HERE
+    MatDivider
   ],
 })
 export class FormCreateScratchComponent implements OnInit {
