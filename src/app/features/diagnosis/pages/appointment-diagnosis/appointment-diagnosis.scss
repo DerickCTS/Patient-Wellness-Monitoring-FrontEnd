@@ -1,132 +1,368 @@
-// --- Page Level ---
+/* =========================================
+   Global Styles & Layout - Color Adjusted
+   ========================================= */
+
+:host {
+  display: block;
+}
+
 .page-container {
-  padding: 24px;
+  min-height: 100vh;
+  background-color: #f7f9fc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #374151;
 }
 
 .page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
-
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    h2 {
-      margin: 0;
-      font-size: 1.75rem;
-    }
-    p {
-      margin: 0;
-      color: #6c757d;
-    }
-  }
+  padding: 20px 40px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
 }
 
-// --- Layout ---
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.header-left h2 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.header-left p {
+  margin: 0;
+  font-size: 1rem;
+  color: #6b7280;
+  margin-left: 16px;
+  padding-left: 16px;
+  border-left: 1px solid #e0e0e0;
+}
+
 .page-layout {
   display: flex;
-  flex-wrap: wrap; // Allow wrapping on small screens
-  gap: 24px;
+  padding: 32px 40px;
+  gap: 32px;
 }
+
+/* =========================================
+   Buttons & Chips - Color Adjusted
+   ========================================= */
+
+.icon-button {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  margin-right: 12px;
+  color: #007bff; /* Primary Blue */
+  transition: color 0.2s;
+}
+
+.icon-button:hover {
+  color: #0056b3;
+}
+
+.flat-button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1rem;
+}
+
+.flat-button.primary {
+  background-color: #007bff; /* Primary Blue */
+  color: white;
+}
+
+.flat-button.primary:hover:not([disabled]) {
+  background-color: #0056b3;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+}
+
+.flat-button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.stroked-button {
+  padding: 12px 20px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: white;
+  color: #374151;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.stroked-button:hover {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.chip {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.chip.primary.selected {
+  background-color: #e6f0ff; /* Light Blue */
+  color: #007bff;
+}
+
+.delete-btn {
+  float: right;
+  color: #dc3545; /* Standard red for warning/delete */
+  margin-right: -4px;
+}
+
+/* =========================================
+   Sidebar (Patient Info) - Color Adjusted
+   ========================================= */
 
 .patient-info-col {
-  flex: 1; // Grow
-  min-width: 300px; // Minimum width
+  flex: 0 0 340px;
 }
 
-.diagnosis-col {
-  flex: 2; // Grow to be twice as large as the info col
-  min-width: 400px;
-}
-
-// --- Left Column ---
 .patient-card {
-  .patient-avatar {
-    background-color: #e3f2fd;
-    color: #1976d2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .patient-details {
-    padding: 16px;
-    span {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 12px;
-      color: #333;
-      mat-icon {
-        color: #6c757d;
-      }
-    }
-  }
+  background-color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.patient-card .card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.patient-avatar {
+  background-color: #007bff; /* Primary Blue */
+  color: white;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem;
+  margin-right: 16px;
+  flex-shrink: 0;
+}
+
+.patient-card .card-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1f2937;
+  line-height: 1.2;
+}
+
+.patient-card .card-subtitle {
+  flex-basis: 100%;
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin-top: 4px;
+  margin-left: 64px;
+}
+
+.divider {
+  border: 0;
+  border-top: 1px solid #e5e7eb;
+  margin: 20px 0;
+}
+
+.patient-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.patient-details span {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: #374151;
+}
+
+.patient-details span:before {
+  margin-right: 12px;
+  font-size: 1.2em;
+  color: #007bff; /* Primary Blue for icons/emojis */
 }
 
 .chief-complaint {
-  background-color: #fff8e1;
-  color: #6d4c0d;
-  border-radius: 8px;
-  padding: 16px;
-  margin-top: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff7e6; /* Light warning/attention color (kept yellow) */
+  border: 1px solid #ffcc80;
   display: flex;
-  align-items: center;
-  gap: 12px;
-  p {
-    margin: 4px 0 0 0;
-    font-weight: 500;
-  }
+  gap: 16px;
+  align-items: flex-start;
 }
 
-// --- Right Column ---
+.chief-complaint strong {
+  color: #1f2937;
+}
+
+.chief-complaint p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+.chief-complaint > span:first-child {
+    font-size: 1.5rem;
+    color: #f59e0b; /* Yellow/Orange accent for warning */
+}
+
+
+/* =========================================
+   Main Column (Diagnosis & Prescription) - Color Adjusted
+   ========================================= */
+
+.diagnosis-col {
+  flex: 1;
+}
+
 .info-section {
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  background-color: white;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   margin-bottom: 24px;
-  
-  .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 24px;
-    border-bottom: 1px solid #e0e0e0;
-    h3 {
-      margin: 0;
-      font-size: 1.25rem;
-    }
-  }
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.section-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #1f2937;
+  border-left: 5px solid #007bff; /* Visual accent with Primary Blue */
+  padding-left: 15px;
 }
 
 .display-card {
-  margin: 16px;
-  position: relative; // For delete button
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 16px;
+  background-color: #fcfcfc;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  position: relative;
 }
 
-.new-item {
-  background-color: #f4f8ff; // Highlight new items
-  border-color: #1976d2;
-  
-  .delete-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-  }
+.display-card:hover {
+  border-color: #007bff; /* Highlight with Primary Blue */
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.1);
+}
+
+.display-card.new-item {
+  border: 2px dashed #f59e0b;
+  background-color: #fffbeb;
+}
+
+.display-card .card-title {
+  font-weight: 700;
+  color: #1f2937;
+  font-size: 1.15rem;
+}
+
+.display-card .card-subtitle {
+  color: #777;
+  font-size: 0.95rem;
+  margin-top: 4px;
+}
+
+.display-card .card-content {
+  margin-top: 12px;
+  color: #555;
+  font-size: 1rem;
+  padding-top: 12px;
+  border-top: 1px dashed #eee;
 }
 
 .empty-state {
-  padding: 32px 24px;
   text-align: center;
-  color: #6c757d;
+  padding: 60px 30px;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  color: #9ca3af;
+  background-color: #fafafa;
+  font-size: 1.1rem;
 }
+
+/* =========================================
+   Footer
+   ========================================= */
 
 .page-footer {
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
-  padding: 16px;
-  border-top: 1px solid #e0e0e0;
-  background: #fff;
+  gap: 16px;
+  padding: 24px 0 0;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 24px;
+}
+
+/* =========================================
+   Media Queries for Responsiveness
+   ========================================= */
+
+@media (max-width: 950px) {
+  .page-layout {
+    flex-direction: column;
+    padding: 24px;
+    gap: 24px;
+  }
+
+  .patient-info-col {
+    flex: 1 1 100%;
+  }
+
+  .page-header {
+    padding: 16px 24px;
+  }
+
+  .header-left p {
+      margin-left: 12px;
+      padding-left: 12px;
+  }
+
+  .patient-card .card-subtitle {
+      margin-left: 0;
+      flex-basis: auto;
+  }
+}
+
+/* =========================================
+   Loading State
+   ========================================= */
+
+ng-template #loading p {
+  text-align: center;
+  padding-top: 50px;
+  color: #777;
+  font-size: 1.2rem;
 }

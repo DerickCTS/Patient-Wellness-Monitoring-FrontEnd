@@ -1,0 +1,121 @@
+<div class="dashboard-container">
+  
+  <header class="header-bar">
+    <div class="header-content">
+      <div class="header-icon">
+        <fa-icon [icon]="faStethoscope"></fa-icon>
+      </div>
+      <div>
+        <h1>My Appointments</h1>
+        <p>Manage and track your medical appointments</p>
+      </div>
+    </div>
+    <button class="btn btn-primary" (click)="openBookAppointmentModal()">
+      <fa-icon [icon]="faPlus"></fa-icon>
+      Book New Appointment
+    </button>
+  </header>
+
+  <nav class="tab-nav">
+    <button
+      class="tab-button"
+      [class.active]="activeTab === 'approved'"
+      (click)="activeTab = 'approved'"
+    >
+      <fa-icon [icon]="faCheck"></fa-icon>
+      Approved Appointments
+      <span class="count count-approved">{{ approvedCount$ | async }}</span>
+    </button>
+    <button
+      class="tab-button"
+      [class.active]="activeTab === 'pending'"
+      (click)="activeTab = 'pending'"
+    >
+      <fa-icon [icon]="faPending"></fa-icon>
+      Pending Appointments
+      <span class="count count-pending">{{ pendingCount$ | async }}</span>
+    </button>
+    <button
+      class="tab-button"
+      [class.active]="activeTab === 'rejected'"
+      (click)="activeTab = 'rejected'"
+    >
+      <fa-icon [icon]="faRejected"></fa-icon>
+      Rejected Appointments
+      <span class="count count-rejected">{{ rejectedCount$ | async }}</span>
+    </button>
+  </nav>
+
+  <main class="tab-content" *ngIf="statusData$ | async as status">
+    <div *ngIf="activeTab === 'approved'" class="appointment-grid">
+      <app-appointment-card
+        *ngFor="let app of status.approved"
+        [appointment]="app"
+      ></app-appointment-card>
+      <div *ngIf="status.approved.length === 0" class="empty-state">
+        You have no approved appointments.
+      </div>
+    </div>
+
+    <div *ngIf="activeTab === 'pending'" class="appointment-grid">
+      <app-appointment-card
+        *ngFor="let app of status.pending"
+        [appointment]="app"
+      ></app-appointment-card>
+      <div *ngIf="status.pending.length === 0" class="empty-state">
+        You have no pending appointments.
+      </div>
+    </div>
+
+    <div *ngIf="activeTab === 'rejected'" class="appointment-grid">
+      <app-appointment-card
+        *ngFor="let app of status.rejected"
+        [appointment]="app"
+        (bookSlot)="openBookAppointmentModal()"
+      ></app-appointment-card>
+      <div *ngIf="status.rejected.length === 0" class="empty-state">
+        You have no rejected appointments.
+      </div>
+    </div>
+  </main>
+
+  <section class="past-appointments">
+    <h2>Past Appointments</h2>
+    <p>View your complete appointment history</p>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th><fa-icon [icon]="faCalendar"></fa-icon> Date</th>
+            <th><fa-icon [icon]="faClock"></fa-icon> Time</th>
+            <th><fa-icon [icon]="faUserMd"></fa-icon> Doctor</th>
+            <th><fa-icon [icon]="faStethoscope"></fa-icon> Specialization</th>
+            <th><fa-icon [icon]="faFileAlt"></fa-icon> Reason</th>
+            <th><fa-icon [icon]="faCheck"></fa-icon> Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of historyData$ | async">
+            <td>{{ item.appointmentDate | date: 'MMM d, y' }}</td>
+            <td>{{ item.appointmentTime }}</td>
+            <td>{{ item.doctorName }}</td>
+            <td><span class="spec-chip">{{ item.specialization }}</span></td>
+            <td>{{ item.reason }}</td>
+            <td>
+              <span class="status-chip-completed">{{ item.status }}</span>
+            </td>
+          </tr>
+          <tr *ngIf="(historyData$ | async)?.length === 0">
+            <td colspan="6" class="empty-state">No past appointments found.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<app-book-appointment-modal
+  *ngIf="showBookModal"
+  (closeModal)="handleModalClose($event)"
+></app-book-appointment-modal>

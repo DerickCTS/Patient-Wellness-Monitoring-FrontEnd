@@ -100,6 +100,10 @@ export class AuthService {
     return localStorage.getItem('userRole');
   }
 
+  public getPatientId(): string | null {
+    return localStorage.getItem('patientId');
+  }
+
   // --- Error & Success Message Handling ---
 
   private handleError(error: HttpErrorResponse): Observable<never> {

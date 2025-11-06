@@ -41,7 +41,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 export class PatientSearchComponent {
   searchType: 'patientName' | 'patientId' = 'patientName';
   searchForm: FormGroup;
-  
+
   // This will hold our results
   results$!: Observable<PatientSearchResultDto[] | null>;
   isLoading = false;
@@ -77,10 +77,10 @@ export class PatientSearchComponent {
     this.results$ = this.wellnessService.searchPatients(this.searchType, query).pipe(
       catchError(() => {
         // On error, just return an empty array
-        return of([]); 
+        return of([]);
       })
     );
-    
+
     // We don't set isLoading = false here, we let the 'async' pipe handle it
     // But for this simple case, we'll just set it.
     this.results$.subscribe(() => this.isLoading = false);
@@ -88,6 +88,6 @@ export class PatientSearchComponent {
 
   // Navigate to Part 2
   selectPatient(patientId: number): void {
-    this.router.navigate(['/wellness/patient', patientId]);
+    this.router.navigate(['wellness/patient', patientId]);
   }
 }

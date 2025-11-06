@@ -1,0 +1,230 @@
+<div class="modal-overlay" (click)="onCloseModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div [ngSwitch]="currentStep">
+      
+      <div *ngSwitchCase="'1_SelectSpec'">
+        <div class="modal-header">
+          <div>
+            <h2>Book New Appointment</h2>
+            <p>Select the medical specialization you need</p>
+          </div>
+          <button class="icon-button" (click)="onCloseModal()">
+            <fa-icon [icon]="faClose"></fa-icon>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <form class="booking-form" #step1Form="ngForm">
+            <label for="specialization">Medical Specialization</label>
+            <div class="spec-header">
+              <button
+                type="button"
+                class="btn-link"
+                (click)="showSpecGuide = true"
+              >
+                <fa-icon [icon]="faQuestion"></fa-icon>
+                View Specialization Guide
+              </button>
+            </div>
+            <select
+              id="specialization"
+              name="specialization"
+              [(ngModel)]="selectedSpecialization"
+              required
+            >
+              <option [ngValue]="null" disabled>Select a specialization</option>
+              <option *ngFor="let spec of specializations$ | async" [value]="spec">
+                {{ spec }}
+              </option>
+            </select>
+
+            <label for="reason">Reason for Visit</label>
+            <textarea
+              id="reason"
+              name="reason"
+              rows="4"
+              placeholder="Briefly describe your symptoms or reason for consultation..."
+              [(ngModel)]="reasonForVisit"
+              required
+            ></textarea>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="onCloseModal()">
+            Cancel
+          </button>
+          <button
+            class="btn btn-primary"
+            (click)="onStep1Next()"
+            [disabled]="!step1Form.valid"
+          >
+            Next: Select Time Slot
+          </button>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="'2_SelectSlot'">
+        <div class="modal-header">
+          <div>
+            <h2>Book New Appointment</h2>
+            <p>Choose a doctor and available time slot</p>
+          </div>
+          <button class="icon-button" (click)="onCloseModal()">
+            <fa-icon [icon]="faClose"></fa-icon>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="selected-spec-box">
+            <div>
+              <label>Selected Specialization:</label>
+              <p>{{ selectedSpecialization }}</p>
+            </div>
+            <button class="btn-link" (click)="onStep2Change()">Change</button>
+          </div>
+
+          <h3>Available Doctors & Slots <small>(Sorted by experience)</small></h3>
+
+          <div *ngIf="isLoadingSlots" class="loading-state">
+            <p>Finding available doctors...</p>
+          </div>
+
+          <div *ngIf="!isLoadingSlots" class="doctor-list">
+            <div *ngFor="let doc of doctorSlots" class="doctor-card">
+              <div class="doctor-header">
+                <div>
+                  <h4>{{ doc.name }}</h4>
+                  <p>{{ doc.education }}</p>
+                </div>
+                <span *ngIf="doc.experienceYears === mostExperienced" class="tag-exp">
+                  <fa-icon [icon]="faStar"></fa-icon> Most Experienced
+                </span>
+              </div>
+              <div class="exp-chip">
+                <fa-icon [icon]="faIdBadge"></fa-icon>
+                {{ doc.experienceYears }} years experience
+              </div>
+
+              <h5>Available Time Slots:</h5>
+              <div class="slot-grid">
+                <label *ngFor="let slot of doc.availableSlots" class="slot-radio">
+                  <input
+                    type="radio"
+                    name="selectedSlot"
+                    [value]="slot.slotID"
+                    (change)="selectSlot(doc, slot)"
+                  />
+                  <div class="slot-content">
+                    <fa-icon [icon]="faCalendar"></fa-icon>
+                    {{ slot.dateString }}
+                    <fa-icon [icon]="faClock"></fa-icon>
+                    {{ slot.timeString }}
+                  </div>
+                </label>
+              </div>
+            </div>
+            
+            <div *ngIf="doctorSlots.length === 0" class="empty-state">
+              No doctors found for specialization: {{ selectedSpecialization }}
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="onCloseModal()">
+            Cancel
+          </button>
+          <button
+            class="btn btn-primary"
+            (click)="onStep2Next()"
+            [disabled]="!selectedSlot"
+          >
+            Review Appointment
+          </button>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="'3_Confirm'">
+        <div class="modal-header">
+          <div>
+            <h2>Book New Appointment</h2>
+            <p>Confirm your appointment details</p>
+          </div>
+          <button class="icon-button" (click)="onCloseModal()">
+            <fa-icon [icon]="faClose"></fa-icon>
+          </button>
+        </div>
+
+        <div class="modal-body" *ngIf="selectedSlot">
+          <div class="confirm-box">
+            <h4><fa-icon [icon]="faCheck"></fa-icon> Confirm Appointment Details</h4>
+            <div class="confirm-grid">
+              <div class="confirm-item">
+                <label>Doctor</label>
+                <p>{{ selectedSlot.doctor.name }}</p>
+                <small>{{ selectedSlot.doctor.education }}</small>
+              </div>
+              <div class="confirm-item">
+                <label>Experience</label>
+                <p>{{ selectedSlot.doctor.experienceYears }} years</p>
+              </div>
+              <div class="confirm-item">
+                <label>Specialization</label>
+                <p>{{ selectedSlot.doctor.specialization }}</p>
+              </div>
+              <div class="confirm-item">
+                <label>Date</label>
+                <p>{{ selectedSlot.slot.dateString }}</p>
+              </div>
+              <div class="confirm-item">
+                <label>Time</label>
+                <p>{{ selectedSlot.slot.timeString }}</p>
+              </div>
+              <div class="confirm-item">
+                <label>Reason for Visit</label>
+                <p>{{ reasonForVisit }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-notice">
+            <fa-icon [icon]="faInfoCircle"></fa-icon>
+            <p>
+              Your appointment request will be sent to the doctor for approval.
+              You will receive a notification once it's confirmed.
+            </p>
+          </div>
+          
+          <div *ngIf="bookingError" class="error-notice">
+            {{ bookingError }}
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            class="btn btn-secondary"
+            (click)="onStep3Back()"
+            [disabled]="isBooking"
+          >
+            Back
+          </button>
+          <button class="btn btn-cancel" (click)="onCloseModal()">Cancel</button>
+          <button
+            class="btn btn-primary"
+            (click)="onStep3Confirm()"
+            [disabled]="isBooking"
+          >
+            <span *ngIf="!isBooking">Confirm & Book Appointment</span>
+            <span *ngIf="isBooking">Booking...</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-specialization-guide
+    *ngIf="showSpecGuide"
+    (closeModal)="showSpecGuide = false"
+  ></app-specialization-guide>
+</div>

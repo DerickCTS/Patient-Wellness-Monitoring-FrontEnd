@@ -1,0 +1,90 @@
+<div
+  class="appointment-card"
+  [ngClass]="{
+    'card-approved': appointment.status === 'Confirmed',
+    'card-pending': appointment.status === 'Pending Approval',
+    'card-rejected': appointment.status === 'Rejected'
+  }"
+>
+  <div class="card-header">
+    <div class="doctor-info">
+      <fa-icon
+        class="header-icon"
+        [icon]="
+          appointment.status === 'Confirmed'
+            ? faCheck
+            : appointment.status === 'Pending Approval'
+            ? faPending
+            : faRejected
+        "
+      ></fa-icon>
+      <div>
+        <h4>{{ appointment.doctorName }}</h4>
+        <p>{{ appointment.specialization }}</p>
+      </div>
+    </div>
+    <div class="status-tag" [attr.data-status]="appointment.status">
+      {{ appointment.status === 'Pending Approval' ? 'Pending' : appointment.status }}
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="info-item">
+      <fa-icon [icon]="faStethoscope"></fa-icon>
+      <div>
+        <label>Specialization</label>
+        <p>{{ appointment.specialization }}</p>
+      </div>
+    </div>
+    <div class="info-item">
+      <fa-icon [icon]="faCalendar"></fa-icon>
+      <div>
+        <label>Date</label>
+        <p>{{ appointment.appointmentDate | date: 'MMM d, y' }}</p>
+      </div>
+    </div>
+    <div class="info-item">
+      <fa-icon [icon]="faClock"></fa-icon>
+      <div>
+        <label>Time</label>
+        <p>{{ appointment.appointmentDate | date: 'h:mm a' }}</p>
+      </div>
+    </div>
+    <div class="info-item reason">
+      <fa-icon [icon]="faFileAlt"></fa-icon>
+      <div>
+        <label>Reason</label>
+        <p>{{ appointment.reason }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <div *ngIf="appointment.status === 'Confirmed'" class="footer-box footer-approved">
+      <fa-icon [icon]="faClock"></fa-icon>
+      <div>
+        <label>Appointment Time</label>
+        <p>{{ timeRemaining }}</p>
+      </div>
+    </div>
+
+    <div *ngIf="appointment.status === 'Pending Approval'" class="footer-box footer-pending">
+      <fa-icon [icon]="faInfoCircle"></fa-icon>
+      <p>Waiting for doctor's approval. You will be notified once confirmed.</p>
+    </div>
+
+    <div *ngIf="appointment.status === 'Rejected'" class="footer-box footer-rejected">
+      <div class="rejection-reason">
+        <fa-icon [icon]="faTimesCircle"></fa-icon>
+        <div>
+          <label>Appointment Rejected</label>
+          <p><strong>Reason:</strong> {{ appointment.rejectionReason }}</p>
+        </div>
+      </div>
+      <button class="btn btn-primary" (click)="onBookAnotherSlot()">
+        <fa-icon [icon]="faCalendar"></fa-icon>
+        Book Another Slot
+      </button>
+    </div>
+  </div>
+</div>

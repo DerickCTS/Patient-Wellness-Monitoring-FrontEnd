@@ -28,7 +28,7 @@ import { FormUseTemplateComponent } from '../form-use-template/form-use-template
 })
 export class AssignPlanModalComponent {
   activeView: 'template' | 'scratch' = 'template';
-  
+
   patientId: string;
   patientName: string;
   doctorId: string;
@@ -40,10 +40,10 @@ export class AssignPlanModalComponent {
   ) {
     this.patientId = data.patientId.toString();
     this.patientName = data.patientName;
-    
+
     // This is the CRITICAL step from Blocker 1
     // const id = this.authService.getDoctorId();
-    const id = "1";
+    const id = '1';
     if (!id) {
       console.error('Doctor ID not found! Cannot assign plan.');
       this.dialogRef.close();

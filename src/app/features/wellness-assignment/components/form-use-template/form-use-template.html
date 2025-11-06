@@ -1,49 +1,54 @@
 <div class="template-container">
+  <!-- =============== TEMPLATE SELECTION VIEW =============== -->
   <div *ngIf="!selectedTemplate; else formView">
-    <h3 class="view-title">Select a Template</h3>
+    <h2 class="view-title">Select a Wellness Template</h2>
 
     <div *ngIf="isLoadingTemplates" class="loading-state">
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      <div class="spinner"></div>
       <p>Loading templates...</p>
     </div>
 
     <div *ngIf="templates$ | async as templates" class="template-grid">
-      <mat-card
+      <div
         *ngFor="let template of templates"
         class="template-card"
-        appearance="outlined"
         (click)="onTemplateSelected(template)"
       >
-        <img
-          mat-card-image
-          [src]="wellnessService.getFullImageUrl(template.imageUrl)"
-          alt="{{ template.planName }}"
-        />
-        <mat-card-header>
-          <mat-card-title>{{ template.planName }}</mat-card-title>
-          <mat-card-subtitle>{{ template.goal }}</mat-card-subtitle>
-        </mat-card-header>
-      </mat-card>
+        <div class="template-image">
+          <img
+            [src]="wellnessService.getFullImageUrl(template.imageUrl)"
+            alt="{{ template.planName }}"
+          />
+        </div>
+        <div class="template-info">
+          <h4 class="plan-name">{{ template.planName }}</h4>
+          <p class="plan-goal">{{ template.goal }}</p>
+        </div>
+      </div>
     </div>
   </div>
 
+  <!-- =============== ASSIGN FORM VIEW =============== -->
   <ng-template #formView>
     <div class="form-header">
-      <button mat-icon-button (click)="goBackToTemplates()">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-      <h3 class="view-title">Assign: {{ selectedTemplateDetails?.planName }}</h3>
+      <button class="back-btn" (click)="goBackToTemplates()">← Back</button>
+      <h2 class="view-title">Assign: {{ selectedTemplateDetails?.planName }}</h2>
     </div>
 
     <div *ngIf="isLoadingDetails" class="loading-state">
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      <div class="spinner"></div>
       <p>Loading template details...</p>
     </div>
 
-    <form *ngIf="!isLoadingDetails" [formGroup]="form" (ngSubmit)="onSubmit()" class="template-form">
-      <mat-progress-bar *ngIf="isSaving" mode="indeterminate" class="form-progress"></mat-progress-bar>
+    <form
+      *ngIf="!isLoadingDetails"
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      class="template-form"
+    >
+      <div *ngIf="isSaving" class="progress-bar"></div>
 
-      <div class="readonly-section">
+      <section class="readonly-section card">
         <div class="readonly-field">
           <label>Plan Name</label>
           <p>{{ selectedTemplateDetails?.planName }}</p>
@@ -52,83 +57,91 @@
           <label>Goal</label>
           <p>{{ selectedTemplateDetails?.goal }}</p>
         </div>
-      </div>
+      </section>
 
-      <div class="form-row">
-        <mat-form-field appearance="outline" class="flex-field">
-          <mat-label>Category</mat-label>
-          <mat-select formControlName="Category">
-             <mat-option *ngFor="let cat of categories" [value]="cat">{{cat}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+      <section class="form-section">
+        <div class="form-row">
+          <div class="form-field">
+            <label>Category</label>
+            <select formControlName="Category">
+              <option *ngFor="let cat of categories" [value]="cat">
+                {{ cat }}
+              </option>
+            </select>
+          </div>
+        </div>
 
-      <div class="form-row">
-        <mat-form-field appearance="outline" class="flex-field">
-          <mat-label>Frequency Count</mat-label>
-          <input matInput formControlName="FrequencyCount" type="number" min="1">
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="flex-field">
-          <mat-label>Frequency Unit</mat-label>
-          <mat-select formControlName="FrequencyUnit">
-            <mat-option *ngFor="let unit of units" [value]="unit">{{unit}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Frequency Count</label>
+            <input formControlName="FrequencyCount" type="number" min="1" />
+          </div>
+          <div class="form-field">
+            <label>Frequency Unit</label>
+            <select formControlName="FrequencyUnit">
+              <option *ngFor="let unit of units" [value]="unit">
+                {{ unit }}
+              </option>
+            </select>
+          </div>
+        </div>
 
-      <div class="form-row">
-        <mat-form-field appearance="outline" class="flex-field">
-          <mat-label>Start Date</mat-label>
-          <input matInput [matDatepicker]="startPicker" formControlName="StartDate">
-          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-          <mat-datepicker #startPicker></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="flex-field">
-          <mat-label>End Date</mat-label>
-          <input matInput [matDatepicker]="endPicker" formControlName="EndDate">
-          <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-          <mat-datepicker #endPicker></mat-datepicker>
-        </mat-form-field>
-      </div>
-      
-      <mat-divider></mat-divider>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Start Date</label>
+            <input type="date" formControlName="StartDate" />
+          </div>
+          <div class="form-field">
+            <label>End Date</label>
+            <input type="date" formControlName="EndDate" />
+          </div>
+        </div>
+      </section>
 
-      <div class="details-header">
-        <h4>Plan Details</h4>
-        <mat-slide-toggle (change)="toggleEdit($event)">
-          Enable Editing
-        </mat-slide-toggle>
-      </div>
+      <hr class="divider" />
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Description</mat-label>
-        <textarea matInput formControlName="Description" rows="3"></textarea>
-      </mat-form-field>
+      <section class="details-section card">
+        <div class="details-header">
+          <h3>Plan Details</h3>
+          <label class="toggle">
+            <input
+              type="checkbox"
+              (change)="toggleEdit(($any({ checked: $event.target.checked })))"
+            />
+            Enable Editing
+          </label>
+        </div>
 
-      <app-form-array-manager
-        label="Instructions"
-        [formArray]="instructions"
-        (addItem)="addItem(instructions)"
-        (removeItem)="removeItem(instructions, $event)"
-      ></app-form-array-manager>
-      
-      <app-form-array-manager
-        label="Benefits"
-        [formArray]="benefits"
-        (addItem)="addItem(benefits)"
-        (removeItem)="removeItem(benefits, $event)"
-      ></app-form-array-manager>
-      
-      <app-form-array-manager
-        label="Safety"
-        [formArray]="safety"
-        (addItem)="addItem(safety)"
-        (removeItem)="removeItem(safety, $event)"
-      ></app-form-array-manager>
-      
+        <div class="form-field full-width">
+          <label>Description</label>
+          <textarea formControlName="Description" rows="3"></textarea>
+        </div>
+
+        <app-form-array-manager
+          label="Instructions"
+          [formArray]="instructions"
+          (addItem)="addItem(instructions)"
+          (removeItem)="removeItem(instructions, $event)"
+        ></app-form-array-manager>
+
+        <app-form-array-manager
+          label="Benefits"
+          [formArray]="benefits"
+          (addItem)="addItem(benefits)"
+          (removeItem)="removeItem(benefits, $event)"
+        ></app-form-array-manager>
+
+        <app-form-array-manager
+          label="Safety"
+          [formArray]="safety"
+          (addItem)="addItem(safety)"
+          (removeItem)="removeItem(safety, $event)"
+        ></app-form-array-manager>
+      </section>
+
       <div class="form-actions">
-        <button mat-flat-button color="primary" type="submit" [disabled]="isSaving">
-          {{ isSaving ? 'Assigning...' : 'Assign Wellness Plan' }}
+        <button class="submit-btn" type="submit" [disabled]="isSaving">
+          {{ isSaving ? "Assigning..." : "Assign Wellness Plan" }}
         </button>
       </div>
     </form>

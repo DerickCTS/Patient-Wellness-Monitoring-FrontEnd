@@ -1,0 +1,184 @@
+/* Using CSS variables for the themes */
+:host {
+  --green-light: #f0f9f4;
+  --green-dark: #1e8755;
+  --green-border: #a3d9b8;
+
+  --yellow-light: #fffbeb;
+  --yellow-dark: #b45309;
+  --yellow-border: #fde68a;
+
+  --red-light: #fef2f2;
+  --red-dark: #dc2626;
+  --red-border: #fecaca;
+}
+
+.appointment-card {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid;
+  font-family: Arial, sans-serif;
+}
+
+/* --- Themeing based on status --- */
+.card-approved {
+  background-color: var(--green-light);
+  border-color: var(--green-border);
+  .header-icon { color: var(--green-dark); }
+  .status-tag { background-color: var(--green-dark); }
+  .footer-box { background-color: #e6f4eb; }
+}
+.card-pending {
+  background-color: var(--yellow-light);
+  border-color: var(--yellow-border);
+  .header-icon { color: var(--yellow-dark); }
+  .status-tag { background-color: var(--yellow-dark); }
+  .footer-box { background-color: #fef9e7; }
+}
+.card-rejected {
+  background-color: var(--red-light);
+  border-color: var(--red-border);
+  .header-icon { color: var(--red-dark); }
+  .status-tag { background-color: var(--red-dark); }
+  .footer-box { background-color: #fdeeee; }
+}
+
+/* --- Card Sections --- */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.doctor-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .header-icon {
+    font-size: 2rem;
+    padding: 8px;
+    border-radius: 50%;
+    background-color: #fff;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  h4 {
+    margin: 0 0 4px 0;
+    font-size: 1.1rem;
+    color: #000;
+  }
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #555;
+  }
+}
+
+.status-tag {
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.card-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 0 20px 20px 20px;
+}
+
+.info-item {
+  background-color: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  &.reason {
+    grid-column: 1 / -1; /* Make reason span full width */
+  }
+
+  fa-icon {
+    color: #3f51b5;
+    font-size: 1rem;
+  }
+  
+  label {
+    display: block;
+    font-size: 0.8rem;
+    color: #777;
+    margin-bottom: 2px;
+  }
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #222;
+  }
+}
+
+.card-footer {
+  padding: 16px 20px;
+}
+
+.footer-box {
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 0.9rem;
+  
+  p, label { margin: 0; }
+  label { font-size: 0.8rem; color: #555; }
+  p { font-weight: bold; }
+}
+
+.footer-approved {
+  fa-icon { color: var(--green-dark); font-size: 1.1rem; }
+  p { color: var(--green-dark); }
+}
+.footer-pending {
+  fa-icon { color: var(--yellow-dark); font-size: 1.1rem; }
+  p { color: #777; font-weight: 500; }
+}
+.footer-rejected {
+  display: block; // Stack vertically
+  fa-icon { color: var(--red-dark); font-size: 1.1rem; }
+  p { color: var(--red-dark); }
+  label { color: var(--red-dark); font-size: 0.9rem; font-weight: bold; }
+
+  .rejection-reason {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .btn {
+    width: 100%;
+    background-color: #3f51b5;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    
+    &:hover { background-color: #303f9f; }
+  }
+}

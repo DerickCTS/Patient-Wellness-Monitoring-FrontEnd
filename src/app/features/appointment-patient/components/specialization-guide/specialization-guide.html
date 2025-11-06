@@ -1,0 +1,29 @@
+<div class="modal-overlay" (click)="closeModal.emit()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <h2>Medical Specialization Guide</h2>
+        <p>Find the right specialization based on your health concerns</p>
+      </div>
+      <button class="icon-button" (click)="closeModal.emit()">
+        <fa-icon [icon]="faClose"></fa-icon>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="guide-grid">
+        <div class="guide-card" *ngFor="let spec of specializations">
+          <div class="card-icon">
+            <fa-icon [icon]="spec.icon"></fa-icon>
+          </div>
+          <h3>{{ spec.name }}</h3>
+          <p class="spec-desc">{{ spec.description }}</p>
+          <h4>Common conditions treated:</h4>
+          <ul>
+            <li *ngFor="let cond of spec.conditions">{{ cond }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,60 +1,78 @@
 <div class="search-container">
-  <mat-card class="search-card" appearance="outlined">
-    <mat-card-title>Patient Search</mat-card-title>
-    <mat-card-content>
-      <mat-tab-group (selectedIndexChange)="onTabChange($event)" animationDuration="0ms">
-        <mat-tab label="Search by Name"></mat-tab>
-        <mat-tab label="Search by Patient ID"></mat-tab>
-      </mat-tab-group>
+  <div class="search-card">
+    <h2 class="card-title">🔍 Patient Search</h2>
 
-      <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="search-form">
-        <mat-form-field appearance="outline" class="search-field">
-          <mat-label>{{ searchType === 'patientName' ? 'Patient Name' : 'Patient ID' }}</mat-label>
-          <input matInput formControlName="query" />
-        </mat-form-field>
-        <button mat-flat-button color="primary" type="submit" [disabled]="isLoading">
-          <mat-icon>search</mat-icon>
-          Search
-        </button>
-      </form>
-    </mat-card-content>
-    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-  </mat-card>
-
-  <div class="results-container">
-    <ng-container *ngIf="results$ | async as results">
-      <h3 class="results-title">Search Results ({{ results.length }})</h3>
-
-      <mat-card
-        *ngFor="let patient of results"
-        class="patient-card"
-        appearance="outlined"
-        (click)="selectPatient(patient.patientId)"
+    <!-- Tab Buttons -->
+    <div class="tab-group">
+      <button
+        class="tab-button"
+        [class.active]="searchType === 'patientName'"
+        (click)="onTabChange(0)"
       >
-        <div class="patient-card-content">
-          <img
-            [src]="wellnessService.getFullImageUrl(patient.profileImage)"
-            alt="Patient"
-            class="patient-avatar"
-          />
-          <div class="patient-info">
-            <div class="patient-name">
-              {{ patient.firstName }} {{ patient.lastName }}
-              <span class="patient-id">(ID: {{ patient.patientId }})</span>
-            </div>
-            <div class="patient-details">
-              <span><mat-icon>{{ patient.gender === 'Male' ? 'male' : 'female' }}</mat-icon> {{ patient.gender }}</span>
-              <span><mat-icon>bloodtype</mat-icon> Blood: {{ patient.bloodGroup }}</span>
-            </div>
-          </div>
-        </div>
-      </mat-card>
+        Search by Name
+      </button>
+      <button
+        class="tab-button"
+        [class.active]="searchType === 'patientId'"
+        (click)="onTabChange(1)"
+      >
+        Search by Patient ID
+      </button>
+    </div>
 
-      <div *ngIf="results.length === 0 && searchAttempted && !isLoading" class="empty-state">
-        <mat-icon>search_off</mat-icon>
-        <p>No patients found matching your query.</p>
+    <!-- Search Form -->
+    <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="search-form">
+      <div class="search-field">
+        <label>
+          {{ searchType === 'patientName' ? 'Patient Name' : 'Patient ID' }}
+        </label>
+        <input
+          type="text"
+          formControlName="query"
+          placeholder="Enter {{ searchType === 'patientName' ? 'patient name' : 'patient ID' }}"
+        />
       </div>
 
-    </ng-container>
+      <button type="submit" class="search-btn" [disabled]="isLoading">
+        Search
+      </button>
+    </form>
+
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="progress-bar"></div>
+  </div>
+
+  <!-- Results Section -->
+  <div class="results-container" *ngIf="results$ | async as results">
+    <h3 class="results-title">Search Results ({{ results.length }})</h3>
+
+    <div
+      *ngFor="let patient of results"
+      class="patient-card"
+      (click)="selectPatient(patient.patientId)"
+    >
+      <img
+        [src]="wellnessService.getFullImageUrl(patient.profileImage)"
+        alt="Patient"
+        class="patient-avatar"
+      />
+      <div class="patient-info">
+        <div class="patient-name">
+          {{ patient.firstName }} {{ patient.lastName }}
+          <span class="patient-id">(ID: {{ patient.patientId }})</span>
+        </div>
+        <div class="patient-details">
+          <span>👤 {{ patient.gender }}</span>
+          <span>🩸 Blood: {{ patient.bloodGroup }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="results.length === 0 && searchAttempted && !isLoading"
+      class="empty-state"
+    >
+      <p>🔍 No patients found matching your query.</p>
+    </div>
   </div>
 </div>

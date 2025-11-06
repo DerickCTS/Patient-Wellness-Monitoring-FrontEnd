@@ -1,115 +1,217 @@
+/* ==== Layout ==== */
 .search-container {
-  max-width: 800px;
-  margin: 24px auto; // Center the content
-  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: linear-gradient(135deg, #d6f0ff, #f0f8ff);
+  min-height: 100vh;
+  padding: 60px 20px;
+  font-family: "Poppins", sans-serif;
 }
 
+/* ==== Search Card ==== */
 .search-card {
-  position: relative; // For the progress bar
-  overflow: hidden; // Keep progress bar neat
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+  padding: 30px;
+  text-align: center;
+  transition: transform 0.3s ease;
 }
 
+.search-card:hover {
+  transform: translateY(-5px);
+}
+
+.card-title {
+  color: #0d47a1;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+/* ==== Tab Buttons ==== */
+.tab-group {
+  display: flex;
+  justify-content: space-around;
+  background: #e3f2fd;
+  border-radius: 10px;
+  padding: 5px;
+  margin-bottom: 25px;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #1565c0;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.tab-button:hover {
+  background: rgba(21, 101, 192, 0.1);
+}
+
+.tab-button.active {
+  background: #1565c0;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ==== Form ==== */
 .search-form {
   display: flex;
-  gap: 16px;
-  padding: 24px 0 16px;
+  flex-direction: column;
   align-items: center;
+  gap: 20px;
+}
 
-  .search-field {
-    flex: 1; // Take up most space
+.search-field {
+  width: 100%;
+  text-align: left;
+}
+
+.search-field label {
+  display: block;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.search-field input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #bbdefb;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.search-field input:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 8px rgba(25, 118, 210, 0.3);
+}
+
+/* ==== Search Button ==== */
+.search-btn {
+  background: #1976d2;
+  color: white;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.search-btn:hover {
+  background: #0d47a1;
+  transform: scale(1.03);
+}
+
+.search-btn:disabled {
+  background: #90caf9;
+  cursor: not-allowed;
+}
+
+/* ==== Progress Bar ==== */
+.progress-bar {
+  margin-top: 15px;
+  height: 5px;
+  width: 100%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #64b5f6, #1e88e5, #1565c0);
+  background-size: 200% 100%;
+  animation: loading 1s infinite linear;
+}
+
+@keyframes loading {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
   }
 }
 
+/* ==== Results Section ==== */
 .results-container {
-  margin-top: 32px;
+  margin-top: 40px;
+  width: 100%;
+  max-width: 700px;
 }
 
 .results-title {
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: #333;
-  margin-bottom: 16px;
+  color: #0d47a1;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: left;
 }
 
+/* ==== Patient Card ==== */
 .patient-card {
-  margin-bottom: 16px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    border-color: #3f51b5; // Primary color
-  }
-}
-
-.patient-card-content {
   display: flex;
   align-items: center;
-  padding: 16px;
-  gap: 16px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  margin-bottom: 15px;
+  padding: 15px 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.patient-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .patient-avatar {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  object-fit: cover; // Prevents stretching
-  background-color: #eee; // Placeholder color
-  // Use a default icon if no image
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #aaa;
+  object-fit: cover;
+  border: 3px solid #64b5f6;
+  margin-right: 15px;
 }
 
 .patient-info {
-  flex: 1;
+  text-align: left;
 }
 
 .patient-name {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #000;
+  font-weight: 600;
+  font-size: 16px;
+  color: #1565c0;
+}
 
-  .patient-id {
-    font-size: 0.9rem;
-    font-weight: 400;
-    color: #555;
-    margin-left: 8px;
-    background-color: #f0f0f0;
-    padding: 2px 6px;
-    border-radius: 4px;
-  }
+.patient-id {
+  color: #666;
+  font-size: 13px;
+  margin-left: 8px;
 }
 
 .patient-details {
   display: flex;
-  gap: 24px;
-  margin-top: 8px;
-  color: #666;
-
-  span {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.9rem;
-
-    mat-icon {
-      font-size: 18px;
-      width: 18px;
-      height: 18px;
-    }
-  }
+  gap: 15px;
+  color: #444;
+  margin-top: 6px;
+  font-size: 14px;
 }
 
+/* ==== Empty State ==== */
 .empty-state {
   text-align: center;
-  padding: 48px;
-  color: #888;
-
-  mat-icon {
-    font-size: 48px;
-    width: 48px;
-    height: 48px;
-  }
+  color: #777;
+  font-size: 15px;
+  margin-top: 30px;
 }

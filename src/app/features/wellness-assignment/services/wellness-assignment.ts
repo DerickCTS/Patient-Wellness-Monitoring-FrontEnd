@@ -29,7 +29,7 @@ export class WellnessService {
     searchType: 'patientName' | 'patientId',
     query: string
   ): Observable<PatientSearchResultDto[]> {
-    
+
     // Create query parameters
     let params = new HttpParams();
     if (searchType === 'patientName') {
@@ -124,7 +124,7 @@ export class WellnessService {
   // --- HELPER FUNCTIONS ---
 
   getDoctorId(): string | null {
-    // return this.authService.getDoctorId();
+    //return this.authService.getDoctorId();
     return '1';
   }
 
@@ -134,7 +134,7 @@ export class WellnessService {
       panelClass: 'success-snackbar',
     });
   }
-  
+
   showError(message: string): void {
     this.snackBar.open(message, 'Close', {
       duration: 5000,
@@ -154,6 +154,6 @@ export class WellnessService {
     // As we discussed, this joins the server URL with the relative path
     return this.serverBaseUrl + relativePath;
   }
-  
+
   // We will add more API calls here in Part 2
 }

@@ -1,86 +1,237 @@
-/* A container to give the page some padding */
+/* --- Global Styles & Layout --- */
 .page-container {
-  padding: 24px;
-  max-width: 900px;
-  margin: 0 auto;
+    padding: 24px;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f4f7f9; /* Light background */
+    min-height: 100vh;
 }
 
 .page-header {
-  margin-bottom: 24px;
-  h1 {
-    font-size: 2.25rem;
-    font-weight: 500;
+    margin-bottom: 32px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 16px;
+}
+
+.page-header h1 {
+    color: #1e3a8a; /* Dark blue primary color */
+    font-weight: 600;
     margin: 0;
-  }
-  p {
+    font-size: 2.2rem;
+}
+
+.page-header p {
+    color: #555;
     font-size: 1rem;
-    color: #6c757d;
-  }
+    margin-top: 8px;
 }
 
+/* --- Appointment List Grid Layout --- */
+.appointment-list {
+    display: grid;
+    /* Responsive Grid: 1 column on small, 2 on medium, 3 on large */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+/* --- Individual Appointment Card --- */
 .appointment-card {
-  margin-bottom: 20px;
-
-  // Use flex to align icon and text
-  .patient-details span,
-  mat-card-subtitle span {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 20px;
     display: flex;
-    align-items: center;
-    gap: 8px; /* space between icon and text */
-    margin-bottom: 8px;
-    font-size: 0.9rem;
-
-    mat-icon {
-      font-size: 1.1rem;
-      width: 1.1rem;
-      height: 1.1rem;
-    }
-  }
-
-  // Make avatar blue
-  .patient-avatar {
-    background-color: #e3f2fd;
-    color: #1976d2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  // The yellow box from your Figma
-  .chief-complaint {
-    background-color: #fff8e1; // Light yellow
-    color: #6d4c0d;
-    border-radius: 8px;
-    padding: 16px;
-    margin: 16px; // Margin inside the card
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    mat-icon {
-      font-size: 1.5rem;
-      width: 1.5rem;
-      height: 1.5rem;
-    }
-    p {
-      margin: 4px 0 0 0;
-      font-weight: 500;
-    }
-  }
-
-  mat-card-actions {
-    padding: 0 16px 16px 16px; // Add padding to actions
-  }
+    flex-direction: column;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border-left: 5px solid #3b82f6; /* Accent color on the left */
 }
 
-.empty-state {
-  text-align: center;
-  padding: 48px;
-  color: #6c757d;
+.appointment-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
 
-  mat-icon {
-    font-size: 4rem;
-    width: 4rem;
-    height: 4rem;
-  }
+/* --- Card Header (Patient Info) --- */
+.card-header {
+    display: flex;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #e0e0e0;
+    margin-bottom: 15px;
+}
+
+.patient-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #dbeafe; /* Light blue background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+.patient-avatar .icon {
+    font-size: 24px;
+    color: #1e3a8a;
+}
+
+.header-content {
+    flex-grow: 1;
+}
+
+.card-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #333;
+    margin: 0;
+}
+
+.card-subtitle {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 4px;
+}
+
+.card-subtitle span {
+    display: flex;
+    align-items: center;
+}
+
+.card-icon {
+    margin-right: 4px;
+    font-size: 16px;
+    color: #3b82f6;
+}
+
+/* --- Patient Details (Contact/ID) --- */
+.patient-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+.patient-details span {
+    display: flex;
+    align-items: center;
+}
+
+.detail-icon {
+    margin-right: 8px;
+    font-size: 18px;
+    color: #9ca3af; /* Gray icon color */
+}
+
+/* --- Chief Complaint Section --- */
+.chief-complaint {
+    display: flex;
+    align-items: flex-start;
+    padding: 15px;
+    background-color: #f9fafb; /* Very light gray for complaint */
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.complaint-icon {
+    margin-right: 10px;
+    font-size: 20px;
+    color: #f59e0b; /* Amber icon color */
+    flex-shrink: 0;
+    padding-top: 2px;
+}
+
+.chief-complaint strong {
+    display: block;
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.chief-complaint p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #4b5563;
+    line-height: 1.4;
+}
+
+/* --- Card Actions (Button) --- */
+.card-actions {
+    margin-top: auto; /* Push to the bottom */
+}
+
+.primary-button {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #c026d3; /* DARK PINK/MAGENTA */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+
+.primary-button:hover {
+    background-color: #a215c0; /* Darker Pink on Hover */
+}
+
+.primary-button .icon {
+    font-size: 20px;
+}
+
+/* --- Empty State & Loading --- */
+.empty-state, #loading {
+    grid-column: 1 / -1; /* Span across all columns */
+    text-align: center;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+}
+
+.empty-state h2 {
+    color: #333;
+    margin: 10px 0 5px;
+}
+
+.empty-state p {
+    color: #777;
+}
+
+.empty-icon {
+    font-size: 40px;
+    color: #3b82f6;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Assuming 'icon', 'card-icon', 'detail-icon', 'complaint-icon' use a font library like Material Icons */
+.icon, .card-icon, .detail-icon, .complaint-icon {
+    font-family: 'Material Icons', sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Firefox. */
+    text-rendering: optimizeLegibility;
+    /* Support for IE. */
+    -moz-osx-font-smoothing: grayscale;
 }

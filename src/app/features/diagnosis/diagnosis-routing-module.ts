@@ -6,11 +6,11 @@ import { AppointmentDiagnosisComponent } from './pages/appointment-diagnosis/app
 
 const routes: Routes = [
   {
-    path: '',
+    path: '', // This will be '.../diagnosis'
     component: AppointmentListComponent,
   },
   {
-    path: ':id',
+    path: ':id', // This will be '.../diagnosis/1'
     component: AppointmentDiagnosisComponent,
   },
 ];

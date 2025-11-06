@@ -57,6 +57,13 @@ export const routes: Routes = [
           ),
       },
       // ...add all other private routes here
+      {
+        path: 'my-appointments',
+        loadChildren: () => 
+          import('./features/appointment-patient/appointment-patient-module').then(
+            (m) => m.AppointmentPatientModule
+          ),
+      }
     ]
   },
 ];

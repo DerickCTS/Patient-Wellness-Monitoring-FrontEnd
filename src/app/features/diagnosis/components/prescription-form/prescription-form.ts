@@ -5,10 +5,26 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { NewPrescriptionDto } from '../../models/diagnosis.dto';
 
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+
+// Dummy DTO structure for compilation context. In a real app, this would be imported.
+interface Schedule {
+  TimeOfDay: string;
+  Quantity: number;
+}
+
+interface NewPrescriptionDto {
+  MedicationName: string;
+  Dosage: string;
+  StartDate: string;
+  EndDate: string;
+  Instructions: string | null;
+  Schedules: Schedule[];
+}
+
+// Angular Material imports are kept but not strictly necessary for the current plain HTML template
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -20,7 +36,7 @@ import { MatSelectModule } from '@angular/material/select';
 @Component({
   selector: 'app-prescription-form',
   templateUrl: './prescription-form.html',
-  styleUrls: ['./prescription-form.scss'],
+  styleUrls: ['./prescription-form.scss'], // Assuming this file exists for styling
   standalone: true,
   imports: [
     CommonModule,
@@ -39,7 +55,7 @@ export class PrescriptionFormComponent implements OnInit {
   @Output() cancel = new EventEmitter<void>();
 
   prescriptionForm: FormGroup;
-  
+
   // These are the dropdown options for the schedule
   timeOfDayOptions = [
     'Morning',
@@ -54,7 +70,7 @@ export class PrescriptionFormComponent implements OnInit {
     this.prescriptionForm = this.fb.group({
       MedicationName: ['', Validators.required],
       Dosage: ['', Validators.required],
-      StartDate: [null, Validators.required],
+      StartDate: [this.formatDate(new Date()), Validators.required], // Initialize with today's date for dev ease
       EndDate: [null, Validators.required],
       Instructions: [null],
       // This is the special "list of forms" for schedules
@@ -90,7 +106,8 @@ export class PrescriptionFormComponent implements OnInit {
    * Adds a new, empty schedule row to the FormArray.
    */
   addSchedule(): void {
-    if (this.schedules.length >= 5) return; // Limit to 5
+    // Allows adding up to 5 schedules
+    if (this.schedules.length >= 5) return;
     this.schedules.push(this.createScheduleGroup());
   }
 
@@ -104,20 +121,29 @@ export class PrescriptionFormComponent implements OnInit {
   // --- Main Form Actions ---
 
   onSave(): void {
+    console.log('Attempting to save prescription...');
+
+    // Check if the form is valid and mark controls as touched to display errors
     if (this.prescriptionForm.invalid) {
+      console.log('Form is invalid. Validation errors:', this.prescriptionForm.errors);
       this.prescriptionForm.markAllAsTouched();
       return;
     }
-    
+
     // We need to format the dates before sending
     const formValue = this.prescriptionForm.value;
-    const payload = {
+    const payload: NewPrescriptionDto = {
       ...formValue,
+      // Ensure dates are formatted to a common standard (e.g., ISO string)
       StartDate: this.formatDate(formValue.StartDate),
       EndDate: this.formatDate(formValue.EndDate),
     };
 
+    console.log('Form is valid, emitting data:', payload);
+
+    // This is the line that signals to the parent component that data is ready
     this.prescriptionSaved.emit(payload);
+
     this.resetForm();
   }
 
@@ -125,17 +151,28 @@ export class PrescriptionFormComponent implements OnInit {
     this.cancel.emit();
     this.resetForm();
   }
-  
+
   private resetForm(): void {
-     this.prescriptionForm.reset();
-     this.schedules.clear();
-     this.addSchedule(); // Add one blank schedule back
+    // Reset the form values
+    this.prescriptionForm.reset();
+    // Clear all schedule array controls
+    this.schedules.clear();
+    // Add one blank schedule back for default view
+    this.addSchedule();
   }
-  
-  // Helper to format date to 'YYYY-MM-DDTHH:mm:ssZ'
-  private formatDate(date: Date): string {
+
+  /**
+   * Helper to format Date objects from the date input into a string for the DTO.
+   * @param date The date object from the form control.
+   * @returns An ISO 8601 string representation of the date (YYYY-MM-DD).
+   */
+  private formatDate(date: string | Date | null): string {
     if (!date) return '';
-    // This gives you a UTC string like "2025-10-29T00:00:00.000Z"
-    return date.toISOString();
+    // If it's a Date object (like from a date picker), convert it.
+    if (date instanceof Date) {
+        return date.toISOString().split('T')[0];
+    }
+    // If it's already a string (like from type="date" input), return it.
+    return date as string;
   }
 }
