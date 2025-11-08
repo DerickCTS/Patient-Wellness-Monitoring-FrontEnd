@@ -1,0 +1,135 @@
+<div class="header-bar">
+  <div class="doctor-info">
+    <div class="doctor-avatar">SJ</div>
+    <div class="doctor-text">
+      <span class="doctor-name">Dr. Sarah Johnson</span>
+      <span class="doctor-specialty">Cardiology</span>
+    </div>
+    <span class="status-online">Online</span>
+  </div>
+  <div class="search-bar">
+    <input type="text" placeholder="Search patients, appointments..." />
+  </div>
+  <div class="actions">
+    <button class="set-availability-btn">Set Availability</button>
+    <span class="notification-icon">🔔</span>
+    <span class="settings-icon">⚙️</span>
+  </div>
+</div>
+
+<div class="main-content">
+  <div class="tab-nav">
+    <button class="tab-btn" [class.active]="selectedTab === 'Overview'" (click)="selectedTab = 'Overview'">Overview</button>
+    <button class="tab-btn" [class.active]="selectedTab === 'Profile'" [routerLink]="['profile']" (click)="selectedTab = 'Profile'">Profile</button>
+  </div>
+
+  <div class="overview-grid" *ngIf="selectedTab === 'Overview'">
+    
+    <div class="stat-card" (click)="openModal('patients')">
+      <h3>Total Patients</h3>
+      <span class="icon-label patient-icon">👤</span>
+      <div class="stat-value">{{ dashboardData?.patients?.totalCount | number }}</div>
+      <div class="stat-change" [ngClass]="getPercentageClass(dashboardData?.patients?.percentageChange)">
+        +{{ dashboardData?.patients?.percentageChange }}%
+      </div>
+    </div>
+    
+    <div class="stat-card" (click)="openModal('appointments')">
+      <h3>Today's Appointments</h3>
+      <span class="icon-label appointment-icon">📅</span>
+      <div class="stat-value">{{ dashboardData?.appointments?.total }}</div>
+      <div class="stat-subtext">{{ dashboardData?.appointments?.pending }} Pending</div>
+    </div>
+
+    <div class="stat-card" (click)="openModal('prescriptions')">
+      <h3>Active Prescriptions</h3>
+      <span class="icon-label prescription-icon">📄</span>
+      <div class="stat-value">{{ dashboardData?.prescriptions?.totalActive }}</div>
+      <div class="stat-change" [ngClass]="getPercentageClass(dashboardData?.prescriptions?.percentageChange)">
+        +{{ dashboardData?.prescriptions?.percentageChange }}%
+      </div>
+    </div>
+    
+    <div class="stat-card" (click)="openModal('wellness')">
+      <h3>Wellness Plans</h3>
+      <span class="icon-label wellness-icon">📈</span>
+      <div class="stat-value">{{ dashboardData?.wellnessPlans?.totalCount }}</div>
+      <div class="stat-change" [ngClass]="getPercentageClass(dashboardData?.wellnessPlans?.percentageChange)">
+        +{{ dashboardData?.wellnessPlans?.percentageChange }}%
+      </div>
+    </div>
+
+    <div class="stat-card" (click)="openModal('completed')">
+      <h3>Completed Today</h3>
+      <span class="icon-label completed-icon">✔️</span>
+      <div class="stat-value">{{ dashboardData?.appointments?.completed }}</div>
+      <div class="stat-subtext">{{ dashboardData?.appointments?.remaining }} Remaining</div>
+    </div>
+    
+    <div class="section-card weekly-appointments-card">
+      <h2>Weekly Appointments</h2>
+      <p>Appointment overview for this week</p>
+      <div class="chart-placeholder">Bar Chart component goes here</div>
+    </div>
+    
+    <div class="section-card patient-trends-card">
+      <h2>Patient Trends</h2>
+      <p>New patients and total visits over time</p>
+      <div class="chart-placeholder">Line Chart component goes here</div>
+    </div>
+    
+    <div class="section-card availability-card">
+      <h2>Availability</h2>
+      <p>Your schedule and time off</p>
+      <div class="schedule-entry"><span>Monday</span><span>09:00 - 17:00</span><span class="recurring-tag">Recurring</span></div>
+      <a href="#" class="view-all-link">+</a>
+    </div>
+
+    <div class="section-card appointment-list-card full-width">
+      <h2>Today's Appointments</h2>
+      <p>{{ dashboardData?.todayAppointmentsList?.length || 0 }} appointments scheduled for today</p>
+      <div class="appointment-table">
+        <div class="table-header">
+          <span>Patient</span><span>Time</span><span>Reason</span><span>Status</span><span>Duration</span><span>Action</span>
+        </div>
+        <div class="table-row" *ngFor="let appt of dashboardData?.todayAppointmentsList">
+          <span class="patient-cell">
+            <span class="patient-avatar">{{ getPatientInitials(appt.patientName) }}</span>
+            {{ appt.patientName }}
+            <span class="patient-age">{{ appt.patientAge }}</span>
+          </span>
+          <span>{{ appt.time }}</span>
+          <span>{{ appt.reason }}</span>
+          <span class="status-tag" [class.scheduled]="appt.status === 'Scheduled'" [class.in-progress]="appt.status === 'InProgress'">{{ appt.status }}</span>
+          <span>{{ appt.duration }}</span>
+          <span class="action-cell">👁️</span>
+        </div>
+      </div>
+      <a href="#" class="view-all-link">View All</a>
+    </div>
+
+    <div class="section-card recent-prescriptions-card">
+      <h2>Recent Prescriptions</h2>
+      <p>Active prescriptions for your patients</p>
+      <div class="prescription-list">
+        <div class="prescription-item" *ngFor="let rx of dashboardData?.recentPrescriptions">
+          <div class="rx-header">
+            <span class="medication-name">{{ rx.medicationName }}</span>
+            <span class="rx-status active">{{ rx.status }}</span>
+          </div>
+          <p class="rx-patient">{{ rx.patientName }}</p>
+        </div>
+      </div>
+      <a href="#" class="view-all-link">View All</a>
+    </div>
+  </div>
+
+  <app-profile *ngIf="selectedTab === 'Profile'"></app-profile>
+  
+  <app-patient-breakdown *ngIf="isPatientModalOpen" [data]="patientBreakdown" (close)="closeAllModals()"></app-patient-breakdown>
+  <app-appointments-breakdown *ngIf="isAppointmentsModalOpen" [data]="appointmentsBreakdown" (close)="closeAllModals()" [type]="'appointments'"></app-appointments-breakdown>
+  <app-appointments-breakdown *ngIf="isCompletedTodayModalOpen" [data]="appointmentsBreakdown" (close)="closeAllModals()" [type]="'completed'"></app-appointments-breakdown>
+  <app-active-prescriptions *ngIf="isPrescriptionsModalOpen" [data]="prescriptionsBreakdown" (close)="closeAllModals()"></app-active-prescriptions>
+  <app-wellness-plans-breakdown *ngIf="isWellnessModalOpen" [data]="wellnessBreakdown" (close)="closeAllModals()"></app-wellness-plans-breakdown>
+
+</div>

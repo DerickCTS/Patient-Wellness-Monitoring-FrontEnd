@@ -1,0 +1,50 @@
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white; border-radius: 12px;
+  width: 400px; max-width: 90%; padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.modal-header { display: flex; align-items: center; margin-bottom: 10px; }
+.header-icon { font-size: 1.8em; margin-right: 10px; }
+
+.modal-header h2 { font-size: 1.5em; margin: 0; flex-grow: 1; }
+
+.close-btn { background: none; border: none; font-size: 1.2em; cursor: pointer; color: #999; }
+
+.modal-subtitle { color: #666; margin: 0 0 20px 0; }
+
+.main-stat-block {
+  text-align: center; padding: 30px 20px;
+  border-radius: 10px; margin-bottom: 25px;
+}
+
+.stat-value { font-size: 4em; font-weight: 300; line-height: 1; }
+.stat-change, .stat-subtext { font-size: 1.1em; font-weight: 500; margin-top: 5px; }
+
+.breakdown-grid { 
+  display: grid; 
+  gap: 15px; 
+}
+.breakdown-item {
+  background-color: #f8f9fa; padding: 15px;
+  border-radius: 8px; text-align: center;
+}
+
+.item-label { color: #6c757d; font-size: 0.9em; margin-top: 0; }
+.item-value { font-size: 1.8em; font-weight: bold; color: #333; margin-bottom: 0; }
+
+/* Utility class for gradients */
+.positive-white { color: white; }
+.stat-subtext-white { color: rgba(255, 255, 255, 0.9); }
+
+/* Grid specific to each modal */
+.patient-grid { grid-template-columns: repeat(2, 1fr); }
+.appointment-grid { grid-template-columns: repeat(3, 1fr); }

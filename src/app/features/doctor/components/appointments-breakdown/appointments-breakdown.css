@@ -1,0 +1,15 @@
+@import url('../modal-base.css');
+
+.appointment-icon { color: #6a1b9a; }
+.completed-icon { color: #007bff; }
+
+.purple-gradient {
+  background: linear-gradient(135deg, #a052ff, #6a1b9a);
+  color: white;
+}
+
+.teal-gradient {
+  background: linear-gradient(135deg, #20c997, #17a2b8);
+  color: white;
+}
+.appointment-grid { grid-template-columns: repeat(3, 1fr); }

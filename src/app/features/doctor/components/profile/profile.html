@@ -1,0 +1,74 @@
+<div class="profile-container">
+  <div class="profile-sidebar">
+    <div class="profile-header">
+      <div class="profile-avatar">
+        {{ (profileData?.firstName?.[0] || '') + (profileData?.lastName?.[0] || '') || 'SJ' }}
+      </div>
+      <div class="name-specialty">
+        <span class="doctor-name">Dr. {{ profileData?.firstName }} {{ profileData?.lastName }}</span>
+        <span class="doctor-specialty">{{ profileData?.specialty }}</span>
+      </div>
+      <span class="edit-icon">✏️</span>
+    </div>
+
+    <div class="profile-details-section">
+      <div class="detail-item">
+        <span class="detail-label">Doctor ID</span>
+        <span class="detail-value">{{ profileData?.doctorId }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Email</span>
+        <span class="detail-value">{{ profileData?.email }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Phone</span>
+        <span class="detail-value">{{ profileData?.contactNumber }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">License Number</span>
+        <span class="detail-value">{{ profileData?.licenseNumber }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Joined</span>
+        <span class="detail-value">{{ formatDate(profileData?.joined) }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="profile-main">
+    <div class="info-card">
+      <h3 class="card-title">Professional Information</h3>
+      <p class="card-subtitle">Education and specialization details</p>
+
+      <div class="info-group">
+        <div class="group-header"><span class="group-icon">🎓</span><h4>Education</h4></div>
+        <div class="group-content highlight-box">
+          <p class="main-info">{{ profileData?.education }}</p>
+          <p class="sub-info">Primary Education Qualification</p>
+        </div>
+      </div>
+
+      <div class="info-group">
+        <div class="group-header"><span class="group-icon">🩺</span><h4>Specialization</h4></div>
+        <div class="group-content highlight-box">
+          <p class="main-info">{{ profileData?.specialty }}</p>
+          <p class="sub-info">Medical Specialization Area</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-group">
+        <div class="group-header"><span class="group-icon">🏷️</span><h4>License Information</h4></div>
+        <div class="group-content license-box">
+          <p class="main-info">Medical License</p>
+          <span class="license-status active-status">Active</span>
+          <div class="license-details">
+            <p>License Number: {{ profileData?.licenseNumber }}</p>
+            <p>Registered Since: {{ formatDate(profileData?.registeredSince) }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

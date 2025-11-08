@@ -1,0 +1,94 @@
+:host {
+  display: block; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; font-family: Arial, sans-serif;
+}
+.header-bar {
+  display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); margin-bottom: 20px;
+}
+.doctor-info { display: flex; align-items: center; }
+.doctor-avatar {
+  width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); color: white;
+  display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 10px;
+}
+.doctor-text { display: flex; flex-direction: column; }
+.doctor-name { font-weight: bold; font-size: 1.1em; }
+.doctor-specialty { color: #666; font-size: 0.9em; }
+.status-online { color: #10b981; margin-left: 10px; font-weight: bold; font-size: 0.8em; background: #d1fae5; padding: 4px 10px; border-radius: 12px; }
+.search-bar input { padding: 8px 15px; border: 1px solid #ccc; border-radius: 20px; width: 300px; }
+.actions { display: flex; align-items: center; }
+.set-availability-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none;
+  padding: 8px 15px; border-radius: 8px; cursor: pointer; margin-right: 15px; font-weight: 500;
+}
+.set-availability-btn:hover { opacity: 0.9; }
+.notification-icon, .settings-icon { font-size: 1.2em; margin-left: 15px; cursor: pointer; }
+
+/* --- Tab Navigation --- */
+.tab-nav { margin-bottom: 20px; background: white; border-radius: 12px; padding: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+.tab-btn {
+  background: none; border: none; padding: 10px 20px; font-size: 1.1em;
+  cursor: pointer; color: #666; font-weight: 500; border-radius: 8px; transition: all 0.3s;
+}
+.tab-btn.active { color: white; font-weight: bold; background: linear-gradient(135deg, #667eea, #764ba2); }
+.tab-btn:hover:not(.active) { background: #f3f4f6; }
+
+/* --- Overview Grid and Cards --- */
+.overview-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px;
+}
+.weekly-appointments-card { grid-column: 1 / span 2; }
+.patient-trends-card { grid-column: 3 / span 2; }
+.availability-card { grid-column: 5 / span 1; }
+.appointment-list-card { grid-column: 1 / span 3; margin-top: 10px; }
+.recent-prescriptions-card { grid-column: 4 / span 2; margin-top: 10px; }
+
+.stat-card, .section-card {
+  background: white; border-radius: 12px; padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); transition: all 0.3s;
+}
+.stat-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); cursor: pointer; }
+
+.stat-card h3, .section-card h2 { font-size: 1em; color: #666; margin-top: 0; margin-bottom: 15px; }
+.icon-label { float: right; font-size: 1.5em; }
+.patient-icon { color: #3b82f6; } .appointment-icon { color: #8b5cf6; }
+.prescription-icon { color: #10b981; } .wellness-icon { color: #f59e0b; }
+.time-icon { color: #06b6d4; } .completed-icon { color: #3b82f6; }
+
+.stat-value { font-size: 2.2em; font-weight: bold; margin-bottom: 5px; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.stat-change { font-size: 0.9em; font-weight: bold; }
+.stat-subtext { font-size: 0.9em; color: #999; }
+.positive { color: #10b981; } .negative { color: #ef4444; } .neutral { color: #6b7280; }
+
+/* --- Table/List Styles --- */
+.appointment-table { margin-top: 15px; }
+.table-header, .table-row {
+  display: grid; grid-template-columns: 2fr 1fr 2fr 1.5fr 1fr 0.5fr;
+  padding: 10px 0; align-items: center; font-size: 0.9em;
+}
+.table-header { font-weight: bold; color: #666; border-bottom: 1px solid #e0e0e0; }
+.table-row { border-bottom: 1px solid #f0f0f0; }
+.patient-cell { display: flex; align-items: center; gap: 8px; }
+.patient-avatar {
+  width: 25px; height: 25px; border-radius: 50%; background-color: #dee2e6;
+  color: #333; display: flex; align-items: center; justify-content: center;
+  font-size: 0.7em; font-weight: bold;
+}
+.patient-age { font-size: 0.8em; color: #999; }
+.status-tag { padding: 3px 8px; border-radius: 12px; font-size: 0.8em; font-weight: 500; text-align: center; }
+.status-tag.scheduled { background-color: #dbeafe; color: #2563eb; }
+.status-tag.in-progress { background-color: #fef3c7; color: #f59e0b; }
+.action-cell { cursor: pointer; text-align: center; }
+.view-all-link { display: block; text-align: right; margin-top: 10px; color: #667eea; text-decoration: none; font-weight: bold; }
+.view-all-link:hover { color: #764ba2; }
+
+/* --- Prescription List --- */
+.prescription-item { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
+.rx-header { display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
+.medication-name { font-size: 1.1em; }
+.rx-status.active { background-color: #d1fae5; color: #059669; padding: 2px 6px; border-radius: 4px; font-size: 0.8em; font-weight: 500; }
+.rx-patient { color: #666; font-size: 0.9em; margin: 5px 0; }
+.schedule-entry { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+.recurring-tag { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.8em; }
+.chart-placeholder {
+  height: 250px; background-color: #f7f7f7; display: flex; align-items: center;
+  justify-content: center; color: #999; border-radius: 8px; border: 1px dashed #ccc; margin-top: 15px;
+}

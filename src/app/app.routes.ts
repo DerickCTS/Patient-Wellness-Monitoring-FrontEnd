@@ -63,6 +63,13 @@ export const routes: Routes = [
           import('./features/appointment-patient/appointment-patient-module').then(
             (m) => m.AppointmentPatientModule
           ),
+      },
+      {
+        path: 'doctor-dashboard',
+        loadChildren: () =>
+          import('./features/doctor/doctor.module').then(
+            (m) => m.DoctorModule
+          ),
       }
     ]
   },

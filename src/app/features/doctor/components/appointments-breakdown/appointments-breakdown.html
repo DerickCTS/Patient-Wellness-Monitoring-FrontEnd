@@ -1,0 +1,44 @@
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    
+    <ng-container *ngIf="type === 'appointments'">
+      <div class="modal-header">
+        <span class="header-icon appointment-icon">📅</span>
+        <h2>Today's Appointments</h2>
+        <button class="close-btn" (click)="closeModal()">X</button>
+      </div>
+      <p class="modal-subtitle">Appointments scheduled for today</p>
+  
+      <div class="main-stat-block purple-gradient">
+        <div class="stat-value">{{ data?.total }}</div>
+        <div class="stat-subtext stat-subtext-white">{{ data?.pending }} Pending</div>
+      </div>
+  
+      <div class="breakdown-grid appointment-grid">
+        <div class="breakdown-item"><p class="item-label">Scheduled</p><p class="item-value">{{ data?.scheduled }}</p></div>
+        <div class="breakdown-item"><p class="item-label">In Progress</p><p class="item-value">{{ data?.inProgress }}</p></div>
+        <div class="breakdown-item"><p class="item-label">Completed</p><p class="item-value">{{ data?.completed }}</p></div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="type === 'completed'">
+      <div class="modal-header">
+        <span class="header-icon completed-icon">✔️</span>
+        <h2>Completed Today</h2>
+        <button class="close-btn" (click)="closeModal()">X</button>
+      </div>
+      <p class="modal-subtitle">Progress of today's appointments</p>
+
+      <div class="main-stat-block teal-gradient">
+        <div class="stat-value">{{ data?.completed }}</div>
+        <div class="stat-subtext stat-subtext-white">{{ data?.remaining }} Remaining</div>
+      </div>
+      
+      <div class="breakdown-grid appointment-grid">
+        <div class="breakdown-item"><p class="item-label">Completed</p><p class="item-value">{{ data?.completed }}</p></div>
+        <div class="breakdown-item"><p class="item-label">Remaining</p><p class="item-value">{{ data?.remaining }}</p></div>
+        <div class="breakdown-item"><p class="item-label">Total</p><p class="item-value">{{ data?.total }}</p></div>
+      </div>
+    </ng-container>
+  </div>
+</div>

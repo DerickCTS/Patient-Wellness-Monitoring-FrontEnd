@@ -1,0 +1,9 @@
+@import url('../modal-base.css');
+
+.patient-icon { color: #007bff; }
+.blue-gradient {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+}
+.patient-grid { grid-template-columns: repeat(2, 1fr); }
+.breakdown-item.full-width { grid-column: 1 / span 2; }

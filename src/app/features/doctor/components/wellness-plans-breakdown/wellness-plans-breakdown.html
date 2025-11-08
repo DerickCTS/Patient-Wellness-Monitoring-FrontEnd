@@ -1,0 +1,32 @@
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <span class="header-icon wellness-icon">📈</span>
+      <h2>Wellness Plans</h2>
+      <button class="close-btn" (click)="closeModal()">X</button>
+    </div>
+    <p class="modal-subtitle">Active wellness plans for your patients</p>
+
+    <div class="main-stat-block orange-gradient">
+      <div class="stat-value">{{ data?.totalCount }}</div>
+      <div class="stat-change positive-white">
+        +{{ data?.percentageChange }}%
+      </div>
+    </div>
+
+    <div class="breakdown-grid wellness-grid">
+      <div class="breakdown-item">
+        <p class="item-label">Active</p>
+        <p class="item-value">{{ data?.active }}</p>
+      </div>
+      <div class="breakdown-item">
+        <p class="item-label">Pending</p>
+        <p class="item-value">{{ data?.pending }}</p>
+      </div>
+      <div class="breakdown-item full-width">
+        <p class="item-label">Completed</p>
+        <p class="item-value">{{ data?.completed }}</p>
+      </div>
+    </div>
+  </div>
+</div>
