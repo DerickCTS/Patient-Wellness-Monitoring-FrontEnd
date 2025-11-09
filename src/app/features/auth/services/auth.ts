@@ -67,18 +67,16 @@ export class AuthService {
       .pipe(
         tap((response) => {
           this.showSuccess(response.message);
-          // --- Store the user's role on successful login ---
           this.saveRole(payload.Role);
           
-          // --- Redirect to a dashboard (we'll create this later) ---
-          // For now, redirecting to your existing /diagnosis page
+          // Store userId based on role
           if (payload.Role === 'Doctor') {
-            this.router.navigate(['/diagnosis']);
-          } else {
-            // We need to create a patient dashboard, for now, progress
+            sessionStorage.setItem('userId', response.userId);
+            this.router.navigate(['/doctor-dashboard']);
+          } else if (payload.Role === 'Patient') {
+            sessionStorage.setItem('userId', response.userId);
             this.router.navigate(['/progress']);
           }
-
         }),
         catchError(this.handleError.bind(this))
       );
@@ -87,21 +85,25 @@ export class AuthService {
   // --- Helper Functions ---
 
   private saveRole(role: 'Patient' | 'Doctor'): void {
-    localStorage.setItem('userRole', role);
+    sessionStorage.setItem('userRole', role);
   }
 
-  // You can call this from your logout button later
   public logout(): void {
-    localStorage.removeItem('userRole');
-    this.router.navigate(['/auth']); // Navigate to login page
+    sessionStorage.removeItem('userRole');
+    sessionStorage.removeItem('userId');
+    this.router.navigate(['/home']);
   }
 
   public getRole(): string | null {
-    return localStorage.getItem('userRole');
+    return sessionStorage.getItem('userRole');
   }
 
   public getPatientId(): string | null {
-    return localStorage.getItem('patientId');
+    return sessionStorage.getItem('userId');
+  }
+
+  public isAuthenticated(): boolean {
+    return !!sessionStorage.getItem('userRole');
   }
 
   // --- Error & Success Message Handling ---

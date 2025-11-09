@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-// import { authGuard } from './core/guards/auth.guard'; 
+import { authGuard } from './core/guards/auth.guard'; 
 
 export const routes: Routes = [
 
@@ -33,10 +33,11 @@ export const routes: Routes = [
         (m) => m.PrivateLayoutComponent
       )
     },
-    // canActivate: [authGuard], 
+    canActivate: [authGuard],
     children: [
       {
         path: 'progress',
+        canActivate: [authGuard],
         loadComponent: () =>
           import('./features/wellness/pages/progress-tracking/progress-tracking').then(
             (m) => m.ProgressTracking
@@ -44,6 +45,7 @@ export const routes: Routes = [
       },
       {
         path: 'diagnosis',
+        canActivate: [authGuard],
         loadChildren: () =>
           import('./features/diagnosis/diagnosis-module').then(
             (m) => m.DiagnosisModule
@@ -51,14 +53,15 @@ export const routes: Routes = [
       },
       {
         path: 'wellness',
+        canActivate: [authGuard],
         loadChildren: () =>
           import('./features/wellness-assignment/wellness-assignment-module').then(
             (m) => m.WellnessModule
           ),
       },
-      // ...add all other private routes here
       {
         path: 'my-appointments',
+        canActivate: [authGuard],
         loadChildren: () => 
           import('./features/appointment-patient/appointment-patient-module').then(
             (m) => m.AppointmentPatientModule
@@ -66,6 +69,7 @@ export const routes: Routes = [
       },
       {
         path: 'doctor-dashboard',
+        canActivate: [authGuard],
         loadChildren: () =>
           import('./features/doctor/doctor.module').then(
             (m) => m.DoctorModule

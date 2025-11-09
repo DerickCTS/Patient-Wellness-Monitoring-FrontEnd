@@ -38,6 +38,7 @@ export interface LoginRequestDto {
 // --- Common API Response Payloads ---
 export interface AuthSuccessDto {
   message: string;
+  userId: string;
 }
 
 export interface AuthErrorDto {
