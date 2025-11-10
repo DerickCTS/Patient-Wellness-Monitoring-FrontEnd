@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AssignScratchPlanDto, AssignTemplatePlanDto, DiagnosisDetailsDto, ImageUploadResponseDto, PatientFullDetailsDto, PatientSearchResultDto, WellnessTemplateDto } from '../models/wellness-assignment.model';
-import { AuthService } from '../../auth/services/auth'; // <-- Import Auth Service
+import { AuthService } from '../../../shared/services/auth'; // <-- Import Auth Service
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PlanDetailsDto } from '../../wellness/models/plan.dto';
 

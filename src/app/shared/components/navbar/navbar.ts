@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../features/auth/services/auth';
+import { AuthService } from '../../services/auth';
 
 // --- STANDALONE IMPORTS ---
 import { CommonModule } from '@angular/common';
@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
   isLoggedIn = false;
   isDoctor = false;
   userName = 'Guest'; // Placeholder
-  profileImageUrl = 'assets/images/default-profile.png'; // Placeholder
+  profileImageUrl : string = ''; // Placeholder
 
   // Font Awesome Icons
   faBars = faBars;
@@ -36,16 +36,13 @@ export class NavbarComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    const role = this.authService.getRole();
+    const role : string = this.authService.getRole();
+    const user: string = this.authService.getUserName();
     if (role) {
       this.isLoggedIn = true;
       this.isDoctor = (role === 'Doctor');
-      
-      // TODO: You need to fetch the user's name and image URL
-      // based on their ID from your authService
-      
-      // For now, we'll use placeholders
-      this.userName = this.isDoctor ? 'Dr. Smith' : 'Jane Doe';
+      this.userName = this.isDoctor ? `Dr. ${user}` : user;
+      this.profileImageUrl = sessionStorage.getItem('imageUrl') || '';
     }
   }
 

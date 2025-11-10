@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth';
+import { AuthService } from '../../../../shared/services/auth';
 
 // --- ADD THESE IMPORTS ---
 import { CommonModule } from '@angular/common';

@@ -2,7 +2,7 @@
 
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AuthService } from '../../../auth/services/auth';
+import { AuthService } from '../../../../shared/services/auth';
 
 // --- STANDALONE IMPORTS ---
 import { CommonModule } from '@angular/common';

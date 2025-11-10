@@ -7,10 +7,10 @@ import { DoctorRoutingModule } from './doctor-routing.module';
 import { DoctorService } from './services/doctor.service';
 import { DashboardComponent } from './components/dashboard/dashboard';
 import { ProfileComponent } from './components/profile/profile';
-import { PatientBreakdownComponent } from './components/patient-breakdown/patient-breakdown';
-import { AppointmentsBreakdownComponent } from './components/appointments-breakdown/appointments-breakdown';
-import { ActivePrescriptionsComponent } from './components/active-prescriptions/active-prescriptions';
-import { WellnessPlansBreakdownComponent } from './components/wellness-plans-breakdown/wellness-plans-breakdown';
+// import { PatientBreakdownComponent } from './components/patient-breakdown/patient-breakdown';
+// import { AppointmentsBreakdownComponent } from './components/appointments-breakdown/appointments-breakdown';
+// import { ActivePrescriptionsComponent } from './components/active-prescriptions/active-prescriptions';
+// import { WellnessPlansBreakdownComponent } from './components/wellness-plans-breakdown/wellness-plans-breakdown';
 // import { AppointmentDetailsComponent } from './panels/appointment-details/appointment-details';
 
 
@@ -22,10 +22,6 @@ import { WellnessPlansBreakdownComponent } from './components/wellness-plans-bre
     DoctorRoutingModule,
     DashboardComponent,
     ProfileComponent,
-    PatientBreakdownComponent,
-    AppointmentsBreakdownComponent,
-    ActivePrescriptionsComponent,
-    WellnessPlansBreakdownComponent
   ],
   providers: [
     DoctorService

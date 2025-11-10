@@ -37,7 +37,7 @@
 }
 .weekly-appointments-card { grid-column: 1 / span 2; }
 .patient-trends-card { grid-column: 3 / span 2; }
-.availability-card { grid-column: 5 / span 1; }
+.availability-card { grid-column: 3 / span 2; }
 .appointment-list-card { grid-column: 1 / span 3; margin-top: 10px; }
 .recent-prescriptions-card { grid-column: 4 / span 2; margin-top: 10px; }
 
@@ -53,7 +53,16 @@
 .prescription-icon { color: #10b981; } .wellness-icon { color: #f59e0b; }
 .time-icon { color: #06b6d4; } .completed-icon { color: #3b82f6; }
 
-.stat-value { font-size: 2.2em; font-weight: bold; margin-bottom: 5px; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.stat-value { 
+  font-size: 2.5em; 
+  font-weight: bold;  
+  margin-bottom: 5px; 
+  padding-block: 5px;
+  background: linear-gradient(135deg, #667eea, #764ba2); 
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent; 
+  background-clip: text; 
+}
 .stat-change { font-size: 0.9em; font-weight: bold; }
 .stat-subtext { font-size: 0.9em; color: #999; }
 .positive { color: #10b981; } .negative { color: #ef4444; } .neutral { color: #6b7280; }
@@ -61,19 +70,20 @@
 /* --- Table/List Styles --- */
 .appointment-table { margin-top: 15px; }
 .table-header, .table-row {
-  display: grid; grid-template-columns: 2fr 1fr 2fr 1.5fr 1fr 0.5fr;
+  display: grid; grid-template-columns: 2fr 1fr 2fr 1.5fr 1fr;
   padding: 10px 0; align-items: center; font-size: 0.9em;
 }
 .table-header { font-weight: bold; color: #666; border-bottom: 1px solid #e0e0e0; }
 .table-row { border-bottom: 1px solid #f0f0f0; }
 .patient-cell { display: flex; align-items: center; gap: 8px; }
+.patient-info { display: flex; flex-direction: column; }
 .patient-avatar {
   width: 25px; height: 25px; border-radius: 50%; background-color: #dee2e6;
   color: #333; display: flex; align-items: center; justify-content: center;
   font-size: 0.7em; font-weight: bold;
 }
-.patient-age { font-size: 0.8em; color: #999; }
-.status-tag { padding: 3px 8px; border-radius: 12px; font-size: 0.8em; font-weight: 500; text-align: center; }
+.patient-age { font-size: 0.75em; color: #999; margin-top: 2px; }
+.status-tag { padding: 3px 8px; width:60px; border-radius: 12px; font-size: 0.8em; font-weight: 500; text-align: center; }
 .status-tag.scheduled { background-color: #dbeafe; color: #2563eb; }
 .status-tag.in-progress { background-color: #fef3c7; color: #f59e0b; }
 .action-cell { cursor: pointer; text-align: center; }
@@ -86,9 +96,21 @@
 .medication-name { font-size: 1.1em; }
 .rx-status.active { background-color: #d1fae5; color: #059669; padding: 2px 6px; border-radius: 4px; font-size: 0.8em; font-weight: 500; }
 .rx-patient { color: #666; font-size: 0.9em; margin: 5px 0; }
-.schedule-entry { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+.schedule-entry { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 1.05em; }
+.schedule-entry span:first-child { font-weight: 500; min-width: 90px; }
+.schedule-entry span:nth-child(2) { flex: 1; text-align: center; color: #666; }
 .recurring-tag { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.8em; }
-.chart-placeholder {
-  height: 250px; background-color: #f7f7f7; display: flex; align-items: center;
-  justify-content: center; color: #999; border-radius: 8px; border: 1px dashed #ccc; margin-top: 15px;
-}
+.bar-chart { margin-top: 15px; }
+.chart-legend { display: flex; gap: 15px; margin-bottom: 15px; font-size: 0.85em; }
+.chart-legend span { display: flex; align-items: center; gap: 5px; }
+.legend-dot { width: 12px; height: 12px; border-radius: 2px; }
+.legend-dot.approved { background: linear-gradient(135deg, #10b981, #059669); }
+.legend-dot.rejected { background: linear-gradient(135deg, #ef4444, #dc2626); }
+.chart-bars { display: flex; justify-content: space-around; align-items: flex-end; height: 180px; border-bottom: 2px solid #e0e0e0; padding: 0 10px; }
+.bar-group { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.bars { display: flex; gap: 4px; align-items: flex-end; height: 160px; }
+.bar { width: 18px; border-radius: 4px 4px 0 0; min-height: 5px; transition: all 0.3s; cursor: pointer; }
+.bar.approved { background: linear-gradient(135deg, #10b981, #059669); }
+.bar.rejected { background: linear-gradient(135deg, #ef4444, #dc2626); }
+.bar:hover { opacity: 0.8; transform: translateY(-2px); }
+.day-label { font-size: 0.8em; color: #666; font-weight: 500; }

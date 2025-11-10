@@ -32,8 +32,8 @@ import { InfoItemComponent } from '../../components/info-item/info-item'; // Hel
 
 @Component({
   selector: 'app-patient-dashboard',
-  templateUrl: './patient-dashboard.html',
-  styleUrls: ['./patient-dashboard.scss'],
+  templateUrl: './patient-dashboard-updated.html',
+  styleUrls: ['./patient-dashboard-updated.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -54,7 +54,8 @@ export class PatientDashboardComponent implements OnInit {
   patientId!: number;
   patientDetails$!: Observable<PatientFullDetailsDto>;
 
-  // This will store the details for the *currently open* accordion
+  // Track which diagnosis is expanded
+  activeDiagnosisId: number | null = null;
   activeDiagnosisDetails$: Observable<DiagnosisDetailsDto | null> = of(null);
 
   // For the medications table
@@ -91,8 +92,15 @@ export class PatientDashboardComponent implements OnInit {
    * It fetches the details for that specific diagnosis.
    */
   loadDiagnosisDetails(diagnosisId: number): void {
-    this.activeDiagnosisDetails$ =
-      this.wellnessService.getDiagnosisDetails(diagnosisId);
+    if (this.activeDiagnosisId === diagnosisId) {
+      // If clicking the same one, collapse it
+      this.activeDiagnosisId = null;
+      this.activeDiagnosisDetails$ = of(null);
+    } else {
+      // Expand the clicked one
+      this.activeDiagnosisId = diagnosisId;
+      this.activeDiagnosisDetails$ = this.wellnessService.getDiagnosisDetails(diagnosisId);
+    }
   }
 
   /**
@@ -101,6 +109,12 @@ export class PatientDashboardComponent implements OnInit {
    */
   clearDiagnosisDetails(): void {
     this.activeDiagnosisDetails$ = of(null);
+  }
+
+  isMedicationActive(endDate: string | Date): boolean {
+    const today = new Date();
+    const end = new Date(endDate);
+    return today <= end;
   }
 
   // --- Wellness Plan Methods ---

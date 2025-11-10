@@ -1,80 +1,58 @@
 // --- 1. Summary Data Structures (for Stat Cards & Modals) ---
 
-export interface PatientSummary {
-  totalCount: number;
-  percentageChange: number;
-  newThisMonth: number;
-  activePatients: number;
-  inactivePatients: number;
+import { NumberValueAccessor } from "@angular/forms";
+
+// Derick's Models
+export interface Stats {
+  totalPatients: number;
+  todaysAppointments: number;
+  activePrescriptions: number;
+  totalWellnessPlans: number;
+  completedToday: number;
 }
 
-export interface AppointmentSummary {
-  total: number;
-  scheduled: number;
-  inProgress: number;
-  completed: number;
-  pending: number;
-  remaining: number; 
+export interface WeeklyAppointmentSummaryItem {
+  day: string;
+  approved: number;
+  rejected: number;
 }
 
-export interface PrescriptionSummary {
-  totalActive: number;
-  percentageChange: number;
-  newThisWeek: number;
-  expiringSoon: number;
+export interface WeeklyScheduleSummaryItem {
+  day: string;
+  startTime: string;
+  endTime: string;
 }
 
-export interface WellnessPlanSummary {
-  totalCount: number;
-  percentageChange: number;
-  active: number;
-  pending: number;
-  completed: number;
-}
-
-// --- 2. List Item Structures (Appointments, Prescription) ---
-
-export interface Appointment {
-  appointmentId: number; 
-  patientId: number;
+export interface TodaysAppointment{
+  profileUrl: string;
   patientName: string;
-  patientAge: string; 
-  time: string;
-  date: string; // Added for display in panel
+  patientAge: number;
+  appointmentStartTime: string;
   reason: string;
-  status: 'Scheduled' | 'InProgress' | 'Completed' | 'Pending';
-  duration: string;
-  patientPhone: string;
-  patientEmail: string;
-  notes: string;
+  status: string;
 }
 
-export interface Prescription {
-  prescriptionId: number;
+export interface RecentPrescription{
   medicationName: string;
   patientName: string;
   dosage: string;
-  frequency: string;
-  dateRange: string;
-  status: 'Active' | 'Expired' | 'New';
+  frequency: number;
+  medicationStartDate: string;
+  medicationEndDate: string;
 }
 
 // --- 3. Full Dashboard Data Structure ---
 export interface DashboardData {
-  patients: PatientSummary;
-  appointments: AppointmentSummary;
-  prescriptions: PrescriptionSummary;
-  wellnessPlans: WellnessPlanSummary;
-  todayAppointmentsList: Appointment[];
-  recentPrescriptions: Prescription[];
-  // Placeholders for chart data
-  weeklyAppointmentsChart: any; 
-  patientTrendsChart: any; 
+  stats: Stats;
+  weeklyAppointmentSummary: WeeklyAppointmentSummaryItem[];
+  weeklyScheduleSummary: WeeklyScheduleSummaryItem[];
+  todaysAppointment: TodaysAppointment[];
+  recentPrescription: RecentPrescription[];
 }
 
 // --- 4. Doctor Profile (from Doctors table) ---
 export interface DoctorProfile {
-  doctorId: number;
+  doctorId: string;
   firstName: string;
   lastName: string;
   specialty: string;
@@ -82,6 +60,5 @@ export interface DoctorProfile {
   contactNumber: string;
   licenseNumber: string | null;
   education: string;
-  registeredSince: Date | string; 
   joined: Date | string;
 }

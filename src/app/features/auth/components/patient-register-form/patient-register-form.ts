@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth';
+import { AuthService } from '../../../../shared/services/auth';
 import { PatientRegisterDto } from '../../models/auth.models';
 // Removed all Mat imports for pure HTML compatibility
 import { CommonModule } from '@angular/common';

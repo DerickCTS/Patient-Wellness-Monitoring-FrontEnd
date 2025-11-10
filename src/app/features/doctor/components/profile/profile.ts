@@ -13,6 +13,7 @@ import { DoctorProfile } from '../../models/doctor.models';
 export class ProfileComponent implements OnInit {
 
   profileData: DoctorProfile | null = null;
+  profileImage: string = '';
   loading: boolean = true;
 
   constructor(private doctorService: DoctorService) { } 
@@ -26,6 +27,9 @@ export class ProfileComponent implements OnInit {
     this.doctorService.getDoctorProfile().subscribe({
       next: (data) => {
         this.profileData = data;
+        this.profileData.doctorId = sessionStorage.getItem('userId') || ''
+        this.profileImage = sessionStorage.getItem('imageUrl') || '';
+        console.log(this.profileImage);
         this.loading = false;
       },
       error: (err) => {

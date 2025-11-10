@@ -29,7 +29,7 @@
                 (click)="selectLoginRole('Patient')"
                 appearance="outlined"
               >
-                <mat-icon class="patient-icon">person</mat-icon>
+                <img src="assets/images/patient.png" alt="Patient" class="patient-icon">
                 <mat-card-content>
                   <h4>Patient</h4>
                   <p>Access your health records</p>
@@ -40,7 +40,7 @@
                 (click)="selectLoginRole('Doctor')"
                 appearance="outlined"
               >
-                <mat-icon class="doctor-icon">medical_services</mat-icon>
+                <img src="assets/images/doctor.png" alt="Doctor" class="doctor-icon">
                 <mat-card-content>
                   <h4>Doctor</h4>
                   <p>Manage patient care</p>
@@ -52,9 +52,7 @@
           <ng-template #loginForm>
             <div class="form-container">
               <div class="form-header">
-                <mat-icon [class]="loginRole === 'Patient' ? 'patient-icon' : 'doctor-icon'">
-                  {{ loginRole === 'Patient' ? 'person' : 'medical_services' }}
-                </mat-icon>
+                <fa-icon [icon]="loginRole === 'Patient' ? faUser : faUserMd" [class]="loginRole === 'Patient' ? 'patient-icon' : 'doctor-icon'"></fa-icon>
                 <h3>Login as {{ loginRole }}</h3>
                 <button mat-button (click)="changeRole()">Change</button>
               </div>
@@ -77,7 +75,7 @@
                 (click)="selectSignupRole('Patient')"
                 appearance="outlined"
               >
-                <mat-icon class="patient-icon">person_add</mat-icon>
+                 <img src="assets/images/patient.png" alt="Patient" class="patient-icon">
                 <mat-card-content>
                   <h4>Patient</h4>
                   <p>Create your patient account</p>
@@ -88,7 +86,7 @@
                 (click)="selectSignupRole('Doctor')"
                 appearance="outlined"
               >
-                <mat-icon class="doctor-icon">person_add</mat-icon>
+                <img src="assets/images/doctor.png" alt="Doctor" class="doctor-icon">
                 <mat-card-content>
                   <h4>Doctor</h4>
                   <p>Join as a healthcare provider</p>
@@ -100,9 +98,7 @@
           <ng-template #signupForm>
             <div class="form-container">
               <div class="form-header">
-                 <mat-icon [class]="signupRole === 'Patient' ? 'patient-icon' : 'doctor-icon'">
-                  person_add
-                </mat-icon>
+                <fa-icon [icon]="faUserPlus" [class]="signupRole === 'Patient' ? 'patient-icon' : 'doctor-icon'"></fa-icon>
                 <h3>Sign Up as {{ signupRole }}</h3>
                 <button mat-button (click)="changeRole()">Change</button>
               </div>

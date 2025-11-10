@@ -46,6 +46,7 @@ export class PatientSearchComponent {
   results$!: Observable<PatientSearchResultDto[] | null>;
   isLoading = false;
   searchAttempted = false; // To show "No results found"
+  imageUrl: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -55,7 +56,9 @@ export class PatientSearchComponent {
     this.searchForm = this.fb.group({
       query: ['', Validators.required],
     });
+
   }
+
 
   onTabChange(index: number): void {
     this.searchType = index === 0 ? 'patientName' : 'patientId';

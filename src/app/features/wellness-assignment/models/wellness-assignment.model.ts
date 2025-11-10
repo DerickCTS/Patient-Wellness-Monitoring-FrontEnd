@@ -26,6 +26,7 @@ export interface PatientFullDetailsDto {
   personalizedDoctor: string;
   diagnoses: DiagnosisHistoryItemDto[];
   wellnessPlans: AssignedWellnessPlanDto[]; // <-- This uses the interface below
+  profileImage: string;
 }
 
 export interface DiagnosisHistoryItemDto {

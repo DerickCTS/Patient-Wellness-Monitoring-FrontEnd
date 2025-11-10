@@ -3,7 +3,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from '../../auth/services/auth';
+import { AuthService } from '../../../shared/services/auth';
 import {
   AppointmentStatusDto,
   AppointmentHistoryItemDto,

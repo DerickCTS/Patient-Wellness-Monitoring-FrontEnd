@@ -6,6 +6,9 @@
     </div>
     
     <ng-container *ngIf="isDoctor">
+      <a routerLink="/doctor-dashboard" routerLinkActive="active" (click)="toggleSidebar()">
+        Dashboard
+      </a>
       <a routerLink="/wellness" routerLinkActive="active" (click)="toggleSidebar()">
         Assign Wellness
       </a>

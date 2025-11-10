@@ -12,6 +12,9 @@ import { PatientRegisterFormComponent } from '../../components/patient-register-
 import { DoctorRegisterFormComponent } from '../../components/doctor-register-form/doctor-register-form';
 import { 
   faHospital,
+  faUser,
+  faUserMd,
+  faUserPlus
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -47,6 +50,9 @@ export class AuthPageComponent {
   signupRole: 'Patient' | 'Doctor' | null = null;
 
   faHospital = faHospital;
+  faUser = faUser;
+  faUserMd = faUserMd;
+  faUserPlus = faUserPlus;
   // --- Event Handlers ---
 
   onTabChange(event: MatTabChangeEvent): void {

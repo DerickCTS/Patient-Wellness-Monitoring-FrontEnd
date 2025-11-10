@@ -39,6 +39,10 @@ export interface LoginRequestDto {
 export interface AuthSuccessDto {
   message: string;
   userId: string;
+  firstName? : string;
+  lastName? : string;
+  specialization? : string;
+  imageUrl? : string;
 }
 
 export interface AuthErrorDto {

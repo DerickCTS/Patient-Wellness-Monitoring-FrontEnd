@@ -1,0 +1,168 @@
+<div *ngIf="patientDetails$ | async as patient; else loading">
+  <div class="dashboard-container">
+    <!-- Header -->
+    <header class="dashboard-header">
+      <button class="back-btn" (click)="goBack()">←</button>
+      <h2>Patient Dashboard</h2>
+      <button class="assign-btn" (click)="assignNewPlan(patient)">＋ Assign Wellness Plan</button>
+    </header>
+
+    <!-- Patient Info -->
+    <div class="info-card patient-info-card">
+      <div class="patient-header">
+        <img [src]="wellnessService.getFullImageUrl(patient.profileImage)" alt="Patient" class="patient-profile-img" />
+        <div class="patient-title">
+          <h3>{{ patient.firstName }} {{ patient.lastName }}</h3>
+          <p class="patient-subtitle">Patient ID: {{ patient.patientId }}</p>
+        </div>
+      </div>
+      
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-icon">📧</span>
+          <div>
+            <p class="info-label">Email</p>
+            <p class="info-value">{{ patient.email }}</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">🎂</span>
+          <div>
+            <p class="info-label">Date of Birth</p>
+            <p class="info-value">{{ patient.dateOfBirth | date:'dd/MM/yyyy' }}</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">👤</span>
+          <div>
+            <p class="info-label">Gender</p>
+            <p class="info-value">{{ patient.gender }}</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">🩸</span>
+          <div>
+            <p class="info-label">Blood Group</p>
+            <p class="info-value">{{ patient.bloodGroup }}</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">📞</span>
+          <div>
+            <p class="info-label">Contact</p>
+            <p class="info-value">{{ patient.contactNumber }}</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">🚨</span>
+          <div>
+            <p class="info-label">Emergency Contact</p>
+            <p class="info-value">{{ patient.emergencyContactName }}</p>
+            <p class="info-subvalue">{{ patient.emergencyContactNumber }}</p>
+          </div>
+        </div>
+        <div class="info-item grid-span-2">
+          <span class="info-icon">📍</span>
+          <div>
+            <p class="info-label">Address</p>
+            <p class="info-value">{{ patient.address }}</p>
+          </div>
+        </div>
+        <div class="info-item grid-span-2">
+          <span class="info-icon">👨‍⚕️</span>
+          <div>
+            <p class="info-label">Personalized Doctor</p>
+            <p class="info-value">{{ patient.personalizedDoctor }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diagnosis History -->
+    <div class="info-card">
+      <h3>📋 Diagnosis History</h3>
+      <div *ngIf="patient.diagnoses.length > 0; else noDiagnoses">
+        <div
+          *ngFor="let diagnosis of patient.diagnoses"
+          class="diagnosis-card"
+          (click)="loadDiagnosisDetails(diagnosis.diagnosisId)"
+        >
+          <div class="diagnosis-header">
+            <h4>{{ diagnosis.diseaseName }}</h4>
+            <span class="diag-date">{{ diagnosis.diagnosisDate | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <p class="diagnosis-doctor">👨‍⚕️ Dr. {{ diagnosis.doctorName }}</p>
+
+          <div *ngIf="activeDiagnosisId === diagnosis.diagnosisId && (activeDiagnosisDetails$ | async) as details" class="diagnosis-details">
+            <hr />
+            <div class="detail-row">
+              <strong>Diagnosed By:</strong> Dr. {{ details.diagnosedBy }}
+            </div>
+            <div class="detail-row">
+              <strong>Diagnosis Notes:</strong> {{ details.diagnosisDescription }}
+            </div>
+            <div class="detail-row">
+              <strong>Disease Info:</strong> {{ details.diseaseDescription }}
+            </div>
+
+            <h5>💊 Medications</h5>
+            <table class="med-table">
+              <thead>
+                <tr>
+                  <th>Tablet Name</th>
+                  <th>Dosage</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let med of details.medicationDetails">
+                  <td>{{ med.medicationName }}</td>
+                  <td>{{ med.dosage }}</td>
+                  <td>
+                    <span [class.active]="isMedicationActive(med.endDate)" class="pill">
+                      {{ isMedicationActive(med.endDate) ? 'Active' : 'Inactive' }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noDiagnoses>
+        <p class="empty">No diagnosis history found.</p>
+      </ng-template>
+    </div>
+
+    <!-- Wellness Plans -->
+    <div class="info-card">
+      <h3>💪 Assigned Wellness Plans</h3>
+      <div *ngIf="patient.wellnessPlans.length > 0; else noPlans" class="plan-list">
+        <div class="plan-card" *ngFor="let plan of patient.wellnessPlans" (click)="viewPlanDetails(plan)">
+          <img [src]="wellnessService.getFullImageUrl(plan.planImage)" alt="{{ plan.planName }}" />
+          <div class="plan-info">
+            <div class="tags">
+              <span [class.custom]="plan.wellnessType === 'Custom'" class="tag">{{ plan.wellnessType }}</span>
+              <span [class.active]="plan.status === 'Active'" class="tag">{{ plan.status }}</span>
+            </div>
+            <h4>{{ plan.planName }}</h4>
+            <p class="category">{{ plan.category }}</p>
+            <p class="plan-goal"><strong>Goal:</strong> {{ plan.goal }}</p>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noPlans>
+        <p class="empty">No wellness plans assigned.</p>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="page-loading">
+    <div class="spinner"></div>
+    <p>Loading patient details...</p>
+  </div>
+</ng-template>

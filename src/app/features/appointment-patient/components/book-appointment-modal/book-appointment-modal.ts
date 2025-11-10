@@ -3,7 +3,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
-import { AuthService } from '../../../auth/services/auth';
+import { AuthService } from '../../../../shared/services/auth';
 import {
   SpecializationListDto,
   DoctorSlotDto,

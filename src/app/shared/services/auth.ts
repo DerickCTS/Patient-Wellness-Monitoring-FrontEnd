@@ -11,7 +11,7 @@ import {
   LoginRequestDto,
   AuthSuccessDto,
   AuthErrorDto,
-} from '../models/auth.models';
+} from '../../features/auth/models/auth.models';
 
 @Injectable({
   providedIn: 'root',
@@ -66,15 +66,19 @@ export class AuthService {
       .post<AuthSuccessDto>(`${this.baseUrl}/login`, payload)
       .pipe(
         tap((response) => {
-          this.showSuccess(response.message);
+          console.log(response);
           this.saveRole(payload.Role);
-          
+          console.log(response);
           // Store userId based on role
+          sessionStorage.setItem('userId', response.userId);
+          sessionStorage.setItem('firstName', response.firstName || '');
+          sessionStorage.setItem('lastName', response.lastName || '');
+          sessionStorage.setItem('specialization', response.specialization || '');
+          sessionStorage.setItem('imageUrl', 'https://localhost:7129' + response.imageUrl || '');
+
           if (payload.Role === 'Doctor') {
-            sessionStorage.setItem('userId', response.userId);
             this.router.navigate(['/doctor-dashboard']);
           } else if (payload.Role === 'Patient') {
-            sessionStorage.setItem('userId', response.userId);
             this.router.navigate(['/progress']);
           }
         }),
@@ -94,8 +98,12 @@ export class AuthService {
     this.router.navigate(['/home']);
   }
 
-  public getRole(): string | null {
-    return sessionStorage.getItem('userRole');
+  public getRole(): string {
+    return sessionStorage.getItem('userRole')?? '';
+  }
+
+  public getUserName(): string {
+    return sessionStorage.getItem('firstName') + ' ' + sessionStorage.getItem('lastName');
   }
 
   public getPatientId(): string | null {

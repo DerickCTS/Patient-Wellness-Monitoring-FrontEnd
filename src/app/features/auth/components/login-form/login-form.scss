@@ -13,7 +13,11 @@ i.icon {
 
 // --- Form Layout ---
 
-.login-form, .register-form { display: flex; flex-direction: column; gap: 18px; }
+.login-form, .register-form { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 20px; 
+}
 .form-row { display: flex; flex-direction: column; gap: 18px; width: 100%; .flex-field { flex: 1; min-width: 0; } }
 @media (min-width: 600px) { .form-row { flex-direction: row; gap: 20px; } }
 
