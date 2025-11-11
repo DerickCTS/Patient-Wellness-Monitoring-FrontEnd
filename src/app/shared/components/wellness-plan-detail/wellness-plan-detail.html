@@ -1,7 +1,10 @@
 <ng-container *ngIf="planDetails$ | async as plan; else loading">
-  <button mat-icon-button class="close-button" (click)="closeDialog()">
-    <mat-icon>close</mat-icon>
-  </button>
+  <div class="modal-header">
+    <h2>💪 Wellness Plan Details</h2>
+    <button mat-icon-button class="close-button" (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
   <div mat-dialog-content class="dialog-content">
     <div class="plan-header">
@@ -11,35 +14,47 @@
         class="plan-image"
       />
       <div class="plan-info">
-        <div class="info-row">
-          <span class="label">Task:</span>
-          <span class="value">{{ plan.planName }}</span>
-        </div>
-        <div class="info-row">
-          <span class="label">Goal:</span>
-          <span class="value">{{ plan.goal }}</span>
-        </div>
-        <div class="info-row">
-          <span class="label">Assigned By:</span>
-          <span class="value">{{ plan.assignedByDoctorName }}</span>
-        </div>
-        <div class="info-row">
-          <span class="label">Frequency:</span>
-          <span class="value">{{ plan.frequency }}</span>
+        <h3 class="plan-title">{{ plan.planName }}</h3>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="icon">🎯</span>
+            <div>
+              <span class="label">Goal</span>
+              <span class="value">{{ plan.goal }}</span>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="icon">👨‍⚕️</span>
+            <div>
+              <span class="label">Assigned By</span>
+              <span class="value">Dr. {{ plan.assignedByDoctorName }}</span>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="icon">📅</span>
+            <div>
+              <span class="label">Frequency</span>
+              <span class="value">{{ plan.frequency }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <hr class="divider" />
-
-    <mat-tab-group mat-stretch-tabs="true" animationDuration="0ms">
-      <mat-tab label="Description">
+    <mat-tab-group mat-stretch-tabs="false" animationDuration="200ms" class="custom-tabs">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-label">📝 Description</span>
+        </ng-template>
         <div class="tab-content">
-          <p>{{ plan.description }}</p>
+          <p class="description-text">{{ plan.description }}</p>
         </div>
       </mat-tab>
 
-      <mat-tab label="Instruction">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-label">📋 Instructions</span>
+        </ng-template>
         <div class="tab-content">
           <ul class="list">
             <li *ngFor="let item of plan.instructions">{{ item }}</li>
@@ -47,17 +62,23 @@
         </div>
       </mat-tab>
 
-      <mat-tab label="Benefits">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-label">✨ Benefits</span>
+        </ng-template>
         <div class="tab-content">
-          <ul class="list">
+          <ul class="list benefits-list">
             <li *ngFor="let item of plan.benefits">{{ item }}</li>
           </ul>
         </div>
       </mat-tab>
 
-      <mat-tab label="Safety">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-label">⚠️ Safety</span>
+        </ng-template>
         <div class="tab-content">
-          <ul class="list">
+          <ul class="list safety-list">
             <li *ngFor="let item of plan.safetyPrecautions">{{ item }}</li>
           </ul>
         </div>

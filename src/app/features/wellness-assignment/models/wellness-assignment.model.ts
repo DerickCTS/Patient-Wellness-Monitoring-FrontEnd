@@ -37,6 +37,7 @@ export interface DiagnosisHistoryItemDto {
 }
 
 export interface AssignedWellnessPlanDto {
+  assignmentId: number
   planId: number; // <--- THIS IS THE FIX YOU MADE
   planName: string;
   goal: string;

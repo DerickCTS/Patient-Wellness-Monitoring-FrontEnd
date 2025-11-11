@@ -21,9 +21,7 @@
     <aside class="patient-info-col">
       <div class="patient-card" appearance="outlined">
         <div class="card-header">
-          <div class="patient-avatar">
-            &#x1F464;
-          </div>
+          <img class="patient-avatar" [src]="'https://localhost:7129' + details.patientInfo.imageUrl"/>
           <div>
             <div class="card-title">{{ details.patientInfo.name }}</div>
             <div class="card-subtitle">Patient ID: {{ details.patientInfo.patientId }}</div>

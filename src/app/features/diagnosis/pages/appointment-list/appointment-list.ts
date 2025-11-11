@@ -32,6 +32,7 @@ export class AppointmentListComponent implements OnInit {
 
   ngOnInit(): void {
     this.appointments$ = this.diagnosisService.getTodaysAppointments();
+    console.log(this.appointments$);
   }
 
   navigateToDiagnosis(appointmentId: number): void {

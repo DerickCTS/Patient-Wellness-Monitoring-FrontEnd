@@ -21,8 +21,8 @@ import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-form-create-scratch',
-  templateUrl: './form-create-scratch.html',
-  styleUrls: ['./form-create-scratch.scss'],
+  templateUrl: './form-create-scratch-plain.html',
+  styleUrls: ['./form-create-scratch-plain.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -45,7 +45,7 @@ export class FormCreateScratchComponent implements OnInit {
 
   form: FormGroup;
   isSaving = false;
-  isUploading = false;
+  selectedFile: File | null = null;
   
   // Dropdown options
   categories = ['Diet', 'Exercise', 'Mindfulness', 'Recovery', 'General'];
@@ -85,31 +85,23 @@ export class FormCreateScratchComponent implements OnInit {
     }
   }
 
-  // --- API 8: Image Upload ---
+  // --- Store selected file ---
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) {
       return;
     }
-    const file = input.files[0];
-    
-    this.isUploading = true;
-    this.wellnessService.uploadPlanImage(file).pipe(
-      finalize(() => this.isUploading = false)
-    ).subscribe({
-      next: (res) => {
-        // Set the returned URL on our form
-        this.form.get('ImageUrl')?.setValue(res.imageUrl);
-        this.wellnessService.showSuccess('Image uploaded!');
-      },
-      error: (err) => this.wellnessService.showError('Image upload failed.')
-    });
+    this.selectedFile = input.files[0];
+    this.form.get('ImageUrl')?.setValue(this.selectedFile.name);
   }
 
-  // --- API 7: Submit Form ---
+  // --- Submit Form with Image ---
   onSubmit(): void {
-    if (this.form.invalid) {
+    if (this.form.invalid || !this.selectedFile) {
       this.form.markAllAsTouched();
+      if (!this.selectedFile) {
+        this.wellnessService.showError('Please select an image file.');
+      }
       return;
     }
     this.isSaving = true;
@@ -128,7 +120,7 @@ export class FormCreateScratchComponent implements OnInit {
       DoctorId: this.doctorId,
       Category: fv.Category,
       PlanName: fv.PlanName,
-      ImageUrl: fv.ImageUrl,
+      ImageUrl: '', // Will be set by backend
       Goal: fv.Goal,
       FrequencyCount: fv.FrequencyCount,
       FrequencyUnit: fv.FrequencyUnit,
@@ -137,12 +129,12 @@ export class FormCreateScratchComponent implements OnInit {
       Details: details,
     };
 
-    this.wellnessService.assignScratchPlan(payload).pipe(
+    this.wellnessService.assignScratchPlan(payload, this.selectedFile).pipe(
       finalize(() => this.isSaving = false)
     ).subscribe({
       next: (res) => {
         this.wellnessService.showSuccess(res.message);
-        this.planAssigned.emit(); // Tell the modal to close
+        this.planAssigned.emit();
       },
       error: (err) => this.wellnessService.showError('Failed to assign plan.')
     });

@@ -1,0 +1,96 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="scratch-form">
+  <div *ngIf="isSaving" class="progress-bar"></div>
+  
+  <div class="form-row">
+    <div class="form-field">
+      <label>Plan Name *</label>
+      <input type="text" formControlName="PlanName" placeholder="Enter plan name">
+    </div>
+    <div class="form-field">
+      <label>Plan Goal *</label>
+      <input type="text" formControlName="Goal" placeholder="Enter goal">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-field">
+      <label>Upload Image *</label>
+      <div class="file-upload">
+        <button type="button" class="upload-btn" (click)="fileInput.click()">
+          📤 Choose File
+        </button>
+        <input hidden #fileInput type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg, image/jpg">
+        <span *ngIf="selectedFile" class="file-name">
+          ✓ {{ selectedFile.name }}
+        </span>
+      </div>
+    </div>
+    
+    <div class="form-field">
+      <label>Category *</label>
+      <select formControlName="Category">
+        <option value="">Select category</option>
+        <option *ngFor="let cat of categories" [value]="cat">{{cat}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-field">
+      <label>Frequency Count *</label>
+      <input type="number" formControlName="FrequencyCount" min="1" placeholder="e.g., 3">
+    </div>
+    <div class="form-field">
+      <label>Frequency Unit *</label>
+      <select formControlName="FrequencyUnit">
+        <option value="">Select unit</option>
+        <option *ngFor="let unit of units" [value]="unit">{{unit}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-field">
+      <label>Start Date *</label>
+      <input type="date" formControlName="StartDate">
+    </div>
+    <div class="form-field">
+      <label>End Date *</label>
+      <input type="date" formControlName="EndDate">
+    </div>
+  </div>
+  
+  <hr class="divider">
+
+  <div class="form-field full-width">
+    <label>Description *</label>
+    <textarea formControlName="Description" rows="3" placeholder="Enter description"></textarea>
+  </div>
+
+  <app-form-array-manager
+    label="Instructions"
+    [formArray]="instructions"
+    (addItem)="addItem(instructions)"
+    (removeItem)="removeItem(instructions, $event)"
+  ></app-form-array-manager>
+  
+  <app-form-array-manager
+    label="Benefits"
+    [formArray]="benefits"
+    (addItem)="addItem(benefits)"
+    (removeItem)="removeItem(benefits, $event)"
+  ></app-form-array-manager>
+  
+  <app-form-array-manager
+    label="Safety"
+    [formArray]="safety"
+    (addItem)="addItem(safety)"
+    (removeItem)="removeItem(safety, $event)"
+  ></app-form-array-manager>
+  
+  <div class="form-actions">
+    <button type="submit" class="submit-btn" [disabled]="isSaving">
+      {{ isSaving ? 'Assigning...' : 'Assign Wellness Plan' }}
+    </button>
+  </div>
+</form>

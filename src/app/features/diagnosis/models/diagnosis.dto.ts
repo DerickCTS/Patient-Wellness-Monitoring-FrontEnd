@@ -4,6 +4,7 @@
 export interface TodaysAppointmentDto {
   appointmentId: number;
   patientName: string;
+  imageUrl: string;
   gender: string;
   age: number;
   appointmentTime: string;
@@ -27,6 +28,7 @@ export interface PatientInfoDto {
   gender: string;
   contactNumber: string;
   email: string;
+  imageUrl: string;
   address: string;
   emergencyContact: string;
   chiefComplaint: string;

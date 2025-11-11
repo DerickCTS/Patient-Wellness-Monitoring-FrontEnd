@@ -18,9 +18,10 @@
                 class="appointment-card"
             >
                 <div class="card-header">
-                    <div class="patient-avatar">
+                    <img class="patient-avatar" [src]="'https://localhost:7129' + app.imageUrl"/>
+                    <!-- <div class="patient-avatar">
                         <span class="icon">person</span>
-                        </div>
+                        </div> -->
                     <div class="header-content">
                         <div class="card-title">{{ app.patientName }}</div>
                         <div class="card-subtitle">

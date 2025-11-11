@@ -72,6 +72,7 @@ export class WellnessService {
    */
   getPlanDetails(planId: number): Observable<PlanDetailsDto> {
     // Note: Your API endpoint was from a different service.
+    console.log(planId);
     return this.http.get<PlanDetailsDto>(
       `${this.progressBaseUrl}/plans/${planId}/details`
     );
@@ -96,27 +97,33 @@ export class WellnessService {
   }
 
   /**
-   * API Call 7 (Scratch): Assign a plan created from scratch
+   * API Call 7 (Scratch): Assign a plan created from scratch with image
    */
   assignScratchPlan(
-    payload: AssignScratchPlanDto
+    payload: AssignScratchPlanDto,
+    imageFile: File
   ): Observable<{ message: string }> {
-    return this.http.post<{ message: string }>(
-      `${this.planUrl}/assign`,
-      payload
-    );
-  }
-
-  /**
-   * API Call 8: Upload a new plan image
-   */
-  uploadPlanImage(file: File): Observable<ImageUploadResponseDto> {
     const formData = new FormData();
-    formData.append('file', file, file.name);
-
-    // We need to create this API endpoint on your backend
-    return this.http.post<ImageUploadResponseDto>(
-      `${this.planUrl}/upload-image`,
+    
+    // Add the image file
+    formData.append('imageFile', imageFile, imageFile.name);
+    
+    // Add all other fields
+    formData.append('PatientId', payload.PatientId);
+    formData.append('DoctorId', payload.DoctorId);
+    formData.append('Category', payload.Category);
+    formData.append('PlanName', payload.PlanName);
+    formData.append('Goal', payload.Goal);
+    formData.append('FrequencyCount', payload.FrequencyCount.toString());
+    formData.append('FrequencyUnit', payload.FrequencyUnit);
+    formData.append('StartDate', payload.StartDate);
+    formData.append('EndDate', payload.EndDate);
+    
+    // Add details as JSON string
+    formData.append('Details', JSON.stringify(payload.Details));
+    
+    return this.http.post<{ message: string }>(
+      `${this.planUrl}/assign-with-image`,
       formData
     );
   }

@@ -123,9 +123,10 @@ export class PatientDashboardComponent implements OnInit {
    * (Part 3) Called when "View Details" is clicked.
    */
   viewPlanDetails(plan: AssignedWellnessPlanDto): void {
+
     this.dialog.open(WellnessPlanDetailComponent, {
       width: '650px',
-      data: { planId: plan.planId },
+      data: { assignmentId: plan.assignmentId },
       autoFocus: false,
     });
   }

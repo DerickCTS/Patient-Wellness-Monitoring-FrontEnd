@@ -36,12 +36,12 @@ export class WellnessPlanDetailComponent {
 
   constructor(
     public dialogRef: MatDialogRef<WellnessPlanDetailComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { planId: number },
+    @Inject(MAT_DIALOG_DATA) public data: { assignmentId: number },
     public wellnessService: WellnessService // Public for getFullImageUrl
   ) {
     // When the dialog opens, call the API to get the details
-    if (data.planId) {
-      this.planDetails$ = this.wellnessService.getPlanDetails(data.planId);
+    if (data.assignmentId) {
+      this.planDetails$ = this.wellnessService.getPlanDetails(data.assignmentId);
     }
   }
 
