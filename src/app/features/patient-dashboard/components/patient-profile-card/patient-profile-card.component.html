@@ -1,0 +1,76 @@
+<div class="card patient-profile-card" *ngIf="_profile() as profile">
+  <div class="header">
+    <div class="title-section">
+      <span class="icon-placeholder">👤</span>
+      <h2>Patient Profile</h2>
+    </div>
+    <button class="edit-button" (click)="editProfileClicked.emit()">
+      <span class="icon-placeholder-small">✏️</span> Edit Profile
+    </button>
+  </div>
+
+  <div class="content-body">
+    <div class="profile-summary">
+      <div class="avatar-container">
+        <div class="avatar-circle">{{ initials() }}</div>
+        <div class="age-badge">{{ age() }}</div>
+      </div>
+      <div class="details-text">
+        <h1 class="full-name">{{ profile.fullName }}</h1>
+        <p class="patient-id">Patient ID: {{ profile.patientId | number:'3.0' }}</p>
+      </div>
+    </div>
+
+    <div class="details-grid">
+      <div class="detail-item">
+        <span class="detail-icon">📧</span>
+        <div class="detail-text">
+          <p class="label">Email</p>
+          <p class="value">{{ profile.email }}</p>
+        </div>
+      </div>
+      <div class="detail-item">
+        <span class="detail-icon">📞</span>
+        <div class="detail-text">
+          <p class="label">Contact Number</p>
+          <p class="value">{{ profile.contactNumber }}</p>
+        </div>
+      </div>
+      <div class="detail-item">
+        <span class="detail-icon">📅</span>
+        <div class="detail-text">
+          <p class="label">Date of Birth</p>
+          <p class="value">{{ profile.dateOfBirth | date: 'dd/MM/yyyy' }}</p>
+        </div>
+      </div>
+      <div class="detail-item">
+        <span class="detail-icon">🧍</span>
+        <div class="detail-text">
+          <p class="label">Gender</p>
+          <p class="value">{{ profile.gender }}</p>
+        </div>
+      </div>
+      <div class="detail-item">
+        <span class="detail-icon">🗓️</span>
+        <div class="detail-text">
+          <p class="label">Registration Date</p>
+          <p class="value">{{ profile.registrationDate | date: 'dd/MM/yyyy' }}</p>
+        </div>
+      </div>
+      <div class="detail-item">
+        <span class="detail-icon">🚨</span>
+        <div class="detail-text">
+          <p class="label">Emergency Contact</p>
+          <p class="value">{{ profile.emergencyContactName }} <br />{{ profile.emergencyContactNumber }}</p>
+        </div>
+      </div>
+      <div class="detail-item full-row">
+        <span class="detail-icon">📍</span>
+        <div class="detail-text">
+          <p class="label">Address</p>
+          <p class="value">{{ profile.address }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

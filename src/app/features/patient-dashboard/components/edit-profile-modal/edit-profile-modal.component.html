@@ -1,0 +1,120 @@
+<div class="modal-backdrop" *ngIf="isOpen" (click)="onCancel()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="header">
+      <div class="title-section">
+        <span class="icon-placeholder">👤</span>
+        <h2>Edit Patient Profile</h2>
+      </div>
+      <button class="close-button" (click)="onCancel()">
+        <span class="icon-placeholder-small">❌</span> Cancel
+      </button>
+    </div>
+
+    <div class="profile-summary">
+      <div class="avatar-container">
+        <div class="avatar-circle">{{ initials() }}</div>
+        <div class="camera-icon">📷</div>
+      </div>
+    </div>
+
+    <form class="details-grid" (ngSubmit)="onSave()">
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input
+          id="firstName"
+          type="text"
+          [ngModel]="firstName()"
+          (ngModelChange)="onFirstNameChange($event)"
+          name="firstName"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input
+          id="lastName"
+          type="text"
+          [ngModel]="lastName()"
+          (ngModelChange)="onLastNameChange($event)"
+          name="lastName"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          [(ngModel)]="editableProfile.email"
+          name="email"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="contactNumber">Contact Number</label>
+        <input
+          id="contactNumber"
+          type="tel"
+          [(ngModel)]="editableProfile.contactNumber"
+          name="contactNumber"
+          required
+        />
+      </div>
+
+      <div class="form-group read-only">
+        <label>Date of Birth</label>
+        <input type="text" [value]="profileData.dateOfBirth | date: 'dd-MM-yyyy'" readonly />
+      </div>
+
+      <div class="form-group">
+        <label for="gender">Gender</label>
+        <select id="gender" [(ngModel)]="editableProfile.gender" name="gender">
+          <option *ngFor="let g of genderOptions" [ngValue]="g">{{ g }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="ecName">Emergency Contact Name</label>
+        <input
+          id="ecName"
+          type="text"
+          [(ngModel)]="editableProfile.emergencyContactName"
+          name="ecName"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="ecNumber">Emergency Contact Number</label>
+        <input
+          id="ecNumber"
+          type="tel"
+          [(ngModel)]="editableProfile.emergencyContactNumber"
+          name="ecNumber"
+          required
+        />
+      </div>
+
+      <div class="form-group full-row">
+        <label for="address">Address</label>
+        <textarea
+          id="address"
+          rows="2"
+          [(ngModel)]="editableProfile.address"
+          name="address"
+          required
+        ></textarea>
+      </div>
+
+      <div class="action-buttons full-row">
+        <button type="submit" class="save-button">
+          <span class="icon-placeholder-small">💾</span> Save Changes
+        </button>
+        <button type="button" class="cancel-button" (click)="onCancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

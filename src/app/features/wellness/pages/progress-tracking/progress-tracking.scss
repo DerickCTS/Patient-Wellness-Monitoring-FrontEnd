@@ -1,14 +1,29 @@
-// This makes the tabs stretch to fill the width
+.page-container {
+  padding: 24px;
+  background: #f5f7fa;
+  min-height: 100vh;
+}
+
 :host ::ng-deep .mat-mdc-tab-group {
-  --mdc-tab-indicator-active-indicator-color: #673ab7; // A nice purple
+  --mdc-tab-indicator-active-indicator-color: #673ab7;
   --mat-tab-header-active-label-text-color: #673ab7;
-  --mat-tab-header-inactive-label-text-color: #333;
+  --mat-tab-header-inactive-label-text-color: #555;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
 }
 
 :host ::ng-deep .mat-mdc-tab-header {
   width: 100%;
+  background: #fafafa;
 }
 
 :host ::ng-deep .mat-mdc-tab-body-wrapper {
-  padding-top: 24px;
+  padding: 24px;
+}
+
+:host ::ng-deep .mat-mdc-tab {
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }

@@ -4,6 +4,10 @@
   gap: 16px;
   align-items: center;
   margin-bottom: 24px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .filter-bar mat-form-field {
@@ -29,6 +33,14 @@
 
 .no-plans {
   text-align: center;
-  padding: 100px;
+  padding: 60px;
   color: #777;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  h3 {
+    color: #555;
+    font-weight: 500;
+  }
 }

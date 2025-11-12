@@ -1,0 +1,62 @@
+<div class="card doctor-card">
+  <div class="header">
+    <div class="title-section">
+      <span class="icon-placeholder">🩺</span>
+      <h2>Your Personal Doctor</h2>
+    </div>
+    </div>
+
+  <div class="doctor-details">
+    <div class="doctor-summary">
+      <img src="https://via.placeholder.com/100" alt="Doctor Profile" class="doctor-avatar" />
+      <div class="info">
+        <h3 class="name">{{ doctor.fullName }}
+        </h3>
+        <p class="specialty">{{ doctor.specialization}}</p>
+        <p class="id">ID: {{ doctor.doctorId | number: '3.0'}}</p>
+
+        <div class="badges">
+          </div>
+        <p class="qualification">⚕️ {{ doctor.qualification || 'N/A' }}</p>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="action-button primary" (click)="bookAppointmentClicked.emit()">Book Appointment</button>
+    </div>
+  </div>
+
+  <div class="detail-grid">
+    <div class="section care-relationship">
+      <h4>CARE RELATIONSHIP</h4>
+      <p>Patient since: {{ doctor.patientSince | date:'dd/MM/yyyy' }}</p>
+      <p>Duration: {{ getPatientDuration() }}</p>
+      <p>Total visits: {{ doctor.totalVisits }}</p>
+      <p>Last visit: {{ doctor.lastVisit | date:'dd/MM/yyyy' }}</p>
+    </div>
+
+    <div class="section upcoming-appointment" >
+      <h4>UPCOMING APPOINTMENTS</h4>
+      <div *ngFor="let appointment of upcomingAppointment" class="appointment-item">
+        <p>Date: {{ appointment.appointmentDateTime | date:'dd/MM/yyyy HH:mm' }}</p>
+        <p>Reason: {{ appointment.title }}</p>
+        <p>Status: <span class="status-badge">{{ appointment.status }}</span></p>
+        <hr >
+      </div>
+    </div>
+    <!--
+    <div class="section availability">
+      <h4>AVAILABILITY</h4>
+      <p>Next available: <span class="highlight-text">{{ mockDoctorDetails.availabilityToday }}</span></p>
+      <p>Schedule: {{ mockDoctorDetails.schedule }}</p>
+      <p>Fee: **{{ mockDoctorDetails.fee }}**</p>
+      <p>Location: {{ mockDoctorDetails.location }}</p>
+      <p>Contact: {{ mockDoctorDetails.contact }}</p>
+    </div>-->
+
+    <div class="section latest-notes">
+      <button class="link-button" (click)="viewHistoryClicked.emit()">
+        View full medical history → </button>
+    </div>
+  </div>
+</div>

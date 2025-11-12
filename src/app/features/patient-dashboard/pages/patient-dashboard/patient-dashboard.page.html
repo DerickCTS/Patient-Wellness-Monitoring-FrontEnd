@@ -1,0 +1,38 @@
+<div class="patient-dashboard" *ngIf="dashboardData; else loading">
+  <app-patient-profile-card
+    [profile]="dashboardData.patientProfile"
+    (editProfileClicked)="openEditModal()"
+  ></app-patient-profile-card>
+
+  <app-personal-doctor-card
+    [doctor]="dashboardData.personalDoctor"
+    (bookAppointmentClicked)="navigateToAppointments()"
+    (viewHistoryClicked)="navigateToMedicalHistory()"
+    [upcomingAppointment]="dashboardData.upcomingAppointments"
+  ></app-personal-doctor-card>
+
+  <div class="row">
+    <div class="col-8">
+      <app-active-prescriptions-list
+        [prescriptions]="dashboardData.activePrescriptions"
+      ></app-active-prescriptions-list>
+    </div>
+    <div class="col-4">
+      <app-recent-activities-list
+        [activities]="dashboardData.recentActivities"
+        (viewDetailsClicked)="navigateToTaskDetails($event)"
+      ></app-recent-activities-list>
+    </div>
+  </div>
+
+  <app-edit-profile-modal
+    [isOpen]="isEditModalOpen"
+    [profileData]="dashboardData.patientProfile"
+    (closed)="closeEditModal()"
+    (profileSaved)="saveProfile($event)"
+  ></app-edit-profile-modal>
+</div>
+
+<ng-template #loading>
+  <div class="loading-state">Loading Patient Dashboard...</div>
+</ng-template>

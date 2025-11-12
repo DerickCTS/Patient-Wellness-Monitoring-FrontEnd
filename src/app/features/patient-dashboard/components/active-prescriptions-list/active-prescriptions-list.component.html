@@ -1,0 +1,35 @@
+<div class="prescription-list-card">
+  <div class="header">
+    <span class="icon-placeholder">🔗</span>
+    <h2>Active Prescriptions</h2>
+    <span class="badge">{{ prescriptions.length }} Active</span>
+  </div>
+
+  <div class="list-container">
+    <div
+      class="prescription-item"
+      *ngFor="let p of prescriptions"
+      (click)="null"
+      [class.clickable]="false" 
+    >
+      <div class="medication-icon">❤️</div>
+
+      <div class="medication-details">
+        <div class="name-status">
+          <h3 class="medication-name">{{ p.medicationName }}</h3>
+          <span class="status-badge active">{{ p.status }}</span>
+        </div>
+        <p class="dosage">{{ p.dosageAndInstructions }}</p>
+        <p class="end-date">Until {{ p.endDate | date:'dd/MM/yyyy' }}</p>
+
+        <p class="days-remaining">
+          - {{ getDaysRemaining(p.endDate) }}
+        </p>
+      </div>
+    </div>
+
+    <div *ngIf="prescriptions.length === 0" class="no-data">
+      No active prescriptions found.
+    </div>
+  </div>
+</div>

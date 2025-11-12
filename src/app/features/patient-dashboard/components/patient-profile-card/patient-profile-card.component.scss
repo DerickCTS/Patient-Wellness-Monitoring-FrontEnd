@@ -1,0 +1,142 @@
+/* src/app/features/patient-dashboard/components/patient-profile-card/patient-profile-card.component.scss */
+.patient-profile-card {
+  background: linear-gradient(135deg, #f0f4ff, #e0e8ff);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  .title-section {
+    display: flex;
+    align-items: center;
+    h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #3b5998;
+    }
+  }
+
+  .icon-placeholder {
+    font-size: 1.5rem;
+    margin-right: 10px;
+  }
+}
+
+.edit-button {
+  display: flex;
+  align-items: center;
+  padding: 8px 15px;
+  border: 1px solid #c0d0f0;
+  border-radius: 20px;
+  background-color: #ffffff;
+  color: #3b5998;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #f0f4ff;
+  }
+}
+
+.icon-placeholder-small {
+  font-size: 0.9rem;
+  margin-right: 5px;
+}
+
+.content-body {
+  .profile-summary {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 30px;
+  }
+
+  .avatar-container {
+    position: relative;
+    margin-right: 25px;
+  }
+
+  .avatar-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #4a7ab5, #72a5d2);
+    color: white;
+    font-size: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .age-badge {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4a7ab5;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .details-text {
+    .full-name {
+      margin: 0 0 5px 0;
+      font-size: 2.5rem;
+      color: #333;
+    }
+    .patient-id {
+      color: #666;
+      font-size: 1rem;
+    }
+  }
+
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+
+  .detail-item {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+
+    &.full-row {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .detail-icon {
+    font-size: 1.5rem;
+    margin-right: 15px;
+    color: #4a7ab5;
+  }
+
+  .detail-text {
+    p {
+      margin: 0;
+    }
+    .label {
+      font-size: 0.8rem;
+      color: #777;
+    }
+    .value {
+      font-weight: 500;
+      color: #333;
+    }
+  }
+}

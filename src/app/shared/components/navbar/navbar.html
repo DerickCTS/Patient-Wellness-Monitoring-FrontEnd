@@ -18,11 +18,14 @@
       </ng-container>
     
     <ng-container *ngIf="!isDoctor">
+      <a routerLink="/patient-dashboard" routerLinkActive="active" (click)="toggleSidebar()">
+        Dashboard
+      </a>
       <a routerLink="/progress" routerLinkActive="active" (click)="toggleSidebar()">
-        My Progress
+        Progress
       </a>
       <a routerLink="/my-appointments" routerLinkActive="active" (click)="toggleSidebar()">
-        My Appointments
+        Appointments
       </a>
       </ng-container>
   </nav>

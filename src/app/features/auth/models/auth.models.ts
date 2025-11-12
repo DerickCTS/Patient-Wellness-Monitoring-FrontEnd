@@ -39,6 +39,7 @@ export interface LoginRequestDto {
 export interface AuthSuccessDto {
   message: string;
   userId: string;
+  token?: string;
   firstName? : string;
   lastName? : string;
   specialization? : string;

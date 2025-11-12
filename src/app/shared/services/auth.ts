@@ -23,7 +23,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
   ) {}
 
   /**
@@ -66,10 +66,7 @@ export class AuthService {
       .post<AuthSuccessDto>(`${this.baseUrl}/login`, payload)
       .pipe(
         tap((response) => {
-          console.log(response);
-          this.saveRole(payload.Role);
-          console.log(response);
-          // Store userId based on role
+          sessionStorage.setItem('userRole', payload.Role);
           sessionStorage.setItem('userId', response.userId);
           sessionStorage.setItem('firstName', response.firstName || '');
           sessionStorage.setItem('lastName', response.lastName || '');
@@ -79,24 +76,23 @@ export class AuthService {
           if (payload.Role === 'Doctor') {
             this.router.navigate(['/doctor-dashboard']);
           } else if (payload.Role === 'Patient') {
-            this.router.navigate(['/progress']);
+            this.router.navigate(['/patient-dashboard']);
           }
         }),
         catchError(this.handleError.bind(this))
       );
   }
 
-  // --- Helper Functions ---
-
-  private saveRole(role: 'Patient' | 'Doctor'): void {
-    sessionStorage.setItem('userRole', role);
-  }
-
   public logout(): void {
     sessionStorage.removeItem('userRole');
     sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('firstName');
+    sessionStorage.removeItem('lastName');
+    sessionStorage.removeItem('imageUrl');
+    sessionStorage.removeItem('specialization');
     this.router.navigate(['/home']);
   }
+
 
   public getRole(): string {
     return sessionStorage.getItem('userRole')?? '';
@@ -113,7 +109,7 @@ export class AuthService {
   public isAuthenticated(): boolean {
     return !!sessionStorage.getItem('userRole');
   }
-
+ 
   // --- Error & Success Message Handling ---
 
   private handleError(error: HttpErrorResponse): Observable<never> {

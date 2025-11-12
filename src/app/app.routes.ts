@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard'; 
+import { HomePageComponent } from './home/home';
 
 export const routes: Routes = [
 
@@ -49,6 +50,14 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./features/diagnosis/diagnosis-module').then(
             (m) => m.DiagnosisModule
+          ),
+      },
+      {
+        path: 'patient-dashboard',
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./features/patient-dashboard/pages/patient-dashboard/patient-dashboard.page').then(
+            (m) => m.PatientDashboardPage
           ),
       },
       {

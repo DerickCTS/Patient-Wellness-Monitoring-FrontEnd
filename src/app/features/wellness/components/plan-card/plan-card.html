@@ -1,6 +1,6 @@
 <mat-card class="plan-card">
   <div class="card-image-container">
-    <img mat-card-image [src]="plan.imageUrl" [alt]="plan.planName" />
+    <img mat-card-image [src]="'https://localhost:7129' + plan.imageUrl" [alt]="plan.planName" />
 
     <span class="status-badge" [ngClass]="plan.status.toLowerCase()">
       {{ plan.status }}

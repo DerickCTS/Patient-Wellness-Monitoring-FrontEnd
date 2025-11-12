@@ -23,7 +23,7 @@ import { FormsModule } from '@angular/forms'; // <-- For ngModel
     FormsModule,
   ],
   templateUrl: './plan-details-modal.html',
-  styleUrls: ['./plan-details-modal.scss'],
+  styleUrls: ['./plan-details-modal-updated.scss'],
 })
 export class PlanDetailsModalComponent implements OnInit {
   // Observable to hold the plan details

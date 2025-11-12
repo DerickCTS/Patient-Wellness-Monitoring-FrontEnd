@@ -1,5 +1,5 @@
 <div class="filter-bar">
-  <mat-chip-listbox [(ngModel)]="statusFilter" (ngModelChange)="onFilterChange()">
+  <mat-chip-listbox [(ngModel)]="statusFilter" (ngModelChange)="onFilterChange('Status')">
     <mat-chip-option value="All" selected>All</mat-chip-option>
     <mat-chip-option value="Completed">Completed</mat-chip-option>
     <mat-chip-option value="Pending">Pending</mat-chip-option>
@@ -7,14 +7,14 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Category</mat-label>
-    <mat-select [(ngModel)]="categoryFilter" (selectionChange)="onFilterChange()">
+    <mat-select [(ngModel)]="categoryFilter" (selectionChange)="onFilterChange('Category')">
       <mat-option *ngFor="let cat of categories" [value]="cat">{{ cat }}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>Due Date</mat-label>
-    <mat-select [(ngModel)]="dateFilter" (selectionChange)="onFilterChange()">
+    <mat-select [(ngModel)]="dateFilter" (selectionChange)="onFilterChange('Date')">
       <mat-option value="Today">Today</mat-option>
       <mat-option value="This Week">This Week</mat-option>
       <mat-option value="This Month">This Month</mat-option>
@@ -27,7 +27,7 @@
 </div>
 
 <div *ngIf="!isLoading" class="plan-grid">
-  <app-plan-card *ngFor="let plan of plans"
+  <app-plan-card *ngFor="let plan of filteredPlans"
                  [plan]="plan"
                  (onViewDetails)="openDetailsModal($event)"
                  (onMarkComplete)="openMarkCompleteModal($event)"></app-plan-card>

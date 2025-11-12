@@ -15,7 +15,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const path = route.routeConfig?.path || '';
 
   // Role-based access control
-  const patientRoutes = ['progress', 'my-appointments'];
+  const patientRoutes = ['progress', 'my-appointments', 'patient-dashboard'];
   const doctorRoutes = ['doctor-dashboard', 'wellness', 'diagnosis'];
 
   if (userRole === 'Patient' && doctorRoutes.includes(path)) {

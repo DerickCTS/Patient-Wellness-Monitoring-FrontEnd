@@ -5,8 +5,15 @@ mat-form-field {
 
 mat-dialog-actions {
   padding: 0 24px 24px;
+  gap: 12px;
 }
 
 button[mat-flat-button] {
   min-width: 150px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+:host ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 12px;
 }

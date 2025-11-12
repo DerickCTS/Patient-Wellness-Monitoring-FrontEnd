@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule
   ],
   templateUrl: './plan-card.html',
-  styleUrls: ['./plan-card.scss'],
+  styleUrls: ['./plan-card-updated.scss'],
 })
 export class PlanCardComponent {
   @Input() plan!: PlanAssignmentDto;

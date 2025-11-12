@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WellnessService } from '../../services/wellness.service';
 import { PlanAssignmentDto } from '../../models/plan.dto';
 import { MatDialog } from '@angular/material/dialog';
-import { PlanDetailsModalComponent } from '../plan-details-modal/plan-details-modal';
+import { WellnessPlanDetailComponent } from '../../../../shared/components/wellness-plan-detail/wellness-plan-detail';
 import { MarkCompleteModalComponent } from '../mark-complete-modal/mark-complete-modal';
 import { CommonModule } from '@angular/common'; // <-- For *ngIf, *ngFor
 import { FormsModule } from '@angular/forms'; // <-- For ngModel
@@ -29,12 +29,13 @@ import { PlanCardComponent } from '../plan-card/plan-card';
 })
 export class PlanListComponent implements OnInit {
   plans: PlanAssignmentDto[] = [];
+  filteredPlans: PlanAssignmentDto[] = [];
   isLoading = true;
 
   // Filter values
   statusFilter = 'All';
   categoryFilter = 'All';
-  dateFilter = 'This Week';
+  dateFilter: 'today' | 'week' | 'month' = 'week';
 
   // Your filter options
   categories = ['All', 'Physical', 'Exercise', 'Diet', 'Mental Wellness', 'Sleep', 'Medical'];
@@ -51,37 +52,50 @@ export class PlanListComponent implements OnInit {
   loadPlans(): void {
     this.isLoading = true;
     this.wellnessService
-      .getPlans(this.statusFilter, this.categoryFilter, this.dateFilter)
+      .getPlans('All', 'All', this.dateFilter)
       .subscribe((data) => {
         this.plans = data;
+        this.applyFilters();
         this.isLoading = false;
       });
   }
 
-  onFilterChange(): void {
-    this.loadPlans();
+  applyFilters(): void {
+    this.filteredPlans = this.plans.filter(plan => {
+      const matchesStatus = this.statusFilter === 'All' || plan.status === this.statusFilter;
+      const matchesCategory = this.categoryFilter === 'All' || plan.category === this.categoryFilter;
+      // TODO: Add date filter logic
+      return matchesStatus && matchesCategory;
+    });
+  }
+
+  onFilterChange(filter: 'Status' | 'Category' | 'Date'): void {
+    switch(filter) {
+      case 'Status':
+      case 'Category':
+        this.applyFilters();
+        break;
+      case 'Date':
+        this.loadPlans();
+        break;
+    }
   }
 
   openDetailsModal(plan: PlanAssignmentDto): void {
-    // Note: The component class name is still 'PlanDetailsModalComponent'
-    this.dialog.open(PlanDetailsModalComponent, {
+    this.dialog.open(WellnessPlanDetailComponent, {
       width: '800px',
       data: { assignmentId: plan.assignmentId },
     });
   }
 
   openMarkCompleteModal(plan: PlanAssignmentDto): void {
-    // Note: The component class name is still 'MarkCompleteModalComponent'
     const dialogRef = this.dialog.open(MarkCompleteModalComponent, {
       width: '400px',
       data: { plan: plan },
     });
 
-    // After the modal closes, check if we need to refresh the list
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'updated') {
-        this.loadPlans(); // Reload the plans to show new status
-      }
+    dialogRef.afterClosed().subscribe(() => {
+      this.loadPlans();
     });
   }
 }

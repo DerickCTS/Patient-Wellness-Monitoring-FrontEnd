@@ -1,0 +1,30 @@
+<div class="activity-list-card">
+  <div class="header">
+    <span class="icon-placeholder">📈</span>
+    <h2>Recent Activity & Task Logs</h2>
+    <span class="badge">{{ activities.length }} Completed</span>
+  </div>
+
+  <div class="list-container">
+    <div
+      class="activity-item"
+      *ngFor="let activity of activities"
+    >
+      <div class="activity-header">
+        <span class="icon">✅</span>
+        <h4 class="task-name">{{ activity.taskName }}</h4>
+        <span class="status-badge completed">{{ activity.status }}</span>
+      </div>
+     
+      <!-- <button class="link-button" (click)="viewDetailsClicked.emit(activity.taskLogId)">
+        View Details → </button> -->
+
+        <button class="link-button" (click)="viewDetailsClicked.emit(1)">
+        View Details → </button>
+    </div>
+
+    <div *ngIf="activities.length === 0" class="no-activities">
+      No recent activity or task logs found.
+    </div>
+  </div>
+</div>

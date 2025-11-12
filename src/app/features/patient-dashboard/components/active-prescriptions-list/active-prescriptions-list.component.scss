@@ -1,0 +1,157 @@
+/* src/app/features/dashboard/components/active-prescriptions-list/active-prescriptions-list.component.scss */
+.prescription-list-card {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 15px 25px;
+  background-color: #3b5998;
+  color: white;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+
+  .icon-placeholder {
+    font-size: 1.2rem;
+    margin-right: 10px;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    flex-grow: 1;
+  }
+
+  .badge {
+    background-color: #48bb78;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+}
+
+.prescription-item {
+  display: flex;
+  padding: 20px 25px;
+  border-bottom: 1px solid #e2e8f0;
+  align-items: flex-start;
+  transition: background-color 0.1s;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &.clickable {
+    cursor: pointer;
+    &:hover {
+      background-color: #f7f9fc;
+    }
+  }
+}
+
+.medication-icon {
+  font-size: 2rem;
+  color: #e53e3e;
+  margin-right: 15px;
+  padding: 10px;
+  background-color: #fcebeb;
+  border-radius: 50%;
+}
+
+.medication-details {
+  flex-grow: 1;
+
+  .name-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .medication-name {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .status-badge {
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+
+      &.active {
+        background-color: #48bb78;
+        color: white;
+      }
+    }
+  }
+
+  .dosage {
+    color: #555;
+    margin: 5px 0;
+  }
+
+  .end-date {
+    font-size: 0.9rem;
+    color: #777;
+  }
+
+  .days-remaining {
+    font-weight: 500;
+    color: #e53e3e;
+    font-size: 0.9rem;
+    text-align: right;
+  }
+}
+
+.treatment-progress {
+  margin-top: 15px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 10px;
+
+  & > p {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+  }
+
+  .progress-bar {
+    height: 10px;
+    background-color: #e2e8f0;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .progress-fill {
+      height: 100%;
+      background-color: #48bb78;
+    }
+
+    & > span {
+      position: absolute;
+      right: 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #333; /* Dark text over the progress bar */
+    }
+  }
+
+  .progress-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #777;
+    margin-top: 5px;
+  }
+}
